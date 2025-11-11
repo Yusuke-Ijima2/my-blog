@@ -49,7 +49,8 @@ const geistMono = Geist_Mono({
  */
 export const metadata: Metadata = {
   title: "Tech Blog", // ブラウザのタブに表示されるタイトル
-  description: "技術ブログ - Next.js, TypeScript, Tailwind CSSなどの技術記事を発信", // 検索結果に表示される説明文
+  description:
+    "技術ブログ - Next.js, TypeScript, Tailwind CSSなどの技術記事を発信", // 検索結果に表示される説明文
 };
 
 /**
@@ -77,7 +78,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja"> {/* 言語を日本語に設定 */}
+    <html lang="ja">
       <head>
         {/*
           highlight.jsのCSSを読み込み
