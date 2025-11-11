@@ -1,65 +1,102 @@
-import Image from "next/image";
+/**
+ * page.tsx - トップページ（記事一覧ページ）
+ *
+ * このページの役割：
+ * 1. サイトのトップページとして機能（URL: /）
+ * 2. 全記事を日付順（新しい順）で一覧表示
+ * 3. 各記事へのリンクを提供
+ *
+ * 表示内容：
+ * - サイトタイトルと説明
+ * - 記事一覧（タイトル、日付、説明、リンク）
+ */
 
+import Link from 'next/link'; // Next.jsのクライアントサイドルーティング用Linkコンポーネント
+import { getAllPosts } from '@/lib/posts'; // 記事一覧を取得する関数
+
+/**
+ * Home - トップページコンポーネント
+ *
+ * データ取得：
+ * - getAllPosts()で全記事のメタデータを取得
+ * - 記事は日付順（新しい順）にソート済み
+ *
+ * レイアウト：
+ * - 最大幅4xl（max-w-4xl）でコンテンツを中央揃え
+ * - 上部にサイト説明セクション
+ * - 下部に記事一覧セクション
+ *
+ * @returns {JSX.Element} トップページのJSX
+ */
 export default function Home() {
+  // 全記事のメタデータを取得（日付順にソート済み）
+  // posts = [{ slug: "...", title: "...", date: "2025-01-15", description: "..." }, ...]
+  const posts = getAllPosts();
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+    <div className="max-w-4xl mx-auto px-4 py-12">
+      {/* サイト説明セクション */}
+      <section className="mb-16">
+        {/* サイトタイトル */}
+        <h1 className="text-4xl font-bold text-gray-900 mb-4">Tech Blog</h1>
+        {/* サイト説明 */}
+        <p className="text-lg text-gray-600">
+          Next.js、TypeScript、Tailwind CSSなどの技術記事を発信しています。
+        </p>
+      </section>
+
+      {/* 記事一覧セクション */}
+      <section>
+        {/* セクションタイトル */}
+        <h2 className="text-2xl font-bold text-gray-900 mb-8">最新記事</h2>
+
+        {/* 記事がない場合のメッセージ */}
+        {posts.length === 0 ? (
+          <p className="text-gray-600">記事がまだありません。</p>
+        ) : (
+          // 記事一覧の表示
+          <div className="space-y-8"> {/* space-y-8: 記事間の縦方向の間隔 */}
+            {/* 各記事をループで表示 */}
+            {posts.map((post) => (
+              <article
+                key={post.slug} // Reactのkey（ユニークな識別子）
+                className="border-b border-gray-200 pb-8 last:border-b-0"
+                // className解説：
+                // - border-b: 下部にボーダー（区切り線）
+                // - pb-8: 下部パディング
+                // - last:border-b-0: 最後の記事はボーダーなし
+              >
+                {/* 記事タイトル（クリック可能） */}
+                <Link href={`/blog/${post.slug}`} className="group">
+                  {/* group: 子要素でhover時のスタイル変更を可能にする */}
+                  <h3 className="text-2xl font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
+                    {/* group-hover:text-blue-600: タイトルにホバー時に青色に変更 */}
+                    {/* transition-colors: 色変化をスムーズにアニメーション */}
+                    {post.title}
+                  </h3>
+                </Link>
+
+                {/* 公開日 */}
+                <time className="text-sm text-gray-500 mb-3 block">
+                  {/* time要素: 日付を意味的に表す（SEOに有利） */}
+                  {post.date} {/* 例: 2025-01-15 */}
+                </time>
+
+                {/* 記事の説明文 */}
+                <p className="text-gray-700 mb-4">{post.description}</p>
+
+                {/* 記事詳細へのリンク */}
+                <Link
+                  href={`/blog/${post.slug}`}
+                  className="text-blue-600 hover:text-blue-800 font-medium"
+                >
+                  続きを読む →
+                </Link>
+              </article>
+            ))}
+          </div>
+        )}
+      </section>
     </div>
   );
 }
