@@ -20,6 +20,7 @@
 import { notFound } from 'next/navigation'; // 404ページを表示する関数
 import Link from 'next/link'; // Next.jsのクライアントサイドルーティング用Linkコンポーネント
 import { getAllPostSlugs, getPostBySlug } from '@/lib/posts'; // 記事データ取得関数
+import BlogPageViewTracker from '@/components/BlogPageViewTracker'; // 記事ページビュートラッカー
 
 /**
  * PageProps - ページコンポーネントのprops型定義
@@ -124,6 +125,9 @@ export default async function BlogPost({ params }: PageProps) {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-12">
+      {/* Google Analytics: 記事ページビュートラッキング */}
+      <BlogPageViewTracker slug={slug} />
+
       {/* 記事一覧に戻るリンク */}
       <Link
         href="/"
