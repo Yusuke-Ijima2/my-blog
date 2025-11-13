@@ -34,8 +34,7 @@ my-blog/
 │   │       └── page.tsx    # 記事詳細ページ
 │   └── globals.css
 ├── components/
-│   ├── Header.tsx          # ヘッダー
-│   └── Footer.tsx          # フッター
+│   └── Header.tsx          # ヘッダー
 ├── lib/
 │   └── posts.ts            # Markdown処理ロジック
 ├── posts/                  # Markdownファイル置き場

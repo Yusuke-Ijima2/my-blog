@@ -5,7 +5,7 @@
  * 1. HTMLの基本構造（html, head, body）
  * 2. グローバルなメタデータ（title, description）
  * 3. Webフォントの設定（Geist Sans, Geist Mono）
- * 4. 共通コンポーネント（Header, Footer）の配置
+ * 4. 共通コンポーネント（Header）の配置
  * 5. グローバルスタイル（globals.css）の読み込み
  *
  * 注意：
@@ -17,7 +17,6 @@ import type { Metadata } from "next"; // Next.jsのメタデータ型定義
 import { Geist, Geist_Mono } from "next/font/google"; // Google Fontsからフォントをインポート
 import "./globals.css"; // グローバルスタイル（Tailwind CSS、Typography設定など）
 import Header from "@/components/Header"; // ヘッダーコンポーネント
-import Footer from "@/components/Footer"; // フッターコンポーネント
 
 /**
  * Geist Sans フォントの設定
@@ -64,7 +63,6 @@ export const metadata: Metadata = {
  *   <body>
  *     - Header（ヘッダー）
  *     - main（メインコンテンツ - 各ページの内容）
- *     - Footer（フッター）
  *   </body>
  * </html>
  *
@@ -107,12 +105,8 @@ export default function RootLayout({
 
         {/* メインコンテンツエリア - 各ページの内容が表示される */}
         <main className="min-h-screen">
-          {/* min-h-screen: 画面の高さを最低限確保してフッターを下部に配置 */}
           {children}
         </main>
-
-        {/* フッター - すべてのページの下部に表示 */}
-        <Footer />
       </body>
     </html>
   );

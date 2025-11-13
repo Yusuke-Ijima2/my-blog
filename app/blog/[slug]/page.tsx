@@ -123,7 +123,7 @@ export default async function BlogPost({ params }: PageProps) {
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-12">
+    <div className="max-w-2xl mx-auto px-4 py-12">
       {/* 記事一覧に戻るリンク */}
       <Link
         href="/"

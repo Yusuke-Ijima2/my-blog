@@ -23,40 +23,11 @@ export default function Header() {
   return (
     <header className="border-b border-gray-200">
       {/* コンテンツの最大幅を制限して中央揃え */}
-      <div className="max-w-4xl mx-auto px-4 py-6">
-        {/* フレックスボックスでロゴとナビを両端配置 */}
-        <div className="flex items-center justify-between">
-          {/* サイトロゴ/タイトル - ホームページへのリンク */}
-          <Link href="/" className="text-2xl font-bold text-gray-900 hover:text-gray-700">
-            Tech Blog
-          </Link>
-
-          {/* ナビゲーションメニュー */}
-          <nav>
-            <ul className="flex gap-6">
-              {/* ホームリンク */}
-              <li>
-                <Link href="/" className="text-gray-600 hover:text-gray-900">
-                  ホーム
-                </Link>
-              </li>
-              {/* Aboutリンク（ページ内アンカー） */}
-              <li>
-                <Link href="/#about" className="text-gray-600 hover:text-gray-900">
-                  About
-                </Link>
-              </li>
-              {/*
-                必要に応じて追加のリンクをここに追加できます：
-                <li>
-                  <Link href="/categories" className="text-gray-600 hover:text-gray-900">
-                    カテゴリー
-                  </Link>
-                </li>
-              */}
-            </ul>
-          </nav>
-        </div>
+      <div className="max-w-2xl mx-auto px-4 py-6">
+        {/* サイトロゴ/タイトル - ホームページへのリンク */}
+        <Link href="/" className="text-2xl font-bold text-gray-900 hover:text-gray-700">
+          Tech Blog
+        </Link>
       </div>
     </header>
   );
