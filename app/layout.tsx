@@ -94,6 +94,10 @@ export default function RootLayout({
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        suppressHydrationWarning={true}
+        // suppressHydrationWarning:
+        // - ブラウザ拡張機能（ColorZilla、Grammarly等）がbodyタグに属性を追加するため
+        // - ハイドレーション警告を抑制（本番環境では問題なし）
         // className解説：
         // - geistSans.variable: Geist SansのCSS変数を設定
         // - geistMono.variable: Geist MonoのCSS変数を設定
