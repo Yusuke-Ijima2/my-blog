@@ -15,6 +15,7 @@ import { remark } from 'remark'; // マークダウン処理の中核ライブ�
 import remarkRehype from 'remark-rehype'; // マークダウンをHTMLに変換するプラグイン
 import rehypeHighlight from 'rehype-highlight'; // コードブロックにシンタックスハイライトを適用するプラグイン
 import rehypeStringify from 'rehype-stringify'; // HTML構造を文字列に変換するプラグイン
+import { cache } from 'react'; // Reactのキャッシュ機能（同じレンダリング内で重複呼び出しを防ぐ）
 
 // postsディレクトリの絶対パスを取得
 // process.cwd()はプロジェクトのルートディレクトリを返す
@@ -137,6 +138,10 @@ export function getAllPostSlugs(): string[] {
  * 4. シンタックスハイライト適用（rehype-highlight）
  * 5. HTML文字列化（rehype-stringify）
  *
+ * パフォーマンス最適化：
+ * - React cache()でラップ（同じレンダリング内での重複呼び出しを防ぐ）
+ * - generateMetadata()とページコンポーネントで同じslugを呼んでも1回だけ実行
+ *
  * 使用例：
  * const post = await getPostBySlug("nextjs-static-export");
  * // => { slug: "...", title: "...", content: "<h2>見出し</h2>...", ... }
@@ -144,7 +149,7 @@ export function getAllPostSlugs(): string[] {
  * @param {string} slug - 取得したい記事のslug（ファイル名）
  * @returns {Promise<PostData | null>} 記事データ（見つからない場合はnull）
  */
-export async function getPostBySlug(slug: string): Promise<PostData | null> {
+export const getPostBySlug = cache(async (slug: string): Promise<PostData | null> => {
   try {
     // ファイルパスを作成（例: posts/nextjs-static-export.md）
     const fullPath = path.join(postsDirectory, `${slug}.md`);
@@ -186,4 +191,4 @@ export async function getPostBySlug(slug: string): Promise<PostData | null> {
     console.error(`Error reading post ${slug}:`, error);
     return null;
   }
-}
+});
