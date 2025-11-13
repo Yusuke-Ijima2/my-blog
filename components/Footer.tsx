@@ -3,9 +3,11 @@
  *
  * 機能：
  * - コピーライト表示
+ * - プライバシーポリシーへのリンク
  * - すべてのページの下部に表示される
- * - 必要に応じてリンク（プライバシーポリシー、利用規約など）を追加可能
  */
+
+import Link from 'next/link'; // Next.jsのLinkコンポーネント
 
 /**
  * Footer - グローバルフッターコンポーネント
@@ -31,30 +33,27 @@ export default function Footer() {
           &copy; {currentYear} Tech Blog. All rights reserved.
         </p>
 
-        {/*
-          必要に応じて追加のコンテンツをここに追加できます：
+        {/* フッターリンク（中央揃え） */}
+        <div className="flex justify-center gap-6 mt-4">
+          {/* プライバシーポリシーへのリンク */}
+          <Link
+            href="/privacy"
+            className="text-gray-600 hover:text-gray-900 text-sm transition-colors"
+          >
+            プライバシーポリシー
+          </Link>
 
-          <div className="flex justify-center gap-6 mt-4">
-            <Link href="/privacy" className="text-gray-600 hover:text-gray-900 text-sm">
-              プライバシーポリシー
-            </Link>
+          {/*
+            将来的に追加可能なリンク：
+
             <Link href="/terms" className="text-gray-600 hover:text-gray-900 text-sm">
               利用規約
             </Link>
             <Link href="/contact" className="text-gray-600 hover:text-gray-900 text-sm">
               お問い合わせ
             </Link>
-          </div>
-
-          <div className="flex justify-center gap-4 mt-4">
-            <a href="https://twitter.com/yourhandle" target="_blank" rel="noopener noreferrer">
-              <TwitterIcon />
-            </a>
-            <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer">
-              <GitHubIcon />
-            </a>
-          </div>
-        */}
+          */}
+        </div>
       </div>
     </footer>
   );
