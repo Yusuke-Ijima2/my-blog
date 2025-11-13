@@ -21,6 +21,8 @@ Next.js Static Exportを使った技術ブログのMVPプロジェクトです�
 - ✅ シンタックスハイライト対応
 - ✅ レスポンシブデザイン
 - ✅ 完全静的サイト（Static Export）
+- ✅ Google Analytics 4統合（本番環境のみ）
+- ✅ プライバシーポリシーページ
 
 ## プロジェクト構造
 
@@ -32,16 +34,23 @@ my-blog/
 │   ├── blog/
 │   │   └── [slug]/
 │   │       └── page.tsx    # 記事詳細ページ
+│   ├── privacy/
+│   │   └── page.tsx        # プライバシーポリシーページ
 │   └── globals.css
 ├── components/
 │   ├── Header.tsx          # ヘッダー
-│   └── Footer.tsx          # フッター
+│   ├── Footer.tsx          # フッター
+│   └── GoogleAnalytics.tsx # Google Analytics 4トラッキング
 ├── lib/
-│   └── posts.ts            # Markdown処理ロジック
+│   ├── posts.ts            # Markdown処理ロジック
+│   └── gtag.ts             # Google Analyticsヘルパー関数
+├── types/
+│   └── gtag.d.ts           # Google Analytics型定義
 ├── posts/                  # Markdownファイル置き場
 │   ├── nextjs-static-export.md
 │   ├── typescript-type-safety.md
 │   └── tailwind-css-guide.md
+├── .env.local.example      # 環境変数サンプル
 └── next.config.ts          # Static Export設定
 ```
 
@@ -53,7 +62,51 @@ my-blog/
 npm install
 ```
 
-### 2. 開発サーバーの起動
+### 2. Google Analytics 4の設定（オプション）
+
+本番環境でアクセス解析を行う場合は、Google Analytics 4を設定します。
+
+#### 2-1. 環境変数ファイルの作成
+
+```bash
+cp .env.local.example .env.local
+```
+
+#### 2-2. Google Analytics測定IDの取得
+
+1. [Google Analytics](https://analytics.google.com/)にログイン
+2. **管理** → **プロパティ** → **データストリーム** を選択
+3. **ウェブストリーム**を選択（または新規作成）
+4. **測定ID**（G-XXXXXXXXXXの形式）をコピー
+
+#### 2-3. 環境変数の設定
+
+`.env.local`ファイルを開き、測定IDを設定します：
+
+```env
+NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
+```
+
+**重要な注意点:**
+- 開発環境（`npm run dev`）ではGoogle Analyticsは動作しません
+- 本番ビルド（`npm run build`）とデプロイ後のみトラッキングが有効化されます
+- `.env.local`は`.gitignore`に含まれているため、Gitにコミットされません
+- デプロイ先（Vercel、Netlifyなど）で環境変数を設定する必要があります
+
+#### デプロイ先での環境変数設定
+
+**Vercel:**
+1. プロジェクト設定 → Environment Variables
+2. `NEXT_PUBLIC_GA_MEASUREMENT_ID`を追加
+
+**Netlify:**
+1. Site settings → Build & deploy → Environment
+2. `NEXT_PUBLIC_GA_MEASUREMENT_ID`を追加
+
+**GitHub Pages:**
+- ビルド時に環境変数を設定（GitHub Actions使用）
+
+### 3. 開発サーバーの起動
 
 ```bash
 npm run dev
@@ -123,6 +176,7 @@ vercel
 | `npm run dev` | 開発サーバーを起動 |
 | `npm run build` | 本番用ビルド（静的ファイル生成） |
 | `npm run lint` | ESLintでコードチェック |
+| `npm run type-check` | TypeScriptの型チェック |
 
 ## カスタマイズ
 
@@ -145,6 +199,33 @@ export const metadata: Metadata = {
 ### スタイルのカスタマイズ
 
 Tailwind CSSのユーティリティクラスを使ってスタイルをカスタマイズできます。
+
+### カスタムイベントトラッキング
+
+Google Analyticsでカスタムイベントを送信する場合、`lib/gtag.ts`のヘルパー関数を使用できます。
+
+```typescript
+import * as gtag from '@/lib/gtag';
+
+// ボタンクリックを追跡
+const handleClick = () => {
+  gtag.event({
+    action: 'click',
+    category: 'engagement',
+    label: 'CTA Button',
+    value: 1,
+  });
+};
+
+// フォーム送信を追跡
+const handleSubmit = () => {
+  gtag.event({
+    action: 'submit',
+    category: 'form',
+    label: 'Contact Form',
+  });
+};
+```
 
 ## 制限事項（Static Export）
 
