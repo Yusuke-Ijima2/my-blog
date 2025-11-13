@@ -18,7 +18,6 @@ import { Geist, Geist_Mono } from "next/font/google"; // Google Fontsからフ�
 import "./globals.css"; // グローバルスタイル（Tailwind CSS、Typography設定など）
 import Header from "@/components/Header"; // ヘッダーコンポーネント
 import Footer from "@/components/Footer"; // フッターコンポーネント
-import GoogleAnalytics from "@/components/GoogleAnalytics"; // Google Analytics 4トラッキングコンポーネント
 
 /**
  * Geist Sans フォントの設定
@@ -103,9 +102,6 @@ export default function RootLayout({
         // - geistMono.variable: Geist MonoのCSS変数を設定
         // - antialiased: フォントのアンチエイリアス（滑らかな表示）を有効化
       >
-        {/* Google Analytics 4 - 本番環境のみで有効化 */}
-        <GoogleAnalytics />
-
         {/* ヘッダー - すべてのページの上部に表示 */}
         <Header />
 
