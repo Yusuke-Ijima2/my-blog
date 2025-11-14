@@ -35,20 +35,10 @@ export default function Home() {
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-12">
-      {/* サイト説明セクション */}
-      <section className="mb-16">
-        {/* サイトタイトル */}
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">Tech Blog</h1>
-        {/* サイト説明 */}
-        <p className="text-lg text-gray-600">
-          Next.js、TypeScript、Tailwind CSSなどの技術記事を発信しています。
-        </p>
-      </section>
-
       {/* 記事一覧セクション */}
       <section>
         {/* セクションタイトル */}
-        <h2 className="text-2xl font-bold text-gray-900 mb-8">最新記事</h2>
+        <h2 className="text-2xl font-bold text-gray-900 mb-8">記事一覧</h2>
 
         {/* 記事がない場合のメッセージ */}
         {posts.length === 0 ? (
