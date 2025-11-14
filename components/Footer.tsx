@@ -7,9 +7,9 @@
  * - すべてのページの下部に表示される
  */
 
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 
 /**
  * Footer - グローバルフッターコンポーネント
@@ -52,9 +52,11 @@ export default function Footer() {
             className="bg-white rounded-lg p-8 max-w-md mx-4"
             onClick={(e) => e.stopPropagation()}
           >
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">このサイトについて</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              このサイトについて
+            </h2>
             <p className="text-gray-700 mb-6">
-              飯嶋が自己満で記事を書くサイト
+              飯嶋が自己満で記事を書くサイトです。
             </p>
             <div className="flex justify-end">
               <button
