@@ -34,13 +34,21 @@ my-blog/
 │   │       └── page.tsx    # 記事詳細ページ
 │   └── globals.css
 ├── components/
-│   └── Header.tsx          # ヘッダー
+│   ├── Header.tsx          # ヘッダー
+│   └── Footer.tsx          # フッター
 ├── lib/
 │   └── posts.ts            # Markdown処理ロジック
-├── posts/                  # Markdownファイル置き場
-│   ├── nextjs-static-export.md
-│   ├── typescript-type-safety.md
-│   └── tailwind-css-guide.md
+├── public/                 # 静的ファイル
+│   └── posts/              # 記事ディレクトリ（完全なコロケーション）
+│       ├── nextjs-static-export/
+│       │   ├── index.md    # 記事のMarkdown
+│       │   └── (画像ファイル)
+│       ├── typescript-type-safety/
+│       │   ├── index.md
+│       │   └── (画像ファイル)
+│       └── tailwind-css-guide/
+│           ├── index.md
+│           └── (画像ファイル)
 └── next.config.ts          # Static Export設定
 ```
 
@@ -62,7 +70,14 @@ npm run dev
 
 ## 記事の追加方法
 
-`posts/`ディレクトリに新しいMarkdownファイルを作成します。
+`public/posts/`ディレクトリに新しい記事ディレクトリを作成します。
+
+### 記事の作成手順
+
+1. 記事のslug（URL）を決める（例: `my-new-article`）
+2. `public/posts/my-new-article/` ディレクトリを作成
+3. `public/posts/my-new-article/index.md` ファイルを作成
+4. 画像がある場合は同じディレクトリに配置
 
 ### Markdownファイルの形式
 
@@ -77,6 +92,8 @@ description: "記事の説明文"
 
 本文...
 
+![画像の説明](./image.png)
+
 \`\`\`typescript
 const example = "コード例";
 \`\`\`
@@ -87,6 +104,39 @@ const example = "コード例";
 - `title`: 記事のタイトル（必須）
 - `date`: 公開日（YYYY-MM-DD形式、必須）
 - `description`: 記事の説明文（必須）
+
+### 画像の追加方法
+
+記事と画像を同じディレクトリに配置できます（完全なコロケーション）。
+
+**ディレクトリ構造:**
+```
+public/posts/
+  nextjs-static-export/
+    index.md                    # 記事のMarkdown
+    screenshot1.png             # 記事で使う画像
+    diagram.svg
+```
+
+**Markdownでの記述（2つの方法）:**
+
+1. **相対パス（推奨）:**
+```markdown
+![スクリーンショット](./screenshot1.png)
+```
+
+2. **絶対パス:**
+```markdown
+![スクリーンショット](/posts/nextjs-static-export/screenshot1.png)
+```
+
+**メリット:**
+- 記事と画像が完全に同じ場所に配置される
+- 記事ごとに画像が整理される
+- 画像の名前が重複しても問題ない
+- 記事のディレクトリをコピーすれば移植も簡単
+
+対応している画像形式：PNG, JPG, GIF, SVG, WebP など
 
 ## ビルドとデプロイ
 

@@ -19,7 +19,8 @@ import { cache } from 'react'; // Reactのキャッシュ機能（同じレン�
 
 // postsディレクトリの絶対パスを取得
 // process.cwd()はプロジェクトのルートディレクトリを返す
-const postsDirectory = path.join(process.cwd(), 'posts');
+// public/posts/ に記事とその画像を配置（完全なコロケーション）
+const postsDirectory = path.join(process.cwd(), 'public', 'posts');
 
 /**
  * PostData - 記事の完全なデータ（本文のHTML含む）
@@ -60,19 +61,24 @@ export function getAllPosts(): PostMeta[] {
     return [];
   }
 
-  // postsディレクトリ内のすべてのファイル名を取得
-  const fileNames = fs.readdirSync(postsDirectory);
+  // postsディレクトリ内のすべてのエントリを取得
+  const entries = fs.readdirSync(postsDirectory, { withFileTypes: true });
 
-  // .mdファイルのみをフィルタして、それぞれのメタデータを取得
-  const allPostsData = fileNames
-    .filter((fileName) => fileName.endsWith('.md')) // .mdファイルのみ
-    .map((fileName) => {
-      // ファイル名から.mdを削除してslugを作成
-      // 例: "nextjs-static-export.md" → "nextjs-static-export"
-      const slug = fileName.replace(/\.md$/, '');
+  // ディレクトリのみをフィルタして、それぞれのメタデータを取得
+  const allPostsData = entries
+    .filter((entry) => entry.isDirectory() && entry.name !== '.git') // ディレクトリのみ（.gitkeepなどを除外）
+    .map((entry) => {
+      // ディレクトリ名がslugになる
+      // 例: "nextjs-static-export/" → "nextjs-static-export"
+      const slug = entry.name;
 
-      // ファイルの絶対パスを作成
-      const fullPath = path.join(postsDirectory, fileName);
+      // index.mdのパスを作成
+      const fullPath = path.join(postsDirectory, slug, 'index.md');
+
+      // index.mdが存在しない場合はスキップ
+      if (!fs.existsSync(fullPath)) {
+        return null;
+      }
 
       // ファイルの内容をUTF-8で読み込み
       const fileContents = fs.readFileSync(fullPath, 'utf8');
@@ -89,7 +95,8 @@ export function getAllPosts(): PostMeta[] {
         date: data.date || '', // frontmatterにdateがない場合は空文字
         description: data.description || '', // frontmatterにdescriptionがない場合は空文字
       };
-    });
+    })
+    .filter((post): post is PostMeta => post !== null); // nullを除外
 
   // 日付順（新しい順）でソート
   return allPostsData.sort((a, b) => {
@@ -119,13 +126,18 @@ export function getAllPostSlugs(): string[] {
     return [];
   }
 
-  // postsディレクトリ内のすべてのファイル名を取得
-  const fileNames = fs.readdirSync(postsDirectory);
+  // postsディレクトリ内のすべてのエントリを取得
+  const entries = fs.readdirSync(postsDirectory, { withFileTypes: true });
 
-  // .mdファイルのファイル名から.mdを削除してslugの配列を作成
-  return fileNames
-    .filter((fileName) => fileName.endsWith('.md'))
-    .map((fileName) => fileName.replace(/\.md$/, ''));
+  // ディレクトリ名をslugとして返す
+  return entries
+    .filter((entry) => entry.isDirectory() && entry.name !== '.git')
+    .filter((entry) => {
+      // index.mdが存在するディレクトリのみ
+      const indexPath = path.join(postsDirectory, entry.name, 'index.md');
+      return fs.existsSync(indexPath);
+    })
+    .map((entry) => entry.name);
 }
 
 /**
@@ -151,8 +163,8 @@ export function getAllPostSlugs(): string[] {
  */
 export const getPostBySlug = cache(async (slug: string): Promise<PostData | null> => {
   try {
-    // ファイルパスを作成（例: posts/nextjs-static-export.md）
-    const fullPath = path.join(postsDirectory, `${slug}.md`);
+    // ファイルパスを作成（例: public/posts/nextjs-static-export/index.md）
+    const fullPath = path.join(postsDirectory, slug, 'index.md');
 
     // ファイルの内容をUTF-8で読み込み
     const fileContents = fs.readFileSync(fullPath, 'utf8');
