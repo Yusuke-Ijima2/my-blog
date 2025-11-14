@@ -17,6 +17,7 @@ import type { Metadata } from "next"; // Next.jsのメタデータ型定義
 import { Geist, Geist_Mono } from "next/font/google"; // Google Fontsからフォントをインポート
 import "./globals.css"; // グローバルスタイル（Tailwind CSS、Typography設定など）
 import Header from "@/components/Header"; // ヘッダーコンポーネント
+import Footer from "@/components/Footer"; // フッターコンポーネント
 
 /**
  * Geist Sans フォントの設定
@@ -90,7 +91,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
         suppressHydrationWarning={true}
         // suppressHydrationWarning:
         // - ブラウザ拡張機能（ColorZilla、Grammarly等）がbodyタグに属性を追加するため
@@ -99,14 +100,19 @@ export default function RootLayout({
         // - geistSans.variable: Geist SansのCSS変数を設定
         // - geistMono.variable: Geist MonoのCSS変数を設定
         // - antialiased: フォントのアンチエイリアス（滑らかな表示）を有効化
+        // - flex flex-col: 縦方向のflexboxレイアウト
+        // - min-h-screen: 最低でも画面の高さを確保
       >
         {/* ヘッダー - すべてのページの上部に表示 */}
         <Header />
 
         {/* メインコンテンツエリア - 各ページの内容が表示される */}
-        <main className="min-h-screen">
+        <main className="flex-1">
           {children}
         </main>
+
+        {/* フッター - すべてのページの下部に表示 */}
+        <Footer />
       </body>
     </html>
   );
