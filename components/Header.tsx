@@ -3,7 +3,6 @@
  *
  * 機能：
  * - サイトロゴ/タイトルの表示
- * - ナビゲーションメニューの表示
  * - すべてのページの上部に表示される
  */
 
@@ -13,7 +12,7 @@ import Link from 'next/link'; // Next.jsのクライアントサイドルーテ�
  * Header - グローバルヘッダーコンポーネント
  *
  * レイアウト：
- * - 最大幅4xl（max-w-4xl）でコンテンツを中央揃え
+ * - 最大幅2xl（max-w-2xl）でコンテンツを中央揃え
  * - パディング（px-4 py-6）でゆとりを持たせる
  * - 下部にボーダー（border-b）で区切り線
  *
@@ -23,7 +22,7 @@ export default function Header() {
   return (
     <header className="border-b border-gray-200">
       {/* コンテンツの最大幅を制限して中央揃え */}
-      <div className="max-w-2xl mx-auto px-4 py-6">
+      <div className="max-w-2xl mx-auto px-4 py-4">
         {/* サイトロゴ/タイトル - ホームページへのリンク */}
         <Link href="/" className="text-2xl font-bold text-gray-900 hover:text-gray-700">
           Tech Blog
