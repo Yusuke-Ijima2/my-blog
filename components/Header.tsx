@@ -23,10 +23,12 @@ export default function Header() {
     <header className="border-b border-gray-200">
       {/* コンテンツの最大幅を制限して中央揃え */}
       <div className="max-w-7xl mx-auto px-4 py-4">
-        {/* サイトロゴ/タイトル - 記事一覧ページへのリンク */}
-        <Link href="/blog" className="text-2xl font-bold text-gray-900 hover:text-gray-700">
-          Ijima.dev
-        </Link>
+        <div className="max-w-3xl mx-auto">
+          {/* サイトロゴ/タイトル - 記事一覧ページへのリンク */}
+          <Link href="/blog" className="text-2xl font-bold text-gray-900 hover:text-gray-700">
+            Ijima.dev
+          </Link>
+        </div>
       </div>
     </header>
   );

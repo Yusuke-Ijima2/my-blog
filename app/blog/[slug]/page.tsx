@@ -134,7 +134,7 @@ export default async function BlogPost({ params }: PageProps) {
       </Link>
 
       {/* 記事と目次のコンテナ */}
-      <div className="flex gap-12 mx-auto">
+      <div className="flex gap-12 justify-center">
         {/* 記事本体 */}
         <article className="flex-1 min-w-0 max-w-3xl">
         {/* 記事ヘッダー */}
