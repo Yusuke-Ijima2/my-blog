@@ -48,7 +48,7 @@ const geistMono = Geist_Mono({
  * - SEO（検索エンジン最適化）に重要
  */
 export const metadata: Metadata = {
-  title: "Tech Blog", // ブラウザのタブに表示されるタイトル
+  title: "Ijima.dev", // ブラウザのタブに表示されるタイトル
   description:
     "技術ブログ - Next.js, TypeScript, Tailwind CSSなどの技術記事を発信", // 検索結果に表示される説明文
 };

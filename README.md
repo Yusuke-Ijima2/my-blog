@@ -1,4 +1,4 @@
-# Tech Blog
+# Ijima.dev
 
 Next.js Static Exportを使った技術ブログのMVPプロジェクトです。
 

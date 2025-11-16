@@ -31,7 +31,7 @@ export default function Footer() {
       <footer className="border-t border-gray-200 mt-16">
         <div className="max-w-2xl mx-auto px-4 py-4 flex items-center justify-between">
           <p className="text-gray-600 text-sm">
-            &copy; {currentYear} Tech Blog. All rights reserved.
+            &copy; {currentYear} Ijima.dev. All rights reserved.
           </p>
           <button
             onClick={() => setIsModalOpen(true)}
