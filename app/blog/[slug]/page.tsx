@@ -20,6 +20,7 @@
 import { notFound } from 'next/navigation'; // 404ページを表示する関数
 import Link from 'next/link'; // Next.jsのクライアントサイドルーティング用Linkコンポーネント
 import { getAllPostSlugs, getPostBySlug } from '@/lib/posts'; // 記事データ取得関数
+import TableOfContents from '@/components/TableOfContents'; // 目次コンポーネント
 
 /**
  * PageProps - ページコンポーネントのprops型定義
@@ -123,7 +124,7 @@ export default async function BlogPost({ params }: PageProps) {
   }
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-12">
+    <div className="max-w-7xl mx-auto px-4 py-12">
       {/* 記事一覧に戻るリンク */}
       <Link
         href="/blog"
@@ -132,8 +133,10 @@ export default async function BlogPost({ params }: PageProps) {
         ← 記事一覧に戻る
       </Link>
 
-      {/* 記事本体 */}
-      <article>
+      {/* 記事と目次のコンテナ */}
+      <div className="flex gap-12 mx-auto">
+        {/* 記事本体 */}
+        <article className="flex-1 min-w-0 max-w-3xl">
         {/* 記事ヘッダー */}
         <header className="mb-8">
           {/* 記事タイトル */}
@@ -189,6 +192,12 @@ export default async function BlogPost({ params }: PageProps) {
           */
         />
       </article>
+
+      {/* 目次サイドバー */}
+      <aside className="hidden xl:block w-80 flex-shrink-0">
+        <TableOfContents />
+      </aside>
+    </div>
     </div>
   );
 }
