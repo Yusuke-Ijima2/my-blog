@@ -34,9 +34,9 @@ export default function Home() {
   const posts = getAllPosts();
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-12">
+    <div className="max-w-7xl mx-auto px-4 py-12">
       {/* 記事一覧セクション */}
-      <section>
+      <section className="max-w-3xl mx-auto">
         {/* セクションタイトル */}
         <h2 className="text-2xl font-bold text-gray-900 mb-8">記事一覧</h2>
 
