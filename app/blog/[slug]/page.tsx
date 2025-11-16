@@ -90,7 +90,7 @@ export async function generateMetadata({ params }: PageProps) {
 
   // 記事のメタデータを返す
   return {
-    title: `${post.title} | Tech Blog`, // 例: "Next.js Static Exportで高速な静的サイトを構築する | Tech Blog"
+    title: `${post.title} | Ijima.dev`, // 例: "Next.js Static Exportで高速な静的サイトを構築する | Ijima.dev"
     description: post.description, // 記事の説明文（検索結果に表示される）
   };
 }
@@ -126,7 +126,7 @@ export default async function BlogPost({ params }: PageProps) {
     <div className="max-w-2xl mx-auto px-4 py-12">
       {/* 記事一覧に戻るリンク */}
       <Link
-        href="/"
+        href="/blog"
         className="text-blue-600 hover:text-blue-800 mb-8 inline-block"
       >
         ← 記事一覧に戻る
