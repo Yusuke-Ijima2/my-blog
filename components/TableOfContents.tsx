@@ -38,6 +38,9 @@ export default function TableOfContents() {
       }
     });
 
+    // ESLint warning about setState in effect is not applicable here.
+    // This is a legitimate use case: synchronizing with external DOM content after mount.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setHeadings(extractedHeadings);
   }, []);
 

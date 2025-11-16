@@ -17,10 +17,10 @@
  * - 結果: 高速な静的サイト（サーバー不要）
  */
 
-import { notFound } from 'next/navigation'; // 404ページを表示する関数
-import Link from 'next/link'; // Next.jsのクライアントサイドルーティング用Linkコンポーネント
-import { getAllPostSlugs, getPostBySlug } from '@/lib/posts'; // 記事データ取得関数
-import TableOfContents from '@/components/TableOfContents'; // 目次コンポーネント
+import { notFound } from "next/navigation"; // 404ページを表示する関数
+import Link from "next/link"; // Next.jsのクライアントサイドルーティング用Linkコンポーネント
+import { getAllPostSlugs, getPostBySlug } from "@/lib/posts"; // 記事データ取得関数
+import TableOfContents from "@/components/TableOfContents"; // 目次コンポーネント
 
 /**
  * PageProps - ページコンポーネントのprops型定義
@@ -47,8 +47,6 @@ interface PageProps {
  *    例: [{ slug: "nextjs-static-export" }, { slug: "typescript-type-safety" }, ...]
  * 3. Next.jsが各slugに対してページを生成
  *    例: /blog/nextjs-static-export.html, /blog/typescript-type-safety.html, ...
- *
- * @returns {Array<{slug: string}>} 生成するページのslug一覧
  */
 export async function generateStaticParams() {
   // 全記事のslugを取得
@@ -71,9 +69,6 @@ export async function generateStaticParams() {
  * - ブラウザのタブタイトル
  * - 検索エンジンの検索結果
  * - SNSでシェアされた時のプレビュー
- *
- * @param {PageProps} props - ページのprops（slugを含む）
- * @returns {Promise<Metadata>} メタデータオブジェクト
  */
 export async function generateMetadata({ params }: PageProps) {
   // paramsからslugを取得（Next.js 16ではawaitが必要）
@@ -85,7 +80,7 @@ export async function generateMetadata({ params }: PageProps) {
   // 記事が見つからない場合
   if (!post) {
     return {
-      title: 'Not Found', // 404ページのタイトル
+      title: "Not Found", // 404ページのタイトル
     };
   }
 
@@ -107,9 +102,6 @@ export async function generateMetadata({ params }: PageProps) {
  * スタイリング：
  * - proseクラス: Tailwind Typographyの基本スタイル
  * - prose-*: 見出し、段落、リスト、コードなどの詳細スタイル
- *
- * @param {PageProps} props - ページのprops（slugを含む）
- * @returns {Promise<JSX.Element>} 記事詳細ページのJSX
  */
 export default async function BlogPost({ params }: PageProps) {
   // paramsからslugを取得（Next.js 16ではawaitが必要）
@@ -125,79 +117,83 @@ export default async function BlogPost({ params }: PageProps) {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-12">
-      {/* 記事一覧に戻るリンク */}
-      <Link
-        href="/blog"
-        className="text-blue-600 hover:text-blue-800 mb-8 inline-block"
-      >
-        ← 記事一覧に戻る
-      </Link>
+      <div className="max-w-5xl mx-auto">
+        {/* 記事一覧に戻るリンク */}
+        <Link
+          href="/blog"
+          className="text-blue-600 hover:text-blue-800 mb-8 inline-block"
+        >
+          ← 記事一覧に戻る
+        </Link>
+      </div>
 
       {/* 記事と目次のコンテナ */}
-      <div className="flex gap-12 justify-center">
-        {/* 記事本体 */}
-        <article className="flex-1 min-w-0 max-w-3xl">
-        {/* 記事ヘッダー */}
-        <header className="mb-8">
-          {/* 記事タイトル */}
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            {post.title}
-          </h1>
-          {/* 公開日 */}
-          <time className="text-gray-500">{post.date}</time>
-        </header>
+      <div className="max-w-5xl mx-auto">
+        <div className="flex gap-12">
+          {/* 記事本体 */}
+          <article className="flex-1 min-w-0">
+            {/* 記事ヘッダー */}
+            <header className="mb-8">
+              {/* 記事タイトル */}
+              <h1 className="text-4xl font-bold text-gray-900 mb-4">
+                {post.title}
+              </h1>
+              {/* 公開日 */}
+              <time className="text-gray-500">{post.date}</time>
+            </header>
 
-        {/* 記事本文（HTMLとして表示） */}
-        <div
-          className="prose prose-lg prose-slate max-w-none
-            prose-headings:font-bold
-            prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4
-            prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3
-            prose-p:text-gray-700 prose-p:leading-relaxed
-            prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline
-            prose-code:text-pink-600 prose-code:bg-gray-100 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:before:content-[''] prose-code:after:content-['']
-            prose-pre:bg-gray-900 prose-pre:text-gray-100 prose-pre:overflow-x-auto
-            prose-ul:list-disc prose-ul:pl-6
-            prose-ol:list-decimal prose-ol:pl-6
-            prose-li:text-gray-700
-            prose-blockquote:border-l-4 prose-blockquote:border-gray-300 prose-blockquote:pl-4 prose-blockquote:italic
-            prose-strong:font-bold prose-strong:text-gray-900"
-          /*
-            className解説（Tailwind Typography）：
-            - prose: Typographyの基本スタイル
-            - prose-lg: 大きめのフォントサイズ
-            - prose-slate: Slateカラーパレット
-            - max-w-none: 最大幅の制限を解除
+            {/* 記事本文（HTMLとして表示） */}
+            <div
+              className="prose prose-lg prose-slate max-w-none
+                prose-headings:font-bold
+                prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4
+                prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3
+                prose-p:text-gray-700 prose-p:leading-relaxed
+                prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline
+                prose-code:text-pink-600 prose-code:bg-gray-100 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:before:content-[''] prose-code:after:content-['']
+                prose-pre:bg-gray-900 prose-pre:text-gray-100 prose-pre:overflow-x-auto
+                prose-ul:list-disc prose-ul:pl-6
+                prose-ol:list-decimal prose-ol:pl-6
+                prose-li:text-gray-700
+                prose-blockquote:border-l-4 prose-blockquote:border-gray-300 prose-blockquote:pl-4 prose-blockquote:italic
+                prose-strong:font-bold prose-strong:text-gray-900"
+              /*
+                className解説（Tailwind Typography）：
+                - prose: Typographyの基本スタイル
+                - prose-lg: 大きめのフォントサイズ
+                - prose-slate: Slateカラーパレット
+                - max-w-none: 最大幅の制限を解除
 
-            各要素のスタイル：
-            - prose-headings: 全見出しを太字
-            - prose-h2: h2のサイズと余白（大見出し）
-            - prose-h3: h3のサイズと余白（小見出し）
-            - prose-p: 段落のテキスト色と行間
-            - prose-a: リンクの色と下線（ホバー時のみ）
-            - prose-code: インラインコードの色と背景
-            - prose-pre: コードブロックの背景と色（シンタックスハイライト用）
-            - prose-ul/ol: リストのスタイル
-            - prose-li: リストアイテムのテキスト色
-            - prose-blockquote: 引用のスタイル（左ボーダー、イタリック）
-            - prose-strong: 強調テキスト（太字）
-          */
-          dangerouslySetInnerHTML={{ __html: post.content }}
-          /*
-            dangerouslySetInnerHTML解説：
-            - マークダウンから変換したHTMLを直接挿入
-            - "dangerous"という名前だが、自分で生成したHTMLなので安全
-            - ユーザー入力を直接挿入するとXSS攻撃のリスクがあるため注意
-            - 今回はマークダウンファイルを自分で管理しているので問題なし
-          */
-        />
-      </article>
+                各要素のスタイル：
+                - prose-headings: 全見出しを太字
+                - prose-h2: h2のサイズと余白（大見出し）
+                - prose-h3: h3のサイズと余白（小見出し）
+                - prose-p: 段落のテキスト色と行間
+                - prose-a: リンクの色と下線（ホバー時のみ）
+                - prose-code: インラインコードの色と背景
+                - prose-pre: コードブロックの背景と色（シンタックスハイライト用）
+                - prose-ul/ol: リストのスタイル
+                - prose-li: リストアイテムのテキスト色
+                - prose-blockquote: 引用のスタイル（左ボーダー、イタリック）
+                - prose-strong: 強調テキスト（太字）
+              */
+              dangerouslySetInnerHTML={{ __html: post.content }}
+              /*
+                dangerouslySetInnerHTML解説：
+                - マークダウンから変換したHTMLを直接挿入
+                - "dangerous"という名前だが、自分で生成したHTMLなので安全
+                - ユーザー入力を直接挿入するとXSS攻撃のリスクがあるため注意
+                - 今回はマークダウンファイルを自分で管理しているので問題なし
+              */
+            />
+          </article>
 
-      {/* 目次サイドバー */}
-      <aside className="hidden xl:block w-80 flex-shrink-0">
-        <TableOfContents />
-      </aside>
-    </div>
+          {/* 目次サイドバー */}
+          <aside className="hidden xl:block w-64 shrink-0">
+            <TableOfContents />
+          </aside>
+        </div>
+      </div>
     </div>
   );
 }

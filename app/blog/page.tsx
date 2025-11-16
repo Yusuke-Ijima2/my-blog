@@ -36,7 +36,7 @@ export default function Home() {
   return (
     <div className="max-w-7xl mx-auto px-4 py-12">
       {/* 記事一覧セクション */}
-      <section className="max-w-3xl mx-auto">
+      <section className="max-w-5xl mx-auto">
         {/* セクションタイトル */}
         <h2 className="text-2xl font-bold text-gray-900 mb-8">記事一覧</h2>
 

@@ -29,16 +29,18 @@ export default function Footer() {
   return (
     <>
       <footer className="border-t border-gray-200 mt-16">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <p className="text-gray-600 text-sm">
-            &copy; {currentYear} Ijima.dev. All rights reserved.
-          </p>
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="text-sm text-gray-600 hover:text-gray-900 cursor-pointer"
-          >
-            このサイトについて
-          </button>
+        <div className="max-w-7xl mx-auto px-4 py-4">
+          <div className="max-w-5xl mx-auto flex items-center justify-center gap-4">
+            <p className="text-gray-600 text-sm">
+              &copy; {currentYear} Ijima.dev. All rights reserved.
+            </p>
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="text-sm text-gray-600 hover:text-gray-900 cursor-pointer"
+            >
+              このサイトについて
+            </button>
+          </div>
         </div>
       </footer>
 
