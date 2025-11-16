@@ -11,8 +11,8 @@
  * - 記事一覧（タイトル、日付、説明、リンク）
  */
 
-import Link from 'next/link'; // Next.jsのクライアントサイドルーティング用Linkコンポーネント
-import { getAllPosts } from '@/lib/posts'; // 記事一覧を取得する関数
+import Link from "next/link"; // Next.jsのクライアントサイドルーティング用Linkコンポーネント
+import { getAllPosts } from "@/lib/posts"; // 記事一覧を取得する関数
 
 /**
  * Home - トップページコンポーネント
@@ -45,12 +45,14 @@ export default function Home() {
           <p className="text-gray-600">記事がまだありません。</p>
         ) : (
           // 記事一覧の表示
-          <div className="space-y-8"> {/* space-y-8: 記事間の縦方向の間隔 */}
+          <div className="space-y-4">
+            {" "}
+            {/* space-y-8: 記事間の縦方向の間隔 */}
             {/* 各記事をループで表示 */}
             {posts.map((post) => (
               <article
                 key={post.slug} // Reactのkey（ユニークな識別子）
-                className="border-b border-gray-200 pb-8 last:border-b-0"
+                className="border-b border-gray-200 last:border-b-0"
                 // className解説：
                 // - border-b: 下部にボーダー（区切り線）
                 // - pb-8: 下部パディング
@@ -74,14 +76,6 @@ export default function Home() {
 
                 {/* 記事の説明文 */}
                 <p className="text-gray-700 mb-4">{post.description}</p>
-
-                {/* 記事詳細へのリンク */}
-                <Link
-                  href={`/blog/${post.slug}`}
-                  className="text-blue-600 hover:text-blue-800 font-medium"
-                >
-                  続きを読む →
-                </Link>
               </article>
             ))}
           </div>

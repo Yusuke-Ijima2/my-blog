@@ -123,7 +123,7 @@ export default async function BlogPost({ params }: PageProps) {
           href="/blog"
           className="text-blue-600 hover:text-blue-800 mb-8 inline-block"
         >
-          ← 記事一覧に戻る
+          ← 記事一覧へ
         </Link>
       </div>
 
