@@ -12,6 +12,7 @@ import fs from 'fs'; // Node.jsのファイルシステムモジュール
 import path from 'path'; // パス操作用のモジュール
 import matter from 'gray-matter'; // frontmatter（---で囲まれたメタデータ）をパースするライブラリ
 import { remark } from 'remark'; // マークダウン処理の中核ライブラリ
+import remarkGfm from 'remark-gfm'; // GitHub Flavored Markdown（テーブル、タスクリストなど）のサポート
 import remarkRehype from 'remark-rehype'; // マークダウンをHTMLに変換するプラグイン
 import rehypeSlug from 'rehype-slug'; // 見出しにIDを自動付与するプラグイン
 import rehypeHighlight from 'rehype-highlight'; // コードブロックにシンタックスハイライトを適用するプラグイン
@@ -178,12 +179,14 @@ export const getPostBySlug = cache(async (slug: string): Promise<PostData | null
     // マークダウンをHTMLに変換（シンタックスハイライト付き）
     // 処理の流れ：
     // 1. remark() - マークダウンパーサーを初期化
-    // 2. .use(remarkRehype) - マークダウンASTをHTML ASTに変換
-    // 3. .use(rehypeSlug) - 見出しにIDを自動付与（目次のリンク用）
-    // 4. .use(rehypeHighlight) - コードブロックにシンタックスハイライトを適用
-    // 5. .use(rehypeStringify) - HTML ASTを文字列に変換
-    // 6. .process(content) - 実際の変換を実行
+    // 2. .use(remarkGfm) - GitHub Flavored Markdown（テーブル、タスクリストなど）を有効化
+    // 3. .use(remarkRehype) - マークダウンASTをHTML ASTに変換
+    // 4. .use(rehypeSlug) - 見出しにIDを自動付与（目次のリンク用）
+    // 5. .use(rehypeHighlight) - コードブロックにシンタックスハイライトを適用
+    // 6. .use(rehypeStringify) - HTML ASTを文字列に変換
+    // 7. .process(content) - 実際の変換を実行
     const processedContent = await remark()
+      .use(remarkGfm) // GitHub Flavored Markdown（テーブル、タスクリストなど）
       .use(remarkRehype) // Markdown → HTML変換
       .use(rehypeSlug) // 見出しにID付与（目次のアンカーリンク用）
       .use(rehypeHighlight) // コードハイライト（highlight.js使用）
