@@ -25,19 +25,3 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
-
-/* プレーンテキストのコードブロックはシンタックスハイライトを無効化 */
-.prose pre code.hljs.language-text,
-.prose pre code.hljs.language-plaintext,
-.prose pre code.language-text,
-.prose pre code.language-plaintext {
-  color: #e5e7eb !important; /* text-gray-200 相当 */
-  background: transparent !important;
-}
-
-.prose pre code.hljs.language-text *,
-.prose pre code.hljs.language-plaintext *,
-.prose pre code.language-text *,
-.prose pre code.language-plaintext * {
-  color: inherit !important;
-}
