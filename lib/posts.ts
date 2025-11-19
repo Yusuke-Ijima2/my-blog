@@ -15,6 +15,7 @@ import { remark } from 'remark'; // マークダウン処理の中核ライブ�
 import remarkGfm from 'remark-gfm'; // GitHub Flavored Markdown（テーブル、タスクリストなど）のサポート
 import remarkRehype from 'remark-rehype'; // マークダウンをHTMLに変換するプラグイン
 import rehypeSlug from 'rehype-slug'; // 見出しにIDを自動付与するプラグイン
+import rehypeCodeTitles from 'rehype-code-titles'; // コードブロックにタイトルを付与するプラグイン
 import rehypeHighlight from 'rehype-highlight'; // コードブロックにシンタックスハイライトを適用するプラグイン
 import rehypeStringify from 'rehype-stringify'; // HTML構造を文字列に変換するプラグイン
 import { cache } from 'react'; // Reactのキャッシュ機能（同じレンダリング内で重複呼び出しを防ぐ）
@@ -182,13 +183,15 @@ export const getPostBySlug = cache(async (slug: string): Promise<PostData | null
     // 2. .use(remarkGfm) - GitHub Flavored Markdown（テーブル、タスクリストなど）を有効化
     // 3. .use(remarkRehype) - マークダウンASTをHTML ASTに変換
     // 4. .use(rehypeSlug) - 見出しにIDを自動付与（目次のリンク用）
-    // 5. .use(rehypeHighlight) - コードブロックにシンタックスハイライトを適用
-    // 6. .use(rehypeStringify) - HTML ASTを文字列に変換
-    // 7. .process(content) - 実際の変換を実行
+    // 5. .use(rehypeCodeTitles) - コードブロックにタイトルを付与
+    // 6. .use(rehypeHighlight) - コードブロックにシンタックスハイライトを適用
+    // 7. .use(rehypeStringify) - HTML ASTを文字列に変換
+    // 8. .process(content) - 実際の変換を実行
     const processedContent = await remark()
       .use(remarkGfm) // GitHub Flavored Markdown（テーブル、タスクリストなど）
       .use(remarkRehype) // Markdown → HTML変換
       .use(rehypeSlug) // 見出しにID付与（目次のアンカーリンク用）
+      .use(rehypeCodeTitles) // コードブロックにタイトル付与
       .use(rehypeHighlight) // コードハイライト（highlight.js使用）
       .use(rehypeStringify) // HTML文字列化
       .process(content);
