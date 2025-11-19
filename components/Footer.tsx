@@ -9,7 +9,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 /**
  * Footer - グローバルフッターコンポーネント
@@ -26,6 +26,33 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  // アクセシビリティ用のref
+  const triggerButtonRef = useRef<HTMLButtonElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+
+  // モーダルが開いたら閉じるボタンにフォーカス
+  useEffect(() => {
+    if (!isModalOpen) return;
+
+    closeButtonRef.current?.focus();
+  }, [isModalOpen]);
+
+  // モーダルを閉じる処理（元のボタンにフォーカスを戻す）
+  const closeModal = () => {
+    setIsModalOpen(false);
+    // 次のレンダリング後にフォーカスを戻す
+    setTimeout(() => {
+      triggerButtonRef.current?.focus();
+    }, 0);
+  };
+
+  // Escキーでモーダルを閉じる
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Escape") {
+      closeModal();
+    }
+  };
+
   return (
     <>
       <footer className="border-t border-gray-200 mt-16">
@@ -35,8 +62,10 @@ export default function Footer() {
               &copy; {currentYear} Ijima.dev. All rights reserved.
             </p>
             <button
+              ref={triggerButtonRef}
               onClick={() => setIsModalOpen(true)}
               className="text-sm text-gray-600 hover:text-gray-900 cursor-pointer"
+              aria-haspopup="dialog"
             >
               このサイトについて
             </button>
@@ -48,13 +77,20 @@ export default function Footer() {
       {isModalOpen && (
         <div
           className="fixed inset-0 bg-gray-900/40 flex items-center justify-center z-50"
-          onClick={() => setIsModalOpen(false)}
+          onClick={closeModal}
+          onKeyDown={handleKeyDown}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="modal-title"
         >
           <div
             className="bg-white rounded-lg p-8 max-w-md mx-4"
             onClick={(e) => e.stopPropagation()}
           >
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+            <h2
+              id="modal-title"
+              className="text-2xl font-bold text-gray-900 mb-4"
+            >
               このサイトについて
             </h2>
             <p className="text-gray-700 mb-6">
@@ -62,7 +98,8 @@ export default function Footer() {
             </p>
             <div className="flex justify-end">
               <button
-                onClick={() => setIsModalOpen(false)}
+                ref={closeButtonRef}
+                onClick={closeModal}
                 className="bg-gray-900 text-white px-4 py-2 rounded hover:bg-gray-700 transition-colors cursor-pointer"
               >
                 閉じる
