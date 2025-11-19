@@ -14,7 +14,7 @@ description: "Claude Codeでコミットを適切な粒度で自動的に作成�
 
 ## 作成した Slash Command
 
-````md
+````md:commit.md
 ---
 description: Git差分を分析して適切な粒度でコミットを作成
 ---
