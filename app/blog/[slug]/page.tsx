@@ -21,6 +21,7 @@ import { notFound } from "next/navigation"; // 404ページを表示する関数
 import Link from "next/link"; // Next.jsのクライアントサイドルーティング用Linkコンポーネント
 import { getAllPostSlugs, getPostBySlug } from "@/lib/posts"; // 記事データ取得関数
 import TableOfContents from "@/components/TableOfContents"; // 目次コンポーネント
+import CodeCopyButton from "@/components/CodeCopyButton"; // コードコピーボタン
 
 /**
  * PageProps - ページコンポーネントのprops型定義
@@ -146,12 +147,12 @@ export default async function BlogPost({ params }: PageProps) {
             <div
               className="prose prose-lg prose-slate max-w-none
                 prose-headings:font-bold
-                prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4 prose-h2:scroll-mt-8
-                prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3 prose-h3:scroll-mt-8
+                prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4 prose-h2:scroll-mt-8 prose-h2:pb-2 prose-h2:border-b prose-h2:border-gray-200
+                prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3 prose-h3:scroll-mt-8 prose-h3:pb-2 prose-h3:border-b prose-h3:border-gray-200
                 prose-p:text-gray-800 prose-p:leading-relaxed
                 prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline
                 prose-code:text-pink-600 prose-code:bg-gray-100 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:before:content-[''] prose-code:after:content-['']
-                prose-pre:bg-gray-900 prose-pre:text-gray-100 prose-pre:overflow-x-auto prose-pre:p-1
+                prose-pre:bg-gray-900 prose-pre:text-gray-100 prose-pre:overflow-x-auto prose-pre:p-1 prose-pre:rounded-lg
                 prose-ul:list-disc prose-ul:pl-6
                 prose-ol:list-decimal prose-ol:pl-6
                 prose-li:text-gray-800
@@ -186,6 +187,7 @@ export default async function BlogPost({ params }: PageProps) {
                 - 今回はマークダウンファイルを自分で管理しているので問題なし
               */
             />
+            <CodeCopyButton />
           </article>
 
           {/* 目次サイドバー */}
