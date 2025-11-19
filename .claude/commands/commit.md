@@ -7,9 +7,8 @@ description: Git差分を分析して適切な粒度でコミットを作成
 1. Analyze changes with `git status` and `git diff`
 2. Report any potential issues or concerns found in the diff
 3. Group commits based on the following criteria:
-   - By functionality (1 commit = 1 logical change)
-   - By file type (config → types → implementation → tests → docs)
-   - By dependencies (dependent changes in same commit)
+   - 1 commit = 1 logical change
+   - dependent changes in same commit
 4. Present commit plan in table format, then **execute directly without asking for user confirmation**
 
 ## Commit Message Format
@@ -17,12 +16,12 @@ description: Git差分を分析して適切な粒度でコミットを作成
 **Write all commit messages in Japanese.**
 
 ```
-<emoji> <type>: <subject>
+<emoji> <prefix>: <subject>
 
-[body: explain the reason and context for the change]
+[body: explain the reason for the change]
 ```
 
-**<emoji> <type> List:**
+**<emoji> <prefix> List:**
 
 - ✨ feat: introduce new features
 - 🐛 fix: fix bugs
