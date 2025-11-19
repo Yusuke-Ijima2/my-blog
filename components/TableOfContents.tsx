@@ -51,7 +51,7 @@ export default function TableOfContents() {
   return (
     <nav className="sticky top-8">
       <h2 className="text-lg font-bold text-gray-900 mb-4">目次</h2>
-      <ul className="space-y-2 text-sm">
+      <ul className="space-y-2 text-base">
         {headings.map((heading) => (
           <li
             key={heading.id}
