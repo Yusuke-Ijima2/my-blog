@@ -4,148 +4,112 @@ date: "2025-01-18"
 description: "Claude Codeでコミットを適切な粒度で自動的に作成するカスタムコマンドを作成しました。差分分析から日本語コミットメッセージの生成まで、開発ワークフローを効率化します。"
 ---
 
-## はじめに
+## この記事の背景・モチベーション
 
-Claude Code には、プロジェクト固有のワークフローを自動化できる「カスタムコマンド」という機能があります。`.claude/commands/` ディレクトリにマークダウンファイルを配置するだけで、独自のスラッシュコマンドを定義できます。
+ある日コミットメッセージを考えるのが苦手な私はコミットするだけの作業にかなりの時間を消費していたことに気づき、Claude Code の Slash Command を使って AI に考えさせていました。
 
-今回は、Git コミットの作成プロセスを効率化するカスタムコマンド `/commit` を作成したので、その内容を紹介します。
+コミットメッセージを AI に考えさせるという行為自体にちょっとだけ抵抗があり、ほんの少しだけ罪悪感を持っていたのですが、チームでやっている輪読会で「AI にコミットメッセージを書かせる」という話題になった時にメンバーの反応が好評だったので、別にやってもいいんだとなり、いつでも共有できる状態にしておこうと思い、プロンプトを一新しようと思った。
 
-## 背景・モチベーション
+今使っているものが当時 AI に 5 分くらいで書かせたものなのでこれを今回は一新していく。
 
-開発中、複数の変更を行った後にコミットする際、以下のような課題がありました：
+## 作成した Slash Command
 
-- **コミットの粒度を適切に保つのが面倒**：関連する変更をまとめつつ、異なる種類の変更は分けたい
-- **コミットメッセージを毎回考えるのが手間**：プロジェクトのコミット規約に沿った日本語メッセージを書くのに時間がかかる
-- **変更内容の確認漏れ**：急いでいると diff をしっかり確認せずにコミットしてしまうことも
-
-これらを解決するために、Claude Code に差分を分析させて、適切な粒度でコミットを自動作成するコマンドを作りました。
-
-## 作ったもの
-
-### コマンドの機能
-
-このコマンドは以下の処理を自動で実行します：
-
-1. **差分の分析**：`git status` と `git diff` で変更内容を確認
-2. **問題点のレポート**：セキュリティやコード品質の懸念があれば報告
-3. **コミットのグルーピング**：機能単位、ファイルタイプ、依存関係に基づいて変更を分類
-4. **コミットの実行**：分析結果を表形式で提示後、自動的にコミットを作成
-
-### コミットメッセージのフォーマット
-
-すべてのコミットメッセージは**日本語**で、以下の形式に従います：
-
-```text
-<emoji> <type>: <subject>
-
-[body: 変更の理由とコンテキストを説明]
-```
-
-使用する絵文字とタイプの例：
-
-| Emoji | Type     | 用途                   |
-| ----- | -------- | ---------------------- |
-| ✨    | feat     | 新機能の追加           |
-| 🐛    | fix      | バグ修正               |
-| ⚡️   | perf     | パフォーマンス改善     |
-| ♻️    | refactor | リファクタリング       |
-| 💄    | style    | UI やスタイルの更新    |
-| 📝    | docs     | ドキュメントの追加更新 |
-
-**ルール**：
-
-- subject: 50 文字以内
-- body: 変更の理由（"why"）を詳しく説明
-
-### 実装
-
-`.claude/commands/commit.md` にコマンドの定義を記述します：
-
-````markdown
+````md
 ---
 description: Git差分を分析して適切な粒度でコミットを作成
 ---
 
-## Execution Steps
+## 実行手順
 
-1. Analyze changes with `git status` and `git diff`
-2. Report any potential issues or concerns found in the diff
-3. Group commits based on the following criteria:
-   - By functionality (1 commit = 1 logical change)
-   - By file type (config → types → implementation → tests → docs)
-   - By dependencies (dependent changes in same commit)
-4. Present commit plan in table format, then **execute directly without asking for user confirmation**
+1. `git status` と `git diff` で変更を分析
+2. 差分に潜在的な問題や懸念事項があれば報告
+3. 以下の基準でコミットをグループ化:
+   - 1 コミット = 1 論理変更
+   - 依存する変更は同一コミット
+4. コミット計画を表形式で提示し、**ユーザーの確認を求めずに直接実行**
 
-## Commit Message Format
+## コミットメッセージ形式
 
-**Write all commit messages in Japanese.**
+**コミットメッセージは全て日本語で記述してください。**
 
 ```
-<emoji> <type>: <subject>
+<emoji> <prefix>: <subject>
 
-[body: explain the reason and context for the change]
+[body: 変更の理由を説明]
 ```
 
-**<emoji> <type> List:**
+**<emoji> <prefix> 一覧:**
 
-- ✨ feat: introduce new features
-- 🐛 fix: fix bugs
-- ⚡️ perf: improve performance
-- ♻️ refactor: refactor code
-- 🔥 remove: remove code or files
-- 💄 style: add or update UI and style files
-- 📝 docs: add or update documentation
-- 💡 comment: add or update comments in source code
-- ✏️ typo: fix typos
-- 🏷️ types: add or update types
+- ✨ feat: 新機能の追加
+- 🐛 fix: バグ修正
+- ⚡️ perf: パフォーマンス改善
+- ♻️ refactor: コードのリファクタリング
+- 🔥 remove: コードやファイルの削除
+- 💄 style: UI やスタイルファイルの追加・更新
+- 🚸 ux: ユーザー体験/ユーザビリティの改善
+- ♿️ a11y: アクセシビリティの改善
+- 📝 docs: ドキュメントの追加・更新
+- 💡 comment: ソースコード内のコメント追加・更新
+- ✏️ typo: タイポの修正
+- 🤡 mock: モックの作成
+- 🏷️ types: 型の追加・更新
 
-**Rules:**
+**ルール:**
 
-- subject: within 50 characters
-- body: explain the reason ("why") in detail
+- subject: 50 文字以内で変更内容を簡潔に説明
+- body: 変更の理由("なぜ")を詳しく説明
 ````
 
-## 使い方
+## 解説
 
-使い方は非常にシンプルです：
+重要度が高い順に解説します。
 
-1. コードを変更
-2. Claude Code で `/commit` と入力
-3. Claude Code が差分を分析してコミットを自動作成
+### subject: 50 文字以内
 
-### 実際の使用例
+50 文字以内は好みかなと思います。私は調べたら 50 文字以内と言っている人が多かったのでそうしてます。
 
-例えば、以下のような変更を行った場合：
+### body: 変更の理由("なぜ")を詳しく説明
 
-```
-- サイト名を変更（Header.tsx）
-- 新しいページを追加（app/about/page.tsx）
-- スタイルを調整（app/globals.css）
-```
+[有名な t-wada さんのツイート](https://x.com/t_wada/status/904916106153828352)にもあるように、**コミットログには Why**を書いておくと、後から見た時になぜその変更をする必要があったのかが分かるので良さそうです。
 
-`/commit` を実行すると、Claude Code が自動的に：
+![有名な t-wada さんのツイート](/posts/claude-code-custom-commit-command/twada-tweet.png)
 
-1. 変更を分析
-2. 3 つの独立したコミットに分割
-3. それぞれに適切な日本語メッセージを付けて実行
+### コミットの粒度
 
-```text
-💄 style: ヘッダーのサイト名を更新
-✨ feat: About ページを追加
-💄 style: グローバルスタイルの余白を調整
-```
+**1 コミット = 1 論理変更**を原則としています。
 
-## まとめ
+理由は書くまでもないと思いますが、
 
-Claude Code のカスタムコマンド機能を使うことで、プロジェクト固有のワークフローを簡単に自動化できます。
+- 問題が起きた時に原因を特定しやすい
+- revert しやすい
+- レビューがしやすい
 
-今回作成した `/commit` コマンドは：
+など、色々な理由があります。
 
-- ✅ コミットの粒度を適切に保つ
-- ✅ プロジェクト規約に沿ったメッセージを自動生成
-- ✅ 差分の確認漏れを防ぐ
-- ✅ コミット作業を大幅に効率化
+### 絵文字/prefix
 
-という効果があり、開発体験が大きく向上しました。
+絵文字はかわいいのでつけてます。もっさりしている GitHub を華やかにできます。可読性も良くなります。
 
-皆さんも、自分のワークフローに合わせたカスタムコマンドを作ってみてはいかがでしょうか？
+prefix は言わずもがなです。昔は絵文字 Only でやっていましたが以下の記事を読んでから合わせてつけるようにしてます。
+
+[コミットメッセージを書く時に gitmoji を使うのをやめた話](https://tech.pepabo.com/2023/08/28/stopped-to-use-gitmoji/)
+
+### 差分に潜在的な問題や懸念事項があれば報告
+
+これが書いてあるだけで AI が脳死コミットをしなくなります。typo に気づいてくれたり、リファクタリングの提案をコミット前にしてくれるようになります。
+
+### ユーザーの確認を求めずに直接実行
+
+これは好みですが、私はつけています。これがないと「コミットを実行しますか？」と聞いてきます。いちいち承認するの面倒です。
+
+先述した typo などの問題がある場合は勝手にコミットしないのでご安心を。
+
+### コミットメッセージは全て日本語で記述してください
+
+これは Slash Command を英語に修正して使うのでつけています。英語ならほんの少しだけトークン消費を抑えられますし、ほんの少しだけ賢くなります。実感したことないので多分ですが。
+
+## 終わりに
+
+## 参考
+
+- [Custom slash commands - Claude Code](https://docs.anthropic.com/en/docs/claude-code/tutorials/custom-commands)
