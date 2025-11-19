@@ -5,6 +5,7 @@
  * - 記事のHTMLから見出しを抽出
  * - サイドバーに目次を表示
  * - クリックで見出しにスクロール
+ * - 現在の閲覧位置をハイライト
  */
 
 'use client';
@@ -19,6 +20,7 @@ interface Heading {
 
 export default function TableOfContents() {
   const [headings, setHeadings] = useState<Heading[]>([]);
+  const [activeId, setActiveId] = useState<string>('');
 
   useEffect(() => {
     // 記事本文から見出しを抽出
@@ -42,6 +44,31 @@ export default function TableOfContents() {
     // This is a legitimate use case: synchronizing with external DOM content after mount.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setHeadings(extractedHeadings);
+
+    // Intersection Observerで現在位置を追跡
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveId(entry.target.id);
+          }
+        });
+      },
+      {
+        rootMargin: '-80px 0px -80% 0px',
+        threshold: 0,
+      }
+    );
+
+    headingElements.forEach((heading) => {
+      observer.observe(heading);
+    });
+
+    return () => {
+      headingElements.forEach((heading) => {
+        observer.unobserve(heading);
+      });
+    };
   }, []);
 
   if (headings.length === 0) {
@@ -59,7 +86,11 @@ export default function TableOfContents() {
           >
             <a
               href={`#${heading.id}`}
-              className="text-gray-600 hover:text-gray-900 transition-colors"
+              className={`transition-colors ${
+                activeId === heading.id
+                  ? 'text-blue-600 font-medium'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
             >
               {heading.text}
             </a>
