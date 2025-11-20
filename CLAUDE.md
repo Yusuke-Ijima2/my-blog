@@ -71,7 +71,9 @@ The `lib/posts.ts` file handles all Markdown processing:
    - `remark` → parse Markdown
    - `remarkRehype` → convert to HTML AST
    - `rehypeSlug` → add IDs to headings (for table of contents anchor links)
+   - `rehypeCodeTitles` → add filename labels to code blocks
    - `rehypeHighlight` → apply syntax highlighting to code blocks
+   - `rehypeLinkCard` → convert URL-only lines to rich link cards with OGP data
    - `rehypeStringify` → convert to HTML string
 4. **Cache**: Wrapped with React `cache()` to prevent duplicate processing within the same render
 
@@ -120,6 +122,18 @@ Articles use Tailwind Typography (`@tailwindcss/typography`) with extensive cust
 - Inline code: `prose-code:text-pink-600 prose-code:bg-gray-100`
 - Headings: `prose-h2:scroll-mt-8` for proper anchor link scrolling
 - Syntax highlighting: GitHub Dark theme via highlight.js CDN
+
+### Link Cards
+
+URL を単独行で記述すると、自動的にOGP情報付きのリンクカードに変換されます：
+
+```markdown
+https://example.com/article
+```
+
+- `lib/rehype-link-card.ts` が unfurl.js を使用してOGPデータを取得
+- タイトル、サムネイル画像、URLをカード形式で表示
+- スタイルは `app/globals.css` の `.link-card` クラスで定義
 
 ## Adding New Articles
 
