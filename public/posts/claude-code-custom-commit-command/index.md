@@ -92,7 +92,7 @@ description: Git差分を分析して適切な粒度でコミットを作成
 
 prefix は言わずもがなです。昔は絵文字 Only でやっていましたが以下の記事を読んでから合わせてつけるようにしてます。
 
-[コミットメッセージを書く時に gitmoji を使うのをやめた話](https://tech.pepabo.com/2023/08/28/stopped-to-use-gitmoji/)
+https://tech.pepabo.com/2023/08/28/stopped-to-use-gitmoji/
 
 ### 差分に潜在的な問題や懸念事項があれば報告
 
@@ -112,4 +112,4 @@ prefix は言わずもがなです。昔は絵文字 Only でやっていまし�
 
 ## 参考
 
-- [Custom slash commands - Claude Code](https://docs.anthropic.com/en/docs/claude-code/tutorials/custom-commands)
+https://code.claude.com/docs/ja/slash-commands

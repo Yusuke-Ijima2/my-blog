@@ -18,6 +18,7 @@ import rehypeSlug from 'rehype-slug'; // 見出しにIDを自動付与するプ�
 import rehypeCodeTitles from 'rehype-code-titles'; // コードブロックにタイトルを付与するプラグイン
 import rehypeHighlight from 'rehype-highlight'; // コードブロックにシンタックスハイライトを適用するプラグイン
 import rehypeStringify from 'rehype-stringify'; // HTML構造を文字列に変換するプラグイン
+import rehypeLinkCard from './rehype-link-card'; // URL行をリンクカードに変換するプラグイン
 import { cache } from 'react'; // Reactのキャッシュ機能（同じレンダリング内で重複呼び出しを防ぐ）
 
 // postsディレクトリの絶対パスを取得
@@ -193,6 +194,7 @@ export const getPostBySlug = cache(async (slug: string): Promise<PostData | null
       .use(rehypeSlug) // 見出しにID付与（目次のアンカーリンク用）
       .use(rehypeCodeTitles) // コードブロックにタイトル付与
       .use(rehypeHighlight) // コードハイライト（highlight.js使用）
+      .use(rehypeLinkCard) // URL行をリンクカードに変換
       .use(rehypeStringify) // HTML文字列化
       .process(content);
 
