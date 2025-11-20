@@ -27,6 +27,16 @@ import { cache } from 'react'; // Reactのキャッシュ機能（同じレン�
 const postsDirectory = path.join(process.cwd(), 'public', 'posts');
 
 /**
+ * Heading - 記事の見出し情報
+ * 目次コンポーネントで使用します
+ */
+export interface Heading {
+  id: string; // 見出しのID（アンカーリンク用）
+  text: string; // 見出しのテキスト
+  level: number; // 見出しレベル（2 = h2, 3 = h3）
+}
+
+/**
  * PostData - 記事の完全なデータ（本文のHTML含む）
  * 記事詳細ページで使用します
  */
@@ -36,6 +46,7 @@ export interface PostData {
   date: string; // 公開日（YYYY-MM-DD形式）
   description: string; // 記事の説明文（一覧ページで表示）
   content: string; // 記事本文のHTML（マークダウンから変換済み）
+  headings: Heading[]; // 目次用の見出し一覧
 }
 
 /**
@@ -201,6 +212,18 @@ export const getPostBySlug = cache(async (slug: string): Promise<PostData | null
     // 変換結果を文字列として取得
     const contentHtml = processedContent.toString();
 
+    // HTMLから見出し（h2, h3）を抽出
+    const headings: Heading[] = [];
+    const headingRegex = /<h([23])\s+id="([^"]+)"[^>]*>([^<]+)<\/h[23]>/g;
+    let match;
+    while ((match = headingRegex.exec(contentHtml)) !== null) {
+      headings.push({
+        level: parseInt(match[1]),
+        id: match[2],
+        text: match[3],
+      });
+    }
+
     // 記事データを返す
     return {
       slug,
@@ -208,6 +231,7 @@ export const getPostBySlug = cache(async (slug: string): Promise<PostData | null
       date: data.date || '', // frontmatterのdate
       description: data.description || '', // frontmatterのdescription
       content: contentHtml, // 変換後のHTML
+      headings, // 目次用の見出し一覧
     };
   } catch (error) {
     // ファイルが見つからない、パースエラーなどの場合

@@ -2,8 +2,7 @@
  * TableOfContents.tsx - 記事の目次コンポーネント
  *
  * 機能：
- * - 記事のHTMLから見出しを抽出
- * - サイドバーに目次を表示
+ * - ビルド時に抽出された見出しを表示（SSG）
  * - クリックで見出しにスクロール
  * - 現在の閲覧位置をハイライト
  */
@@ -11,39 +10,18 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import type { Heading } from '@/lib/posts';
 
-interface Heading {
-  id: string;
-  text: string;
-  level: number;
+interface TableOfContentsProps {
+  headings: Heading[];
 }
 
-export default function TableOfContents() {
-  const [headings, setHeadings] = useState<Heading[]>([]);
+export default function TableOfContents({ headings }: TableOfContentsProps) {
   const [activeId, setActiveId] = useState<string>('');
 
   useEffect(() => {
-    // 記事本文から見出しを抽出
-    const articleElement = document.querySelector('article');
-    if (!articleElement) return;
-
-    const headingElements = articleElement.querySelectorAll('h2, h3');
-    const extractedHeadings: Heading[] = [];
-
-    headingElements.forEach((heading) => {
-      const id = heading.id;
-      const text = heading.textContent || '';
-      const level = parseInt(heading.tagName.substring(1));
-
-      if (id && text) {
-        extractedHeadings.push({ id, text, level });
-      }
-    });
-
-    // ESLint warning about setState in effect is not applicable here.
-    // This is a legitimate use case: synchronizing with external DOM content after mount.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setHeadings(extractedHeadings);
+    // 見出しがない場合は何もしない
+    if (headings.length === 0) return;
 
     // Intersection Observerで現在位置を追跡
     const observer = new IntersectionObserver(
@@ -60,16 +38,23 @@ export default function TableOfContents() {
       }
     );
 
-    headingElements.forEach((heading) => {
-      observer.observe(heading);
+    // 見出し要素を監視
+    headings.forEach((heading) => {
+      const element = document.getElementById(heading.id);
+      if (element) {
+        observer.observe(element);
+      }
     });
 
     return () => {
-      headingElements.forEach((heading) => {
-        observer.unobserve(heading);
+      headings.forEach((heading) => {
+        const element = document.getElementById(heading.id);
+        if (element) {
+          observer.unobserve(element);
+        }
       });
     };
-  }, []);
+  }, [headings]);
 
   if (headings.length === 0) {
     return null;

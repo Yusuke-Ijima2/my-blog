@@ -192,7 +192,7 @@ export default async function BlogPost({ params }: PageProps) {
 
           {/* 目次サイドバー */}
           <aside className="hidden xl:block w-64 shrink-0">
-            <TableOfContents />
+            <TableOfContents headings={post.headings} />
           </aside>
         </div>
       </div>
