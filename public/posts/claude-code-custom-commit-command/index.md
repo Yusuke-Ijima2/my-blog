@@ -108,8 +108,6 @@ https://tech.pepabo.com/2023/08/28/stopped-to-use-gitmoji/
 
 AI にコミットメッセージを考えさせるのは少し心配ですが、自分で書くよりよっぽどいいメッセージを書いてくれます。セッション情報を読み取って考えてくれるので結構正確です。
 
-もちろんどんなメッセージを書いたかは人間が確認する前提です！
-
 ## 参考
 
 https://code.claude.com/docs/ja/slash-commands
