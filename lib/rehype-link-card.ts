@@ -6,9 +6,9 @@
  * - OGP情報を取得してリンクカードHTMLに変換
  */
 
-import { visit } from 'unist-util-visit';
-import type { Root, Element, Text } from 'hast';
-import { unfurl } from 'unfurl.js';
+import { visit } from "unist-util-visit";
+import type { Root, Element, Text } from "hast";
+import { unfurl } from "unfurl.js";
 
 // URLの正規表現
 const urlRegex = /^https?:\/\/[^\s]+$/;
@@ -34,13 +34,37 @@ async function fetchOgpData(url: string): Promise<OgpData> {
   try {
     const result = await unfurl(url);
 
+    let imageUrl = result.open_graph?.images?.[0]?.url || "";
+
+    // Next.js Image Optimization URLの場合、元の画像URLを抽出
+    if (imageUrl && imageUrl.includes("/_next/image?url=")) {
+      try {
+        const imageUrlObj = new URL(imageUrl);
+        const urlParam = imageUrlObj.searchParams.get("url");
+        if (urlParam) {
+          // 相対パスの場合は絶対URLに変換
+          // 元の画像URLのホスト名を使用（リダイレクト先のホスト名ではなく）
+          if (urlParam.startsWith("/")) {
+            imageUrl = `${imageUrlObj.protocol}//${imageUrlObj.host}${urlParam}`;
+          } else {
+            imageUrl = urlParam;
+          }
+        }
+      } catch (e) {
+        // URL解析エラーの場合は元の画像URLをそのまま使用
+        console.error("Failed to extract image URL:", e);
+      }
+    }
+
     const ogpData: OgpData = {
       title: result.open_graph?.title || result.title || url,
-      description: result.open_graph?.description || result.description || '',
-      image: result.open_graph?.images?.[0]?.url || '',
+      description: result.open_graph?.description || result.description || "",
+      image: imageUrl,
       url: url,
       siteName: result.open_graph?.site_name || new URL(url).hostname,
-      favicon: result.favicon || `https://www.google.com/s2/favicons?domain=${new URL(url).hostname}`,
+      favicon:
+        result.favicon ||
+        `https://www.google.com/s2/favicons?domain=${new URL(url).hostname}`,
     };
 
     ogpCache.set(url, ogpData);
@@ -52,8 +76,8 @@ async function fetchOgpData(url: string): Promise<OgpData> {
     const hostname = new URL(url).hostname;
     const fallbackData: OgpData = {
       title: url,
-      description: '',
-      image: '',
+      description: "",
+      image: "",
       url: url,
       siteName: hostname,
       favicon: `https://www.google.com/s2/favicons?domain=${hostname}`,
@@ -70,66 +94,66 @@ function createLinkCardElement(ogp: OgpData): Element {
   // 左側のコンテンツ部分
   const contentChildren: Element[] = [
     {
-      type: 'element',
-      tagName: 'div',
-      properties: { className: ['link-card-title'] },
-      children: [{ type: 'text', value: ogp.title }],
+      type: "element",
+      tagName: "div",
+      properties: { className: ["link-card-title"] },
+      children: [{ type: "text", value: ogp.title }],
     },
   ];
 
   if (ogp.description) {
     contentChildren.push({
-      type: 'element',
-      tagName: 'div',
-      properties: { className: ['link-card-description'] },
-      children: [{ type: 'text', value: ogp.description }],
+      type: "element",
+      tagName: "div",
+      properties: { className: ["link-card-description"] },
+      children: [{ type: "text", value: ogp.description }],
     });
   }
 
   // サイト情報（favicon + サイト名）
   contentChildren.push({
-    type: 'element',
-    tagName: 'div',
-    properties: { className: ['link-card-meta'] },
+    type: "element",
+    tagName: "div",
+    properties: { className: ["link-card-meta"] },
     children: [
       {
-        type: 'element',
-        tagName: 'img',
+        type: "element",
+        tagName: "img",
         properties: {
           src: ogp.favicon,
-          alt: '',
-          className: ['link-card-favicon'],
+          alt: "",
+          className: ["link-card-favicon"],
           width: 16,
           height: 16,
         },
         children: [],
       },
       {
-        type: 'element',
-        tagName: 'span',
-        properties: { className: ['link-card-site-name'] },
-        children: [{ type: 'text', value: ogp.url }],
+        type: "element",
+        tagName: "span",
+        properties: { className: ["link-card-site-name"] },
+        children: [{ type: "text", value: ogp.url }],
       },
     ],
   });
 
   children.push({
-    type: 'element',
-    tagName: 'div',
-    properties: { className: ['link-card-content'] },
+    type: "element",
+    tagName: "div",
+    properties: { className: ["link-card-content"] },
     children: contentChildren,
   });
 
   // 右側のサムネイル画像
   if (ogp.image) {
     children.push({
-      type: 'element',
-      tagName: 'div',
-      properties: { className: ['link-card-thumbnail'] },
+      type: "element",
+      tagName: "div",
+      properties: { className: ["link-card-thumbnail"] },
       children: [
         {
-          type: 'element',
-          tagName: 'img',
+          type: "element",
+          tagName: "img",
           properties: {
             src: ogp.image,
             alt: ogp.title,
@@ -141,13 +165,13 @@ function createLinkCardElement(ogp: OgpData): Element {
   }
 
   return {
-    type: 'element',
-    tagName: 'a',
+    type: "element",
+    tagName: "a",
     properties: {
       href: ogp.url,
-      className: ['link-card'],
-      target: '_blank',
-      rel: 'noopener noreferrer',
+      className: ["link-card"],
+      target: "_blank",
+      rel: "noopener noreferrer",
     },
     children,
   };
@@ -157,9 +181,9 @@ export default function rehypeLinkCard() {
   return async (tree: Root) => {
     const promises: Promise<void>[] = [];
 
-    visit(tree, 'element', (node: Element, index, parent) => {
+    visit(tree, "element", (node: Element, index, parent) => {
       // p要素のみを処理
-      if (node.tagName !== 'p' || !parent || index === undefined) return;
+      if (node.tagName !== "p" || !parent || index === undefined) return;
 
       // p要素の子要素が1つのテキストノードかリンクのみかを確認
       if (node.children.length === 1) {
@@ -168,7 +192,7 @@ export default function rehypeLinkCard() {
         let url: string | null = null;
 
         // テキストノードの場合
-        if (child.type === 'text') {
+        if (child.type === "text") {
           const text = (child as Text).value.trim();
           if (urlRegex.test(text)) {
             url = text;
@@ -176,14 +200,14 @@ export default function rehypeLinkCard() {
         }
         // リンク要素の場合（リンクテキストがURLと同じ場合）
         else if (
-          child.type === 'element' &&
-          (child as Element).tagName === 'a' &&
+          child.type === "element" &&
+          (child as Element).tagName === "a" &&
           (child as Element).children.length === 1 &&
-          (child as Element).children[0].type === 'text'
+          (child as Element).children[0].type === "text"
         ) {
           const linkElement = child as Element;
           const href = linkElement.properties?.href as string;
-          const text = ((linkElement.children[0] as Text).value || '').trim();
+          const text = ((linkElement.children[0] as Text).value || "").trim();
 
           if (href && text === href && urlRegex.test(href)) {
             url = href;
