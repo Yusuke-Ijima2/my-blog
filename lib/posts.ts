@@ -19,7 +19,8 @@ import rehypeCodeTitles from 'rehype-code-titles'; // コードブロックに�
 import rehypeHighlight from 'rehype-highlight'; // コードブロックにシンタックスハイライトを適用するプラグイン
 import rehypeStringify from 'rehype-stringify'; // HTML構造を文字列に変換するプラグイン
 import rehypeLinkCard from './rehype-link-card'; // URL行をリンクカードに変換するプラグイン
-import { cache } from 'react'; // Reactのキャッシュ機能（同じレンダリング内で重複呼び出しを防ぐ）
+// NOTE: React cache()は静的エクスポートモードでは不要
+// ビルド時に1回のみ実行されるため、リクエスト間のキャッシュは発生しない
 
 // postsディレクトリの絶対パスを取得
 // process.cwd()はプロジェクトのルートディレクトリを返す
@@ -165,9 +166,9 @@ export function getAllPostSlugs(): string[] {
  * 4. シンタックスハイライト適用（rehype-highlight）
  * 5. HTML文字列化（rehype-stringify）
  *
- * パフォーマンス最適化：
- * - React cache()でラップ（同じレンダリング内での重複呼び出しを防ぐ）
- * - generateMetadata()とページコンポーネントで同じslugを呼んでも1回だけ実行
+ * 静的エクスポートモード：
+ * - ビルド時に1回のみ実行される
+ * - cache()は不要（リクエスト間のキャッシュが発生しないため）
  *
  * 使用例：
  * const post = await getPostBySlug("nextjs-static-export");
@@ -176,7 +177,7 @@ export function getAllPostSlugs(): string[] {
  * @param {string} slug - 取得したい記事のslug（ファイル名）
  * @returns {Promise<PostData | null>} 記事データ（見つからない場合はnull）
  */
-export const getPostBySlug = cache(async (slug: string): Promise<PostData | null> => {
+export async function getPostBySlug(slug: string): Promise<PostData | null> {
   try {
     // ファイルパスを作成（例: public/posts/nextjs-static-export/index.md）
     const fullPath = path.join(postsDirectory, slug, 'index.md');
@@ -238,4 +239,4 @@ export const getPostBySlug = cache(async (slug: string): Promise<PostData | null
     console.error(`Error reading post ${slug}:`, error);
     return null;
   }
-});
+}
