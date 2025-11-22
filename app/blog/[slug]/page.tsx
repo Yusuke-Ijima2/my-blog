@@ -36,6 +36,14 @@ interface PageProps {
 }
 
 /**
+ * dynamicParams - 動的パラメータの処理を無効化
+ *
+ * 静的エクスポートモードでは、generateStaticParams()で指定したパスのみを生成します。
+ * falseに設定することで、存在しないslugへのアクセス時に404を返します。
+ */
+export const dynamicParams = false;
+
+/**
  * generateStaticParams - 静的生成するページのパス一覧を返す
  *
  * この関数は、ビルド時にNext.jsによって呼び出されます。
