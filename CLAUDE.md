@@ -29,8 +29,11 @@ npm run type-check    # Run TypeScript type checking without emitting files
 This project uses Next.js Static Export, which means:
 - All pages are pre-rendered to static HTML at build time
 - No Node.js server required for deployment
-- Server Components, API Routes, Middleware, Image Optimization, and ISR are **not available**
+- **Server Components run at build time** and are fully supported
+- Dynamic server features (API Routes, Middleware, ISR) are **not available**
 - Images must use `unoptimized: true` in next.config.ts
+
+**Important:** `redirect()` function IS supported in Server Components during static export. It gets converted to client-side navigation. Config-based redirects in next.config.ts are NOT supported.
 
 ### Content Structure: Complete Colocation
 
@@ -69,25 +72,28 @@ The `lib/posts.ts` file handles all Markdown processing:
 2. **Parse**: Extract frontmatter with `gray-matter`
 3. **Transform**: Markdown → HTML via remark/rehype pipeline:
    - `remark` → parse Markdown
+   - `remarkGfm` → GitHub Flavored Markdown support
    - `remarkRehype` → convert to HTML AST
    - `rehypeSlug` → add IDs to headings (for table of contents anchor links)
    - `rehypeCodeTitles` → add filename labels to code blocks
    - `rehypeHighlight` → apply syntax highlighting to code blocks
    - `rehypeLinkCard` → convert URL-only lines to rich link cards with OGP data
    - `rehypeStringify` → convert to HTML string
-4. **Cache**: Wrapped with React `cache()` to prevent duplicate processing within the same render
 
 **Key Functions:**
 - `getAllPosts()`: Returns all post metadata (sorted by date, newest first) - used for blog listing
 - `getAllPostSlugs()`: Returns array of slugs - used for `generateStaticParams()`
 - `getPostBySlug(slug)`: Returns full post data including HTML content - used for article detail pages
 
+**Note:** React `cache()` is NOT used because static export runs at build time only, making request-level caching unnecessary.
+
 ### Routing Structure
 
+- `/` - Root page that redirects to `/blog` using `redirect()` (app/page.tsx)
 - `/blog` - Article listing page (app/blog/page.tsx)
 - `/blog/[slug]` - Article detail pages (app/blog/[slug]/page.tsx)
 
-The `[slug]` dynamic route uses `generateStaticParams()` to pre-render all articles at build time.
+The `[slug]` dynamic route uses `generateStaticParams()` to pre-render all articles at build time, with `dynamicParams = false` to ensure only statically generated paths are valid.
 
 ### Layout System
 
@@ -134,6 +140,7 @@ https://example.com/article
 - `lib/rehype-link-card.ts` が unfurl.js を使用してOGPデータを取得
 - タイトル、サムネイル画像、URLをカード形式で表示
 - スタイルは `app/globals.css` の `.link-card` クラスで定義
+- 外部サービスのNext.js Image Optimization URL (`/_next/image?url=...`) を検出した場合、元の画像URLを自動抽出
 
 ## Adding New Articles
 
@@ -165,6 +172,33 @@ export default async function Page({ params }: PageProps) {
 }
 ```
 
+### Static Export with Dynamic Routes
+
+When using dynamic routes with static export, always set `dynamicParams = false`:
+
+```tsx
+export const dynamicParams = false; // Only generate paths from generateStaticParams()
+
+export async function generateStaticParams() {
+  // Return all paths to pre-render
+}
+```
+
+This ensures that only statically generated paths are valid and non-existent paths return 404.
+
+### Server Component redirect()
+
+The `redirect()` function from `next/navigation` IS supported in Server Components during static export. It gets converted to client-side navigation automatically. This is different from config-based redirects in next.config.ts, which are NOT supported.
+
+```tsx
+// ✅ Supported in static export
+import { redirect } from 'next/navigation';
+
+export default function Home() {
+  redirect('/blog');
+}
+```
+
 ### ESLint: setState in useEffect
 
 The `TableOfContents.tsx` component has an ESLint disable comment for `react-hooks/set-state-in-effect` because DOM-based heading extraction is a legitimate use case for setState in useEffect.
@@ -174,6 +208,20 @@ The `TableOfContents.tsx` component has an ESLint disable comment for `react-hoo
 When committing changes, separate unrelated concerns into different commits. For example:
 - ✅ Separate commits for: site name change, routing change, feature addition
 - ❌ Single commit for: site name + routing + feature
+
+## Custom Slash Commands
+
+This project includes custom slash commands in `.claude/commands/`:
+
+### `/commit`
+Analyzes git changes and creates well-structured commits in Japanese with emojis. Automatically separates unrelated changes into different commits and follows conventional commit format.
+
+### `/nextjs-fix`
+Uses Next.js MCP (Model Context Protocol) server to validate code against Next.js best practices and official documentation. Checks for:
+- Next.js 16 async API compliance
+- Static export compatibility
+- App Router patterns
+- Performance best practices
 
 ## Deployment
 
