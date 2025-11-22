@@ -2,10 +2,21 @@
  * page.tsx - トップページ（リダイレクト）
  *
  * ルートパス（/）にアクセスした場合、/blog にリダイレクト
+ * 静的エクスポートではサーバーサイドリダイレクトが使えないため、
+ * クライアントサイドでのナビゲーションを使用
  */
 
-import { redirect } from 'next/navigation';
+'use client';
+
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
-  redirect('/blog');
+  const router = useRouter();
+
+  useEffect(() => {
+    router.replace('/blog');
+  }, [router]);
+
+  return null;
 }
