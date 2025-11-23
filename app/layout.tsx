@@ -14,30 +14,9 @@
  */
 
 import type { Metadata } from "next"; // Next.jsのメタデータ型定義
-import { Noto_Sans_JP } from "next/font/google"; // Google Fontsからフォントをインポート
 import "./globals.css"; // グローバルスタイル（Tailwind CSS、Typography設定など）
 import Header from "@/components/Header"; // ヘッダーコンポーネント
 import Footer from "@/components/Footer"; // フッターコンポーネント
-
-/**
- * Noto Sans JP フォントの設定
- *
- * パフォーマンス最適化のため、以下の設定を採用：
- * - display: "swap" - システムフォントを優先表示し、フォント読み込み後に切り替え
- * - preload: false - 初期ロードを高速化（必要時に読み込み）
- * - adjustFontFallback: true - フォールバックフォントとのレイアウトシフトを最小化
- *
- * Noto Sans JPは33個のサブセットに分割されており、全て読み込むとLCPが遅延します。
- * そのため、preloadをfalseにして初期ロードを軽量化します。
- */
-const notoSansJP = Noto_Sans_JP({
-  variable: "--font-noto-sans-jp",
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  display: "swap",
-  preload: false,
-  adjustFontFallback: true,
-});
 
 /**
  * グローバルメタデータ
@@ -98,13 +77,12 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body
-        className={`${notoSansJP.variable} antialiased flex flex-col min-h-screen`}
+        className="antialiased flex flex-col min-h-screen"
         suppressHydrationWarning={true}
         // suppressHydrationWarning:
         // - ブラウザ拡張機能（ColorZilla、Grammarly等）がbodyタグに属性を追加するため
         // - ハイドレーション警告を抑制（本番環境では問題なし）
         // className解説：
-        // - notoSansJP.variable: Noto Sans JPのCSS変数を設定
         // - antialiased: フォントのアンチエイリアス（滑らかな表示）を有効化
         // - flex flex-col: 縦方向のflexboxレイアウト
         // - min-h-screen: 最低でも画面の高さを確保
