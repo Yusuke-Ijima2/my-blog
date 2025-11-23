@@ -59,6 +59,16 @@ const nextConfig: NextConfig = {
     unoptimized: true,
   },
 
+  /**
+   * experimental.optimizePackageImports - パッケージインポートの最適化
+   *
+   * 大きなライブラリから必要な部分だけをインポートすることで、
+   * バンドルサイズを削減し、初期ロード時間を改善します。
+   */
+  experimental: {
+    optimizePackageImports: ['react', 'react-dom'],
+  },
+
   /*
     その他の設定例（必要に応じて追加可能）：
 
