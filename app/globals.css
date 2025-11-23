@@ -56,6 +56,20 @@ body {
   }
 }
 
+/* 記事見出しのアクセシビリティ対応（WCAG AAA準拠: コントラスト比 7:1以上） */
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  color: rgb(17, 24, 39) !important; /* gray-900 - 白背景に対してコントラスト比15:1 */
+}
+
+/* コードブロック内のシンタックスハイライトのアクセシビリティ対応 */
+.hljs-section {
+  color: #58a6ff !important; /* GitHub Dark テーマの見出し色を明るく調整（contrast ratio 5.7:1） */
+}
+
 /* リンクカード */
 .link-card {
   display: flex !important;

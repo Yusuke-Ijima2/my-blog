@@ -207,10 +207,10 @@ export default async function BlogPost({ params }: PageProps) {
 
             {/* 記事本文（HTMLとして表示） */}
             <div
-              className="prose prose-lg prose-slate max-w-none
-                prose-headings:font-bold
-                prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4 prose-h2:scroll-mt-8 prose-h2:pb-2 prose-h2:border-b prose-h2:border-gray-200
-                prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3 prose-h3:scroll-mt-8 prose-h3:pb-2 prose-h3:border-b prose-h3:border-gray-200
+              className="prose prose-lg max-w-none
+                prose-headings:font-bold prose-headings:text-gray-900
+                prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4 prose-h2:scroll-mt-8 prose-h2:pb-2 prose-h2:border-b prose-h2:border-gray-200 prose-h2:text-gray-900
+                prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3 prose-h3:scroll-mt-8 prose-h3:pb-2 prose-h3:border-b prose-h3:border-gray-200 prose-h3:text-gray-900
                 prose-p:text-gray-800 prose-p:leading-relaxed prose-p:my-3
                 prose-a:text-purple-600 prose-a:underline prose-a:decoration-purple-400 prose-a:hover:text-purple-400 prose-a:hover:decoration-purple-300 prose-a:transition-colors prose-a:duration-200
                 prose-code:text-pink-600 prose-code:bg-gray-100 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:before:content-[''] prose-code:after:content-['']
