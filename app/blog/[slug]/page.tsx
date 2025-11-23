@@ -22,6 +22,7 @@ import Link from "next/link"; // Next.jsのクライアントサイドルーテ�
 import { getAllPostSlugs, getPostBySlug } from "@/lib/posts"; // 記事データ取得関数
 import TableOfContents from "@/components/TableOfContents"; // 目次コンポーネント
 import CodeCopyButton from "@/components/CodeCopyButton"; // コードコピーボタン
+import JsonLd from "@/components/JsonLd"; // 構造化データコンポーネント
 
 /**
  * PageProps - ページコンポーネントのprops型定義
@@ -95,8 +96,20 @@ export async function generateMetadata({ params }: PageProps) {
 
   // 記事のメタデータを返す
   return {
-    title: `${post.title} | Ijima.dev`, // 例: "Next.js Static Exportで高速な静的サイトを構築する | Ijima.dev"
-    description: post.description, // 記事の説明文（検索結果に表示される）
+    title: post.title, // templateで | Ijima.dev が自動追加される
+    description: post.description,
+    openGraph: {
+      type: 'article',
+      title: post.title,
+      description: post.description,
+      publishedTime: post.date,
+      authors: ['Ijima'],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.description,
+    },
   };
 }
 
@@ -124,8 +137,31 @@ export default async function BlogPost({ params }: PageProps) {
     notFound(); // Next.jsの404ページにリダイレクト
   }
 
+  // 構造化データ（JSON-LD）
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.description,
+    datePublished: post.date,
+    author: {
+      '@type': 'Person',
+      name: 'Ijima',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Ijima.dev',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://ijima.dev/icon.svg',
+      },
+    },
+  };
+
   return (
-    <div className="max-w-7xl mx-auto px-4 py-12">
+    <>
+      <JsonLd data={jsonLd} />
+      <div className="max-w-7xl mx-auto px-4 py-12">
       <div className="max-w-5xl mx-auto">
         {/* 記事一覧に戻るリンク */}
         <Link
@@ -223,5 +259,6 @@ export default async function BlogPost({ params }: PageProps) {
         </div>
       </div>
     </div>
+    </>
   );
 }
