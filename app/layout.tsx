@@ -14,31 +14,22 @@
  */
 
 import type { Metadata } from "next"; // Next.jsのメタデータ型定義
-import { Geist, Geist_Mono } from "next/font/google"; // Google Fontsからフォントをインポート
+import { Noto_Sans_JP } from "next/font/google"; // Google Fontsからフォントをインポート
 import "./globals.css"; // グローバルスタイル（Tailwind CSS、Typography設定など）
 import Header from "@/components/Header"; // ヘッダーコンポーネント
 import Footer from "@/components/Footer"; // フッターコンポーネント
 
 /**
- * Geist Sans フォントの設定
- * - variable: CSS変数名（--font-geist-sans）
- * - subsets: 読み込むフォントのサブセット（latinは英数字）
+ * Noto Sans JP フォントの設定
+ * - variable: CSS変数名（--font-noto-sans-jp）
+ * - subsets: 読み込むフォントのサブセット（japanese: 日本語、latin: 英数字）
+ * - weight: フォントの太さ（400: 通常、700: 太字）
  * - このフォントはサイト全体の本文に使用されます
  */
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const notoSansJP = Noto_Sans_JP({
+  variable: "--font-noto-sans-jp",
   subsets: ["latin"],
-});
-
-/**
- * Geist Mono フォントの設定
- * - variable: CSS変数名（--font-geist-mono）
- * - subsets: 読み込むフォントのサブセット（latinは英数字）
- * - このフォントはコードブロックやインラインコードに使用されます
- */
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: ["400", "500", "700"],
 });
 
 /**
@@ -91,14 +82,13 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
+        className={`${notoSansJP.variable} antialiased flex flex-col min-h-screen`}
         suppressHydrationWarning={true}
         // suppressHydrationWarning:
         // - ブラウザ拡張機能（ColorZilla、Grammarly等）がbodyタグに属性を追加するため
         // - ハイドレーション警告を抑制（本番環境では問題なし）
         // className解説：
-        // - geistSans.variable: Geist SansのCSS変数を設定
-        // - geistMono.variable: Geist MonoのCSS変数を設定
+        // - notoSansJP.variable: Noto Sans JPのCSS変数を設定
         // - antialiased: フォントのアンチエイリアス（滑らかな表示）を有効化
         // - flex flex-col: 縦方向のflexboxレイアウト
         // - min-h-screen: 最低でも画面の高さを確保
