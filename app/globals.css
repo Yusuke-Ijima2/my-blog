@@ -27,6 +27,18 @@ body {
 
 /* コードブロックのファイル名表示 */
 @layer base {
+  /* フォーカスリングをデフォルトの青から紫に変更 */
+  *:focus-visible {
+    outline: 2px solid #c084fc !important;
+    outline-offset: 2px !important;
+    border-radius: 4px !important;
+    transition: none !important;
+  }
+
+  .dark *:focus-visible {
+    outline-color: #c084fc !important;
+    transition: none !important;
+  }
   .rehype-code-title {
     display: inline-block;
     background-color: #0d1117;
