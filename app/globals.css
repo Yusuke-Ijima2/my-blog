@@ -176,7 +176,7 @@ code.hljs {
 
 .dark .link-card {
   border-color: #4b5563 !important;
-  background-color: #374151 !important;
+  background-color: #1f2937 !important;
 }
 
 .link-card-content {
@@ -225,10 +225,14 @@ code.hljs {
 
 .link-card-site-name {
   font-size: 0.875rem !important;
-  color: #6b7280 !important;
+  color: #4b5563 !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
   white-space: nowrap !important;
+}
+
+.dark .link-card-site-name {
+  color: #d1d5db !important;
 }
 
 .link-card-thumbnail {
