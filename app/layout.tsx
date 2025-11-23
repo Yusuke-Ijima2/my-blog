@@ -31,9 +31,10 @@ import Footer from "@/components/Footer"; // フッターコンポーネント
 const notoSansJP = Noto_Sans_JP({
   variable: "--font-noto-sans-jp",
   subsets: ["latin"],
-  weight: ["400", "500", "700"],
-  display: "swap",
+  weight: ["400", "700"],
+  display: "optional",
   preload: true,
+  adjustFontFallback: true,
 });
 
 /**
