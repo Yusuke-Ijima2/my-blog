@@ -127,7 +127,8 @@ Articles use Tailwind Typography (`@tailwindcss/typography`) with extensive cust
 - Code blocks: `prose-pre:bg-gray-900 prose-pre:text-gray-100 prose-pre:p-1`
 - Inline code: `prose-code:text-pink-600 prose-code:bg-gray-100`
 - Headings: `prose-h2:scroll-mt-8` for proper anchor link scrolling
-- Syntax highlighting: GitHub Dark theme via highlight.js CDN
+- Syntax highlighting: GitHub Dark theme via highlight.js (local)
+- Font: Noto Sans JP with `display: swap` and `preload: true` for optimal performance
 
 ### Link Cards
 
@@ -155,9 +156,10 @@ https://example.com/article
 
    ## Content here...
    ```
-3. Add images to the same directory
+3. Add images to the same directory (prefer WebP format for optimal performance)
 4. Reference images with relative paths: `![alt](./image.png)`
-5. Run `npm run build` to regenerate static site
+5. Run `node scripts/convert-to-webp.mjs` to convert PNG/JPEG to WebP (optional but recommended)
+6. Run `npm run build` to regenerate static site
 
 ## Important Implementation Notes
 
@@ -223,11 +225,40 @@ Uses Next.js MCP (Model Context Protocol) server to validate code against Next.j
 - App Router patterns
 - Performance best practices
 
+### `/update-description`
+Updates blog post descriptions automatically from the first paragraph content.
+
+## SEO & Performance Optimizations
+
+### SEO Features
+- **robots.txt**: Search engine crawl control at `public/robots.txt`
+- **sitemap.xml**: Dynamically generated at build time via `app/sitemap.ts`
+- **OGP Images**: Dynamically generated via `app/opengraph-image.tsx` for social media previews
+- **Structured Data**: JSON-LD BlogPosting schema via `components/JsonLd.tsx` for rich snippets
+- **Metadata**: Comprehensive Open Graph and Twitter Card metadata in `app/layout.tsx`
+
+### Performance Optimizations
+- **Font Loading**: Noto Sans JP with `display: swap` and `preload: true` (FOUT prevention)
+- **Image Optimization**: WebP format for all images (typically 60-70% size reduction)
+  - Conversion script: `scripts/convert-to-webp.mjs`
+- **Syntax Highlighting**: Local highlight.js (no CDN dependency)
+- **Security Headers**: Comprehensive security headers in `public/_headers` (Cloudflare Pages)
+  - Content-Security-Policy, X-Frame-Options, HSTS, etc.
+  - Static asset caching (1 year for immutable assets)
+
+### Image Workflow
+1. Add images as PNG/JPEG to article directory
+2. Run `node scripts/convert-to-webp.mjs` to convert to WebP
+3. Update markdown references from `.png`/`.jpg` to `.webp`
+4. Delete original PNG/JPEG files to reduce bundle size
+
 ## Deployment
 
 The project is configured for Cloudflare Pages deployment:
 - Build command: `npm run build`
 - Output directory: `out`
 - Includes Cloudflare Web Analytics (cookie-free, auto-enabled)
+- Security headers automatically applied via `public/_headers`
+- Requires `wrangler.jsonc` for deployment configuration
 
 Also compatible with Vercel, Netlify, GitHub Pages, AWS S3, Firebase Hosting.
