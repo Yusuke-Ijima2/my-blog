@@ -200,6 +200,8 @@ code.hljs {
   margin: 0 !important;
   padding: 0 !important;
   overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
   display: block !important;
   flex-shrink: 0 !important;
   height: auto !important;
