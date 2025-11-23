@@ -16,24 +16,26 @@
 import type { Metadata } from "next"; // Next.jsのメタデータ型定義
 import { Noto_Sans_JP } from "next/font/google"; // Google Fontsからフォントをインポート
 import "./globals.css"; // グローバルスタイル（Tailwind CSS、Typography設定など）
-import "highlight.js/styles/github-dark.css"; // highlight.jsのスタイル（ローカル）
 import Header from "@/components/Header"; // ヘッダーコンポーネント
 import Footer from "@/components/Footer"; // フッターコンポーネント
 
 /**
  * Noto Sans JP フォントの設定
- * - variable: CSS変数名（--font-noto-sans-jp）
- * - subsets: 読み込むフォントのサブセット（japanese: 日本語を含む）
- * - weight: フォントの太さ（400: 通常、500: 中太、700: 太字）
- * - display: swap - フォント読み込み中もテキストを表示（FOUT対策）
- * - このフォントはサイト全体の本文に使用されます
+ *
+ * パフォーマンス最適化のため、以下の設定を採用：
+ * - display: "swap" - システムフォントを優先表示し、フォント読み込み後に切り替え
+ * - preload: false - 初期ロードを高速化（必要時に読み込み）
+ * - adjustFontFallback: true - フォールバックフォントとのレイアウトシフトを最小化
+ *
+ * Noto Sans JPは33個のサブセットに分割されており、全て読み込むとLCPが遅延します。
+ * そのため、preloadをfalseにして初期ロードを軽量化します。
  */
 const notoSansJP = Noto_Sans_JP({
   variable: "--font-noto-sans-jp",
   subsets: ["latin"],
   weight: ["400", "700"],
-  display: "optional",
-  preload: true,
+  display: "swap",
+  preload: false,
   adjustFontFallback: true,
 });
 
