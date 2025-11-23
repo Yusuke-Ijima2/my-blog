@@ -1,23 +1,17 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export default function ThemeToggle() {
-  const [isDark, setIsDark] = useState(false);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-    // ローカルストレージから設定を読み込む、なければシステム設定を使用
-    const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const shouldBeDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
-
-    setIsDark(shouldBeDark);
-    if (shouldBeDark) {
-      document.documentElement.classList.add('dark');
+  // localStorageから初期状態を読み込む（SSR時はfalse）
+  const [isDark, setIsDark] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      return savedTheme === 'dark' || (!savedTheme && prefersDark);
     }
-  }, []);
+    return false;
+  });
 
   const toggleTheme = () => {
     const newIsDark = !isDark;
@@ -31,18 +25,6 @@ export default function ThemeToggle() {
       localStorage.setItem('theme', 'light');
     }
   };
-
-  // ハイドレーションミスマッチを防ぐため、マウント前は何も表示しない
-  if (!mounted) {
-    return (
-      <button
-        className="p-2 text-gray-900 dark:text-white transition-colors duration-200 cursor-pointer"
-        aria-label="テーマ切り替え"
-      >
-        <div className="w-6 h-6" />
-      </button>
-    );
-  }
 
   return (
     <button
