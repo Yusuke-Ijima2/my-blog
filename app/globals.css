@@ -66,6 +66,12 @@ body {
   color: rgb(17, 24, 39) !important; /* gray-900 - 白背景に対してコントラスト比15:1 */
 }
 
+/* インラインコードのダークモード対応 */
+.dark .prose code {
+  color: rgb(192, 132, 252) !important; /* purple-400 - ダークモードで見やすい明るい紫 */
+  background-color: rgb(31, 41, 55) !important; /* gray-800 - ダークモード背景 */
+}
+
 /* highlight.js GitHub Dark テーマ - インライン化してレンダリングブロックを削減 */
 pre code.hljs {
   padding: 1em;

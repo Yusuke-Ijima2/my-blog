@@ -218,7 +218,7 @@ export default async function BlogPost({ params }: PageProps) {
                 prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3 prose-h3:scroll-mt-8 prose-h3:pb-2 prose-h3:border-b prose-h3:border-gray-200 prose-h3:text-gray-900
                 prose-p:text-gray-800 prose-p:leading-relaxed prose-p:my-3
                 prose-a:text-purple-600 prose-a:underline prose-a:decoration-purple-400 prose-a:hover:text-purple-400 prose-a:hover:decoration-purple-300 prose-a:transition-colors prose-a:duration-200
-                prose-code:text-pink-600 prose-code:bg-gray-100 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:before:content-[''] prose-code:after:content-['']
+                prose-code:text-purple-600 prose-code:bg-gray-100 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:before:content-[''] prose-code:after:content-['']
                 prose-pre:bg-gray-900 prose-pre:text-gray-100 prose-pre:overflow-x-auto prose-pre:p-1 prose-pre:rounded-lg
                 prose-ul:list-disc prose-ul:pl-6
                 prose-ol:list-decimal prose-ol:pl-6

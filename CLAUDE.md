@@ -143,7 +143,7 @@ Article detail pages include a client-side table of contents (`components/TableO
 **Typography:**
 Articles use Tailwind Typography (`@tailwindcss/typography`) with extensive customization:
 - Code blocks: `prose-pre:bg-gray-900 prose-pre:text-gray-100 prose-pre:p-1`
-- Inline code: `prose-code:text-pink-600 prose-code:bg-gray-100`
+- Inline code: `prose-code:text-purple-600 prose-code:bg-gray-100` (light mode), `purple-400` on `gray-800` (dark mode)
 - Headings: `prose-h2:scroll-mt-8` for proper anchor link scrolling
 - Syntax highlighting: GitHub Dark theme via highlight.js (local)
 - Font: System font stack (no external fonts) for optimal performance
