@@ -35,7 +35,7 @@ export default function Header() {
           </Link>
 
           {/* 右側のアイコングループ */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             {/* テーマ切り替えボタン */}
             <ThemeToggle />
 
@@ -48,8 +48,8 @@ export default function Header() {
               className="p-2 text-gray-900 dark:text-white hover:text-purple-400 dark:hover:text-purple-400 transition-colors duration-200 cursor-pointer"
             >
               <svg
-                width="24"
-                height="24"
+                width="22"
+                height="22"
                 viewBox="0 0 24 24"
                 fill="currentColor"
                 xmlns="http://www.w3.org/2000/svg"
