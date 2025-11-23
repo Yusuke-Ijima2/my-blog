@@ -1,0 +1,8 @@
+# robots.txt for Ijima.dev
+
+# すべての検索エンジンクローラーを許可
+User-agent: *
+Allow: /
+
+# サイトマップの場所を指定
+Sitemap: https://ijima.dev/sitemap.xml
