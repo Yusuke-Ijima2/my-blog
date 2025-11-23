@@ -1,0 +1,31 @@
+# セキュリティヘッダー設定
+# Cloudflare Pages用の_headersファイル
+
+/*
+  # XSS攻撃対策
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  X-XSS-Protection: 1; mode=block
+
+  # リファラーポリシー（プライバシー保護）
+  Referrer-Policy: strict-origin-when-cross-origin
+
+  # 権限ポリシー（不要な機能を無効化）
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()
+
+  # Content Security Policy（厳格なセキュリティ）
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'
+
+  # HTTPS強制（本番環境のみ有効）
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+
+# キャッシュ設定（静的アセット）
+/icon.svg
+  Cache-Control: public, max-age=31536000, immutable
+
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# HTMLはキャッシュしない（更新を即座に反映）
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
