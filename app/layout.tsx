@@ -75,7 +75,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja">
+    <html lang="ja" suppressHydrationWarning>
       <head>
         {/* ダークモードのちらつき防止スクリプト - ページ読み込み前にテーマを適用 */}
         <script
