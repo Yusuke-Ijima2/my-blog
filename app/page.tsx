@@ -38,11 +38,11 @@ export default function Home() {
       {/* 記事一覧セクション */}
       <section className="max-w-5xl mx-auto">
         {/* セクションタイトル */}
-        <h2 className="text-2xl font-bold text-gray-900 mb-8">記事一覧</h2>
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-8 transition-colors duration-200">記事一覧</h2>
 
         {/* 記事がない場合のメッセージ */}
         {posts.length === 0 ? (
-          <p className="text-gray-600">記事がまだありません。</p>
+          <p className="text-gray-600 dark:text-gray-300">記事がまだありません。</p>
         ) : (
           // 記事一覧の表示
           <div className="space-y-4">
@@ -52,7 +52,7 @@ export default function Home() {
             {posts.map((post) => (
               <article
                 key={post.slug} // Reactのkey（ユニークな識別子）
-                className="border-b border-gray-200 last:border-b-0"
+                className="border-b border-gray-200 dark:border-gray-700 last:border-b-0"
                 // className解説：
                 // - border-b: 下部にボーダー（区切り線）
                 // - pb-8: 下部パディング
@@ -61,7 +61,7 @@ export default function Home() {
                 {/* 記事タイトル（クリック可能） */}
                 <Link href={`/${post.slug}`} className="group">
                   {/* group: 子要素でhover時のスタイル変更を可能にする */}
-                  <h3 className="text-2xl font-semibold text-gray-900 mb-2 group-hover:text-purple-400 transition-colors duration-200">
+                  <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-purple-400 transition-colors duration-200">
                     {/* group-hover:text-purple-400: タイトルにホバー時に薄い紫色に変更 */}
                     {/* transition-colors duration-200: 色変化を200msでスムーズにアニメーション */}
                     {post.title}
@@ -69,7 +69,7 @@ export default function Home() {
                 </Link>
 
                 {/* 公開日 */}
-                <time className="text-sm text-gray-500 mb-3 flex items-center gap-1.5">
+                <time className="text-sm text-gray-500 dark:text-gray-400 mb-3 flex items-center gap-1.5">
                   {/* time要素: 日付を意味的に表す（SEOに有利） */}
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -91,7 +91,7 @@ export default function Home() {
                 </time>
 
                 {/* 記事の説明文 */}
-                <p className="text-gray-700 mb-4">{post.description}</p>
+                <p className="text-gray-700 dark:text-gray-300 mb-4">{post.description}</p>
               </article>
             ))}
           </div>

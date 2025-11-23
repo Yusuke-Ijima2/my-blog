@@ -62,7 +62,7 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
 
   return (
     <nav className="sticky top-8">
-      <h2 className="text-lg font-bold text-gray-900 mb-4">目次</h2>
+      <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4">目次</h2>
       <ul className="space-y-2 text-base">
         {headings.map((heading) => (
           <li
@@ -73,8 +73,8 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
               href={`#${heading.id}`}
               className={`transition-colors duration-200 ${
                 activeId === heading.id
-                  ? 'text-purple-500 font-medium'
-                  : 'text-gray-600 hover:text-purple-400'
+                  ? 'text-purple-500 dark:text-purple-400 font-medium'
+                  : 'text-gray-600 dark:text-gray-400 hover:text-purple-400'
               }`}
             >
               {heading.text}

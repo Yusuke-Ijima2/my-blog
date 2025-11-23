@@ -171,7 +171,7 @@ export default async function BlogPost({ params }: PageProps) {
         {/* 記事一覧に戻るリンク */}
         <Link
           href="/"
-          className="text-gray-600 hover:text-purple-400 mb-8 inline-block transition-colors duration-200"
+          className="text-gray-600 dark:text-gray-400 hover:text-purple-400 mb-8 inline-block transition-colors duration-200"
         >
           ← 記事一覧へ
         </Link>
@@ -185,11 +185,11 @@ export default async function BlogPost({ params }: PageProps) {
             {/* 記事ヘッダー */}
             <header className="mb-8">
               {/* 記事タイトル */}
-              <h1 className="text-4xl font-bold text-gray-900 mb-4">
+              <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
                 {post.title}
               </h1>
               {/* 公開日 */}
-              <time className="text-gray-500 flex items-center gap-1.5">
+              <time className="text-gray-500 dark:text-gray-400 flex items-center gap-1.5">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -213,18 +213,18 @@ export default async function BlogPost({ params }: PageProps) {
             {/* 記事本文（HTMLとして表示） */}
             <div
               className="prose prose-lg max-w-none
-                prose-headings:font-bold prose-headings:text-gray-900
-                prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4 prose-h2:scroll-mt-8 prose-h2:pb-2 prose-h2:border-b prose-h2:border-gray-200 prose-h2:text-gray-900
-                prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3 prose-h3:scroll-mt-8 prose-h3:pb-2 prose-h3:border-b prose-h3:border-gray-200 prose-h3:text-gray-900
-                prose-p:text-gray-800 prose-p:leading-relaxed prose-p:my-3
-                prose-a:text-purple-600 prose-a:underline prose-a:decoration-purple-400 prose-a:hover:text-purple-400 prose-a:hover:decoration-purple-300 prose-a:transition-colors prose-a:duration-200
-                prose-code:text-purple-600 prose-code:bg-gray-100 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:before:content-[''] prose-code:after:content-['']
+                prose-headings:font-bold prose-headings:text-gray-900 dark:prose-headings:text-white
+                prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4 prose-h2:scroll-mt-8 prose-h2:pb-2 prose-h2:border-b prose-h2:border-gray-200 dark:prose-h2:border-gray-700 prose-h2:text-gray-900 dark:prose-h2:text-white
+                prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3 prose-h3:scroll-mt-8 prose-h3:pb-2 prose-h3:border-b prose-h3:border-gray-200 dark:prose-h3:border-gray-700 prose-h3:text-gray-900 dark:prose-h3:text-white
+                prose-p:text-gray-800 dark:prose-p:text-white prose-p:leading-relaxed prose-p:my-3
+                prose-a:text-purple-600 dark:prose-a:text-white prose-a:underline prose-a:decoration-purple-400 prose-a:hover:text-purple-400 prose-a:hover:decoration-purple-300 prose-a:transition-colors prose-a:duration-200
+                prose-code:text-purple-600 dark:prose-code:text-purple-400 prose-code:bg-gray-100 dark:prose-code:bg-gray-800 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:before:content-[''] prose-code:after:content-['']
                 prose-pre:bg-gray-900 prose-pre:text-gray-100 prose-pre:overflow-x-auto prose-pre:p-1 prose-pre:rounded-lg
                 prose-ul:list-disc prose-ul:pl-6
                 prose-ol:list-decimal prose-ol:pl-6
-                prose-li:text-gray-800
-                prose-blockquote:border-l-4 prose-blockquote:border-gray-300 prose-blockquote:pl-4 prose-blockquote:italic
-                prose-strong:font-bold prose-strong:text-gray-900"
+                prose-li:text-gray-800 dark:prose-li:text-white
+                prose-blockquote:border-l-4 prose-blockquote:border-gray-300 dark:prose-blockquote:border-gray-600 prose-blockquote:pl-4 prose-blockquote:italic
+                prose-strong:font-bold prose-strong:text-gray-900 dark:prose-strong:text-white"
               /*
                 className解説（Tailwind Typography）：
                 - prose: Typographyの基本スタイル

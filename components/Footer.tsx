@@ -55,16 +55,16 @@ export default function Footer() {
 
   return (
     <>
-      <footer className="border-t border-gray-200 mt-16">
+      <footer className="border-t border-gray-200 dark:border-gray-700 mt-16">
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="max-w-5xl mx-auto flex flex-col-reverse sm:flex-row items-center justify-center gap-4 sm:gap-16">
-            <p className="text-gray-600 text-sm">
+            <p className="text-gray-600 dark:text-gray-400 text-sm">
               &copy; {currentYear} Ijima.dev. All rights reserved.
             </p>
             <button
               ref={triggerButtonRef}
               onClick={() => setIsModalOpen(true)}
-              className="text-sm text-gray-600 hover:text-gray-900 cursor-pointer"
+              className="text-sm text-gray-600 dark:text-gray-400 hover:text-purple-400 dark:hover:text-purple-400 cursor-pointer transition-colors duration-200"
               aria-haspopup="dialog"
             >
               このサイトについて
@@ -76,7 +76,7 @@ export default function Footer() {
       {/* モーダル */}
       {isModalOpen && (
         <div
-          className="fixed inset-0 bg-gray-900/40 flex items-center justify-center z-50"
+          className="fixed inset-0 bg-gray-900/40 dark:bg-gray-900/60 flex items-center justify-center z-50"
           onClick={closeModal}
           onKeyDown={handleKeyDown}
           role="dialog"
@@ -84,23 +84,23 @@ export default function Footer() {
           aria-labelledby="modal-title"
         >
           <div
-            className="bg-white rounded-lg p-8 max-w-md mx-4"
+            className="bg-white dark:bg-gray-800 rounded-lg p-8 max-w-md mx-4"
             onClick={(e) => e.stopPropagation()}
           >
             <h2
               id="modal-title"
-              className="text-2xl font-bold text-gray-900 mb-4"
+              className="text-2xl font-bold text-gray-900 dark:text-white mb-4"
             >
               このサイトについて
             </h2>
-            <p className="text-gray-700 mb-6">
+            <p className="text-gray-700 dark:text-gray-300 mb-6">
               飯嶋が自己満で記事を書くサイトです。
             </p>
             <div className="flex justify-end">
               <button
                 ref={closeButtonRef}
                 onClick={closeModal}
-                className="bg-gray-900 text-white px-4 py-2 rounded hover:bg-gray-700 transition-colors cursor-pointer"
+                className="bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white px-6 py-2 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-200 cursor-pointer"
               >
                 閉じる
               </button>
