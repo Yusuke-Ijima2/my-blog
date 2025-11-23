@@ -89,9 +89,8 @@ The `lib/posts.ts` file handles all Markdown processing:
 
 ### Routing Structure
 
-- `/` - Root page that redirects to `/blog` using `redirect()` (app/page.tsx)
-- `/blog` - Article listing page (app/blog/page.tsx)
-- `/blog/[slug]` - Article detail pages (app/blog/[slug]/page.tsx)
+- `/` - Root page (article listing) (app/page.tsx)
+- `/[slug]` - Article detail pages (app/[slug]/page.tsx)
 
 The `[slug]` dynamic route uses `generateStaticParams()` to pre-render all articles at build time, with `dynamicParams = false` to ensure only statically generated paths are valid.
 
@@ -110,8 +109,8 @@ All pages use a consistent two-tier layout structure for alignment:
 This structure is used in:
 - Header (`components/Header.tsx`)
 - Footer (`components/Footer.tsx`)
-- Blog listing (`app/blog/page.tsx`)
-- Article detail pages (`app/blog/[slug]/page.tsx`)
+- Article listing (`app/page.tsx`)
+- Article detail pages (`app/[slug]/page.tsx`)
 
 ### Table of Contents
 
@@ -123,12 +122,31 @@ Article detail pages include a client-side table of contents (`components/TableO
 
 ### Typography and Styling
 
+**Tailwind CSS v4 Configuration:**
+- Uses new CSS-first configuration via `app/globals.css`
+- No `tailwind.config.ts` required
+- Import: `@import "tailwindcss"` and `@plugin "@tailwindcss/typography"`
+- Theme variables defined with `@theme inline` directive
+
+**Dark Mode Implementation:**
+- Uses class-based dark mode (`.dark` class on `<html>`)
+- Background: Gray (#1f2937) instead of pure black for better readability
+- Text: White (#ffffff) for maximum contrast
+- **Important:** Tailwind's utility classes (`dark:text-white`) may not work in v4. Use direct CSS selectors in `globals.css`:
+  ```css
+  .dark h1, .dark h2, .dark p, .dark a {
+    color: #ffffff !important;
+  }
+  ```
+- System preference support via `@media (prefers-color-scheme: dark)`
+
+**Typography:**
 Articles use Tailwind Typography (`@tailwindcss/typography`) with extensive customization:
 - Code blocks: `prose-pre:bg-gray-900 prose-pre:text-gray-100 prose-pre:p-1`
 - Inline code: `prose-code:text-pink-600 prose-code:bg-gray-100`
 - Headings: `prose-h2:scroll-mt-8` for proper anchor link scrolling
 - Syntax highlighting: GitHub Dark theme via highlight.js (local)
-- Font: Noto Sans JP with `display: swap` and `preload: true` for optimal performance
+- Font: System font stack (no external fonts) for optimal performance
 
 ### Link Cards
 
@@ -238,7 +256,9 @@ Updates blog post descriptions automatically from the first paragraph content.
 - **Metadata**: Comprehensive Open Graph and Twitter Card metadata in `app/layout.tsx`
 
 ### Performance Optimizations
-- **Font Loading**: Noto Sans JP with `display: swap` and `preload: true` (FOUT prevention)
+- **Font Loading**: System font stack (no external font requests)
+  - Stack: `ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", Meiryo, sans-serif`
+  - Zero network requests for fonts, instant text rendering
 - **Image Optimization**: WebP format for all images (typically 60-70% size reduction)
   - Conversion script: `scripts/convert-to-webp.mjs`
 - **Syntax Highlighting**: Local highlight.js (no CDN dependency)
