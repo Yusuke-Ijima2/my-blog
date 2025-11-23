@@ -10,6 +10,8 @@
 import { getAllPostSlugs } from '@/lib/posts';
 import type { MetadataRoute } from 'next';
 
+export const dynamic = 'force-static';
+
 /**
  * サイトマップを生成する関数
  * ビルド時に自動的に呼び出され、/sitemap.xmlとして出力されます
@@ -22,7 +24,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // 記事ページのURLを生成
   const blogPosts = postSlugs.map((slug) => ({
-    url: `${baseUrl}/blog/${slug}`,
+    url: `${baseUrl}/${slug}`,
     lastModified: new Date(),
     changeFrequency: 'monthly' as const,
     priority: 0.8,
@@ -35,12 +37,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: 'weekly' as const,
       priority: 1,
-    },
-    {
-      url: `${baseUrl}/blog`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 0.9,
     },
   ];
 

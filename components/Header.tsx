@@ -27,7 +27,7 @@ export default function Header() {
         <div className="max-w-5xl mx-auto flex items-center justify-between">
           {/* サイトロゴ/タイトル - 記事一覧ページへのリンク */}
           <Link
-            href="/blog"
+            href="/"
             className="text-2xl font-bold text-gray-900 hover:text-gray-700"
           >
             Ijima.dev

@@ -2,13 +2,13 @@
  * [slug]/page.tsx - 記事詳細ページ（動的ルート）
  *
  * このページの役割：
- * 1. 個別の記事を表示（URL: /blog/記事slug）
+ * 1. 個別の記事を表示（URL: /記事slug）
  * 2. マークダウンをHTMLに変換して表示
  * 3. ビルド時に全記事のページを静的生成
  *
  * 動的ルートの仕組み：
  * - ファイル名の[slug]は動的パラメータ
- * - 例: /blog/nextjs-static-export → slug = "nextjs-static-export"
+ * - 例: /claude-code-custom-commit-command → slug = "claude-code-custom-commit-command"
  * - generateStaticParams()で生成するページのパスを指定
  *
  * 静的生成（Static Site Generation）：
@@ -56,7 +56,7 @@ export const dynamicParams = false;
  * 2. 各slugをオブジェクトに変換して返す
  *    例: [{ slug: "nextjs-static-export" }, { slug: "typescript-type-safety" }, ...]
  * 3. Next.jsが各slugに対してページを生成
- *    例: /blog/nextjs-static-export.html, /blog/typescript-type-safety.html, ...
+ *    例: /nextjs-static-export.html, /typescript-type-safety.html, ...
  */
 export async function generateStaticParams() {
   // 全記事のslugを取得
@@ -165,7 +165,7 @@ export default async function BlogPost({ params }: PageProps) {
       <div className="max-w-5xl mx-auto">
         {/* 記事一覧に戻るリンク */}
         <Link
-          href="/blog"
+          href="/"
           className="text-gray-600 hover:text-purple-400 mb-8 inline-block transition-colors duration-200"
         >
           ← 記事一覧へ
