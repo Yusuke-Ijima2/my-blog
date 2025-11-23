@@ -7,7 +7,7 @@
 
 import { ImageResponse } from 'next/og';
 
-export const runtime = 'edge';
+export const dynamic = 'force-static';
 export const alt = 'Ijima.dev - 技術ブログ';
 export const size = {
   width: 1200,
