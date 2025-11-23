@@ -21,10 +21,60 @@
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
 
 # キャッシュ設定（静的アセット）
+# アイコン・ファビコン（1年）
 /icon.svg
   Cache-Control: public, max-age=31536000, immutable
 
+# Next.jsビルド成果物（1年・immutable）
 /_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# 画像ファイル（1年）
+/*.png
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.jpg
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.jpeg
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.svg
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.gif
+  Cache-Control: public, max-age=31536000, immutable
+
+# 記事内の画像（posts/配下）
+/posts/*/*.png
+  Cache-Control: public, max-age=31536000, immutable
+
+/posts/*/*.jpg
+  Cache-Control: public, max-age=31536000, immutable
+
+/posts/*/*.jpeg
+  Cache-Control: public, max-age=31536000, immutable
+
+/posts/*/*.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/posts/*/*.svg
+  Cache-Control: public, max-age=31536000, immutable
+
+# フォントファイル（1年）
+/*.woff
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.woff2
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.ttf
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.otf
   Cache-Control: public, max-age=31536000, immutable
 
 # HTMLはキャッシュしない（更新を即座に反映）
