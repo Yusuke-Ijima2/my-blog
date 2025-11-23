@@ -61,9 +61,9 @@ export default function Home() {
                 {/* 記事タイトル（クリック可能） */}
                 <Link href={`/blog/${post.slug}`} className="group">
                   {/* group: 子要素でhover時のスタイル変更を可能にする */}
-                  <h3 className="text-2xl font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
-                    {/* group-hover:text-blue-600: タイトルにホバー時に青色に変更 */}
-                    {/* transition-colors: 色変化をスムーズにアニメーション */}
+                  <h3 className="text-2xl font-semibold text-gray-900 mb-2 group-hover:text-purple-400 transition-colors duration-200">
+                    {/* group-hover:text-purple-400: タイトルにホバー時に薄い紫色に変更 */}
+                    {/* transition-colors duration-200: 色変化を200msでスムーズにアニメーション */}
                     {post.title}
                   </h3>
                 </Link>

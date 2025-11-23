@@ -34,7 +34,8 @@ body {
     color: #b8c0cc;
     padding: 0.25rem 0.75rem;
     font-size: 0.8125rem;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+      monospace;
     border-radius: 0.5rem 0.5rem 0 0;
     border-bottom: 1px solid #30363d;
   }

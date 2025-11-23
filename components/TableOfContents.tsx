@@ -71,10 +71,10 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
           >
             <a
               href={`#${heading.id}`}
-              className={`transition-colors ${
+              className={`transition-colors duration-200 ${
                 activeId === heading.id
-                  ? 'text-blue-600 font-medium'
-                  : 'text-gray-600 hover:text-gray-900'
+                  ? 'text-purple-500 font-medium'
+                  : 'text-gray-600 hover:text-purple-400'
               }`}
             >
               {heading.text}
