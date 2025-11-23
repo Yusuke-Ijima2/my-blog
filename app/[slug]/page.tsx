@@ -214,8 +214,8 @@ export default async function BlogPost({ params }: PageProps) {
             <div
               className="prose prose-lg max-w-none
                 prose-headings:font-bold prose-headings:text-gray-900 dark:prose-headings:text-white
-                prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4 prose-h2:scroll-mt-8 prose-h2:pb-2 prose-h2:border-b prose-h2:border-gray-200 dark:prose-h2:border-gray-700 prose-h2:text-gray-900 dark:prose-h2:text-white
-                prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3 prose-h3:scroll-mt-8 prose-h3:pb-2 prose-h3:border-b prose-h3:border-gray-200 dark:prose-h3:border-gray-700 prose-h3:text-gray-900 dark:prose-h3:text-white
+                prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4 prose-h2:scroll-mt-8 prose-h2:pb-1 prose-h2:border-b prose-h2:border-gray-200 dark:prose-h2:border-gray-700 prose-h2:text-gray-900 dark:prose-h2:text-white
+                prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3 prose-h3:scroll-mt-8 prose-h3:text-gray-900 dark:prose-h3:text-white
                 prose-p:text-gray-800 dark:prose-p:text-white prose-p:leading-relaxed prose-p:my-3
                 prose-a:text-purple-600 dark:prose-a:text-white prose-a:underline prose-a:decoration-purple-400 prose-a:hover:text-purple-400 prose-a:hover:decoration-purple-300 prose-a:transition-colors prose-a:duration-200
                 prose-code:text-purple-600 dark:prose-code:text-purple-400 prose-code:bg-gray-100 dark:prose-code:bg-gray-800 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:before:content-[''] prose-code:after:content-['']
