@@ -23,7 +23,6 @@ import { getAllPostSlugs, getPostBySlug } from "@/lib/posts"; // 記事データ
 import TableOfContents from "@/components/TableOfContents"; // 目次コンポーネント
 import CodeCopyButton from "@/components/CodeCopyButton"; // コードコピーボタン
 import JsonLd from "@/components/JsonLd"; // 構造化データコンポーネント
-import "highlight.js/styles/github-dark.css"; // シンタックスハイライトのスタイル（記事ページでのみ読み込み）
 
 /**
  * PageProps - ページコンポーネントのprops型定義
