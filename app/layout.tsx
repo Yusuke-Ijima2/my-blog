@@ -16,20 +16,24 @@
 import type { Metadata } from "next"; // Next.jsのメタデータ型定義
 import { Noto_Sans_JP } from "next/font/google"; // Google Fontsからフォントをインポート
 import "./globals.css"; // グローバルスタイル（Tailwind CSS、Typography設定など）
+import "highlight.js/styles/github-dark.css"; // highlight.jsのスタイル（ローカル）
 import Header from "@/components/Header"; // ヘッダーコンポーネント
 import Footer from "@/components/Footer"; // フッターコンポーネント
 
 /**
  * Noto Sans JP フォントの設定
  * - variable: CSS変数名（--font-noto-sans-jp）
- * - subsets: 読み込むフォントのサブセット（japanese: 日本語、latin: 英数字）
- * - weight: フォントの太さ（400: 通常、700: 太字）
+ * - subsets: 読み込むフォントのサブセット（japanese: 日本語を含む）
+ * - weight: フォントの太さ（400: 通常、500: 中太、700: 太字）
+ * - display: swap - フォント読み込み中もテキストを表示（FOUT対策）
  * - このフォントはサイト全体の本文に使用されます
  */
 const notoSansJP = Noto_Sans_JP({
   variable: "--font-noto-sans-jp",
   subsets: ["latin"],
   weight: ["400", "500", "700"],
+  display: "swap",
+  preload: true,
 });
 
 /**
@@ -39,9 +43,30 @@ const notoSansJP = Noto_Sans_JP({
  * - SEO（検索エンジン最適化）に重要
  */
 export const metadata: Metadata = {
-  title: "Ijima.dev", // ブラウザのタブに表示されるタイトル
+  metadataBase: new URL('https://ijima.dev'),
+  title: {
+    default: "Ijima.dev",
+    template: "%s | Ijima.dev",
+  },
   description:
-    "技術ブログ - Next.js, TypeScript, Tailwind CSSなどの技術記事を発信", // 検索結果に表示される説明文
+    "技術ブログ - Next.js, TypeScript, Tailwind CSSなどの技術記事を発信",
+  openGraph: {
+    type: 'website',
+    locale: 'ja_JP',
+    url: 'https://ijima.dev',
+    siteName: 'Ijima.dev',
+    title: 'Ijima.dev',
+    description: '技術ブログ - Next.js, TypeScript, Tailwind CSSなどの技術記事を発信',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Ijima.dev',
+    description: '技術ブログ - Next.js, TypeScript, Tailwind CSSなどの技術記事を発信',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 /**
@@ -69,18 +94,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
-      <head>
-        {/*
-          highlight.jsのCSSを読み込み
-          - シンタックスハイライト用のスタイル
-          - github-darkテーマを使用（暗めの背景）
-          - CDNから読み込むことで高速化
-        */}
-        <link
-          rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"
-        />
-      </head>
       <body
         className={`${notoSansJP.variable} antialiased flex flex-col min-h-screen`}
         suppressHydrationWarning={true}
