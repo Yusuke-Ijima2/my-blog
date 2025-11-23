@@ -58,6 +58,9 @@ export default function Footer() {
       <footer className="border-t border-gray-200 mt-16">
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-16">
+            <p className="text-gray-600 text-sm">
+              &copy; {currentYear} Ijima.dev. All rights reserved.
+            </p>
             <button
               ref={triggerButtonRef}
               onClick={() => setIsModalOpen(true)}
@@ -66,9 +69,6 @@ export default function Footer() {
             >
               このサイトについて
             </button>
-            <p className="text-gray-600 text-sm">
-              &copy; {currentYear} Ijima.dev. All rights reserved.
-            </p>
           </div>
         </div>
       </footer>
