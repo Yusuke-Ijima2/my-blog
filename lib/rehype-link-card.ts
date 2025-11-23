@@ -125,6 +125,8 @@ function createLinkCardElement(ogp: OgpData): Element {
           className: ["link-card-favicon"],
           width: 16,
           height: 16,
+          loading: "lazy", // 遅延読み込み
+          decoding: "async", // 非同期デコード
         },
         children: [],
       },
@@ -157,6 +159,8 @@ function createLinkCardElement(ogp: OgpData): Element {
           properties: {
             src: ogp.image,
             alt: ogp.title,
+            loading: "lazy", // 遅延読み込み - 画面に表示されるまで読み込まない
+            decoding: "async", // 非同期デコード - 他のコンテンツのレンダリングをブロックしない
           },
           children: [],
         },
