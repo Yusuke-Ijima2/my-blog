@@ -20,9 +20,14 @@
 import { notFound } from "next/navigation"; // 404ページを表示する関数
 import Link from "next/link"; // Next.jsのクライアントサイドルーティング用Linkコンポーネント
 import { getAllPostSlugs, getPostBySlug } from "@/lib/posts"; // 記事データ取得関数
-import TableOfContents from "@/components/TableOfContents"; // 目次コンポーネント
-import CodeCopyButton from "@/components/CodeCopyButton"; // コードコピーボタン
+import dynamic from "next/dynamic"; // 動的インポート
 import JsonLd from "@/components/JsonLd"; // 構造化データコンポーネント
+
+// CodeCopyButtonを遅延ロード（初期表示に不要、TBT改善のため）
+const CodeCopyButton = dynamic(() => import("@/components/CodeCopyButton"));
+
+// TableOfContentsを遅延ロード（XL以上でのみ表示、TBT改善のため）
+const TableOfContents = dynamic(() => import("@/components/TableOfContents"));
 
 /**
  * PageProps - ページコンポーネントのprops型定義
