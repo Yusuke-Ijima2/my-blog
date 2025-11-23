@@ -23,7 +23,10 @@
 # misc
 .DS_Store
 *.pem
+
+# MCP tools temporary files
 .playwright-mcp/
+lighthouse-*.json
 
 # debug
 npm-debug.log*
