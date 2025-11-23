@@ -69,6 +69,15 @@ const nextConfig: NextConfig = {
     optimizePackageImports: ['react', 'react-dom'],
   },
 
+  /**
+   * compiler.removeConsole - 本番ビルドでconsoleを削除
+   *
+   * 本番環境でconsole.log等を自動削除し、バンドルサイズを削減します。
+   */
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
+
   /*
     その他の設定例（必要に応じて追加可能）：
 
