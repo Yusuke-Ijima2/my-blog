@@ -67,6 +67,7 @@ const nextConfig: NextConfig = {
    */
   experimental: {
     optimizePackageImports: ['react', 'react-dom'],
+    optimizeCss: true, // CSSの最適化を有効化してLighthouse警告を改善
   },
 
   /**
