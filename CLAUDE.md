@@ -64,9 +64,39 @@ description: "Article description for listing pages"
 ## Content here...
 ```
 
+### Directory Structure: App Router Colocation
+
+This project follows Next.js App Router colocation patterns:
+
+```
+app/
+├── _components/              # App-wide shared components
+│   ├── Header.tsx
+│   ├── Footer.tsx
+│   ├── Modal.tsx
+│   ├── ThemeToggle.tsx
+│   └── JsonLd.tsx
+├── _lib/                     # App-wide utilities
+│   ├── posts.ts             # Markdown processing
+│   └── rehype-link-card.ts  # Link card plugin
+├── [slug]/
+│   ├── _components/         # Route-specific components
+│   │   ├── TableOfContents.tsx
+│   │   └── CodeCopyButton.tsx
+│   └── page.tsx
+├── page.tsx
+└── layout.tsx
+```
+
+**Benefits:**
+- Related code is colocated near usage
+- `_` prefix prevents routing (Next.js convention)
+- Route-specific components are clearly separated
+- Follows Next.js App Router best practices
+
 ### Markdown Processing Pipeline
 
-The `lib/posts.ts` file handles all Markdown processing:
+The `app/_lib/posts.ts` file handles all Markdown processing:
 
 1. **Read**: Read `index.md` from `public/posts/{slug}/`
 2. **Parse**: Extract frontmatter with `gray-matter`
@@ -107,14 +137,14 @@ All pages use a consistent two-tier layout structure for alignment:
 ```
 
 This structure is used in:
-- Header (`components/Header.tsx`)
-- Footer (`components/Footer.tsx`)
+- Header (`app/_components/Header.tsx`)
+- Footer (`app/_components/Footer.tsx`)
 - Article listing (`app/page.tsx`)
 - Article detail pages (`app/[slug]/page.tsx`)
 
 ### Table of Contents
 
-Article detail pages include a client-side table of contents (`components/TableOfContents.tsx`) that:
+Article detail pages include a client-side table of contents (`app/[slug]/_components/TableOfContents.tsx`) that:
 - Extracts h2/h3 headings from the article DOM after mount
 - Displays in a sticky sidebar on XL+ screens (`hidden xl:block w-64 shrink-0`)
 - Uses `rehypeSlug` to ensure headings have IDs for anchor links
@@ -156,7 +186,7 @@ URL を単独行で記述すると、自動的にOGP情報付きのリンクカ�
 https://example.com/article
 ```
 
-- `lib/rehype-link-card.ts` が unfurl.js を使用してOGPデータを取得
+- `app/_lib/rehype-link-card.ts` が unfurl.js を使用してOGPデータを取得
 - タイトル、サムネイル画像、URLをカード形式で表示
 - スタイルは `app/globals.css` の `.link-card` クラスで定義
 - 外部サービスのNext.js Image Optimization URL (`/_next/image?url=...`) を検出した場合、元の画像URLを自動抽出
@@ -252,7 +282,7 @@ Updates blog post descriptions automatically from the first paragraph content.
 - **robots.txt**: Search engine crawl control at `public/robots.txt`
 - **sitemap.xml**: Dynamically generated at build time via `app/sitemap.ts`
 - **OGP Images**: Dynamically generated via `app/opengraph-image.tsx` for social media previews
-- **Structured Data**: JSON-LD BlogPosting schema via `components/JsonLd.tsx` for rich snippets
+- **Structured Data**: JSON-LD BlogPosting schema via `app/_components/JsonLd.tsx` for rich snippets
 - **Metadata**: Comprehensive Open Graph and Twitter Card metadata in `app/layout.tsx`
 
 ### Performance Optimizations
