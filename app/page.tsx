@@ -38,7 +38,7 @@ export default function Home() {
       {/* 記事一覧セクション */}
       <section className="max-w-5xl mx-auto">
         {/* セクションタイトル */}
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-8 transition-colors duration-200">記事一覧</h2>
+        <h2 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-8 transition-colors duration-200">記事一覧</h2>
 
         {/* 記事がない場合のメッセージ */}
         {posts.length === 0 ? (
@@ -61,7 +61,7 @@ export default function Home() {
                 {/* 記事タイトル（クリック可能） */}
                 <Link href={`/${post.slug}`} className="group">
                   {/* group: 子要素でhover時のスタイル変更を可能にする */}
-                  <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-purple-400 transition-colors duration-200">
+                  <h3 className="text-xl md:text-2xl font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-purple-400 transition-colors duration-200">
                     {/* group-hover:text-purple-400: タイトルにホバー時に薄い紫色に変更 */}
                     {/* transition-colors duration-200: 色変化を200msでスムーズにアニメーション */}
                     {post.title}

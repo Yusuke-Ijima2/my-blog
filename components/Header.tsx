@@ -29,7 +29,7 @@ export default function Header() {
           {/* サイトロゴ/タイトル - 記事一覧ページへのリンク */}
           <Link
             href="/"
-            className="text-2xl font-bold text-gray-900 dark:text-white hover:text-purple-400 transition-colors duration-200"
+            className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white hover:text-purple-400 transition-colors duration-200"
           >
             Ijima.dev
           </Link>

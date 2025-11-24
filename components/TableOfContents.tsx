@@ -62,8 +62,8 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
 
   return (
     <nav className="sticky top-8">
-      <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4">目次</h2>
-      <ul className="space-y-2 text-base">
+      <h2 className="text-base md:text-lg font-bold text-gray-900 dark:text-white mb-4">目次</h2>
+      <ul className="space-y-2 text-sm md:text-base">
         {headings.map((heading) => (
           <li
             key={heading.id}

@@ -95,7 +95,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className="antialiased flex flex-col min-h-screen"
+        className="antialiased flex flex-col min-h-screen text-sm md:text-base"
         suppressHydrationWarning={true}
         // suppressHydrationWarning:
         // - ブラウザ拡張機能（ColorZilla、Grammarly等）がbodyタグに属性を追加するため

@@ -185,7 +185,7 @@ export default async function BlogPost({ params }: PageProps) {
             {/* 記事ヘッダー */}
             <header className="mb-8">
               {/* 記事タイトル */}
-              <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+              <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
                 {post.title}
               </h1>
               {/* 公開日 */}
@@ -212,10 +212,10 @@ export default async function BlogPost({ params }: PageProps) {
 
             {/* 記事本文（HTMLとして表示） */}
             <div
-              className="prose prose-lg max-w-none
+              className="prose prose-sm md:prose-lg max-w-none
                 prose-headings:font-bold prose-headings:text-gray-900 prose-headings:dark:text-white
-                prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4 prose-h2:scroll-mt-8 prose-h2:pb-1 prose-h2:border-b prose-h2:border-gray-200 prose-h2:dark:border-gray-700 prose-h2:text-gray-900 prose-h2:dark:text-white
-                prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3 prose-h3:scroll-mt-8 prose-h3:text-gray-900 prose-h3:dark:text-white
+                prose-h2:text-2xl md:prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4 prose-h2:scroll-mt-8 prose-h2:pb-1 prose-h2:border-b prose-h2:border-gray-200 prose-h2:dark:border-gray-700 prose-h2:text-gray-900 prose-h2:dark:text-white
+                prose-h3:text-xl md:prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3 prose-h3:scroll-mt-8 prose-h3:text-gray-900 prose-h3:dark:text-white
                 prose-p:text-gray-800 prose-p:dark:text-white prose-p:leading-relaxed prose-p:my-3
                 prose-a:text-purple-600 prose-a:dark:text-white prose-a:underline prose-a:decoration-purple-400 prose-a:hover:text-purple-400 prose-a:hover:decoration-purple-300 prose-a:transition-colors prose-a:duration-200
                 prose-code:text-purple-600 prose-code:dark:text-purple-400 prose-code:bg-gray-100 prose-code:dark:bg-gray-800 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:before:content-[''] prose-code:after:content-['']

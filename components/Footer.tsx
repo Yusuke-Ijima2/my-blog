@@ -89,7 +89,7 @@ export default function Footer() {
           >
             <h2
               id="modal-title"
-              className="text-2xl font-bold text-gray-900 dark:text-white mb-4"
+              className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-4"
             >
               このサイトについて
             </h2>

@@ -26,13 +26,20 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   /* システムフォントスタック - 外部フォント読み込みなしで高速表示 */
-  --font-sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", Meiryo, sans-serif;
+  --font-sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", Meiryo,
+    sans-serif;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", Meiryo, sans-serif;
+/* ベーススタイルの定義 */
+@layer base {
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
+      "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", Meiryo,
+      sans-serif;
+  }
 }
 
 /* コードブロックのファイル名表示 */
@@ -77,7 +84,6 @@ body {
     border-bottom-right-radius: 0.375rem !important;
   }
 }
-
 
 /* highlight.js GitHub Dark テーマ - インライン化してレンダリングブロックを削減 */
 pre code.hljs {
@@ -319,7 +325,7 @@ details[open] summary {
 
 /* 三角形アイコンをカスタマイズ */
 summary::before {
-  content: '▶';
+  content: "▶";
   display: inline-block;
   color: #9333ea;
   font-size: 0.75rem;
@@ -435,4 +441,3 @@ details[open] strong {
 .dark details[open] strong {
   color: #ffffff;
 }
-
