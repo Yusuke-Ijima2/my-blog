@@ -9,7 +9,8 @@
 
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
+import Modal from "./Modal";
 
 /**
  * Footer - グローバルフッターコンポーネント
@@ -18,8 +19,6 @@ import { useState, useRef, useEffect } from "react";
  * - 上部にボーダー（border-t）で区切り線
  * - 上部マージン（mt-16）でコンテンツとの間隔を確保
  * - コピーライトと「このサイトについて」ボタン
- *
- * @returns {JSX.Element} フッターのJSX
  */
 export default function Footer() {
   // 現在の年を取得（コピーライト表示用）
@@ -28,14 +27,6 @@ export default function Footer() {
 
   // アクセシビリティ用のref
   const triggerButtonRef = useRef<HTMLButtonElement>(null);
-  const closeButtonRef = useRef<HTMLButtonElement>(null);
-
-  // モーダルが開いたら閉じるボタンにフォーカス
-  useEffect(() => {
-    if (!isModalOpen) return;
-
-    closeButtonRef.current?.focus();
-  }, [isModalOpen]);
 
   // モーダルを閉じる処理（元のボタンにフォーカスを戻す）
   const closeModal = () => {
@@ -44,13 +35,6 @@ export default function Footer() {
     setTimeout(() => {
       triggerButtonRef.current?.focus();
     }, 0);
-  };
-
-  // Escキーでモーダルを閉じる
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Escape") {
-      closeModal();
-    }
   };
 
   return (
@@ -74,40 +58,13 @@ export default function Footer() {
       </footer>
 
       {/* モーダル */}
-      {isModalOpen && (
-        <div
-          className="fixed inset-0 bg-gray-900/40 dark:bg-gray-900/60 flex items-center justify-center z-50"
-          onClick={closeModal}
-          onKeyDown={handleKeyDown}
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="modal-title"
-        >
-          <div
-            className="bg-white dark:bg-gray-800 rounded-lg p-8 max-w-md mx-4"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h2
-              id="modal-title"
-              className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-4"
-            >
-              このサイトについて
-            </h2>
-            <p className="text-gray-700 dark:text-gray-300 mb-6">
-              飯嶋が自己満で記事を書くサイトです。
-            </p>
-            <div className="flex justify-end">
-              <button
-                ref={closeButtonRef}
-                onClick={closeModal}
-                className="bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white px-6 py-2 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-200 cursor-pointer"
-              >
-                閉じる
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <Modal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        title="このサイトについて"
+      >
+        <p>飯嶋が自己満で記事を書くサイトです。</p>
+      </Modal>
     </>
   );
 }
