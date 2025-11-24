@@ -15,8 +15,8 @@
 
 import type { Metadata } from "next"; // Next.jsのメタデータ型定義
 import "./globals.css"; // グローバルスタイル（Tailwind CSS、Typography設定など）
-import Header from "@/components/Header"; // ヘッダーコンポーネント
-import Footer from "@/components/Footer"; // フッターコンポーネント
+import Header from "@/app/_components/Header"; // ヘッダーコンポーネント
+import Footer from "@/app/_components/Footer"; // フッターコンポーネント
 
 /**
  * グローバルメタデータ

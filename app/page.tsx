@@ -12,7 +12,7 @@
  */
 
 import Link from "next/link"; // Next.jsのクライアントサイドルーティング用Linkコンポーネント
-import { getAllPosts } from "@/lib/posts"; // 記事一覧を取得する関数
+import { getAllPosts } from "@/app/_lib/posts"; // 記事一覧を取得する関数
 
 /**
  * Home - トップページコンポーネント

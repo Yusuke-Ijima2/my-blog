@@ -10,7 +10,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import type { Heading } from '@/lib/posts';
+import type { Heading } from '@/app/_lib/posts';
 
 interface TableOfContentsProps {
   headings: Heading[];

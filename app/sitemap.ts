@@ -7,7 +7,7 @@
  * 参考: https://nextjs.org/docs/app/api-reference/file-conventions/metadata/sitemap
  */
 
-import { getAllPostSlugs } from '@/lib/posts';
+import { getAllPostSlugs } from '@/app/_lib/posts';
 import type { MetadataRoute } from 'next';
 
 export const dynamic = 'force-static';

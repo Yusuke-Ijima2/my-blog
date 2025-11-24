@@ -19,15 +19,15 @@
 
 import { notFound } from "next/navigation"; // 404ページを表示する関数
 import Link from "next/link"; // Next.jsのクライアントサイドルーティング用Linkコンポーネント
-import { getAllPostSlugs, getPostBySlug } from "@/lib/posts"; // 記事データ取得関数
+import { getAllPostSlugs, getPostBySlug } from "@/app/_lib/posts"; // 記事データ取得関数
 import dynamic from "next/dynamic"; // 動的インポート
-import JsonLd from "@/components/JsonLd"; // 構造化データコンポーネント
+import JsonLd from "@/app/_components/JsonLd"; // 構造化データコンポーネント
 
 // CodeCopyButtonを遅延ロード（初期表示に不要、TBT改善のため）
-const CodeCopyButton = dynamic(() => import("@/components/CodeCopyButton"));
+const CodeCopyButton = dynamic(() => import("@/app/[slug]/_components/CodeCopyButton"));
 
 // TableOfContentsを遅延ロード（XL以上でのみ表示、TBT改善のため）
-const TableOfContents = dynamic(() => import("@/components/TableOfContents"));
+const TableOfContents = dynamic(() => import("@/app/[slug]/_components/TableOfContents"));
 
 /**
  * PageProps - ページコンポーネントのprops型定義
