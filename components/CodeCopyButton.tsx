@@ -23,23 +23,42 @@ export default function CodeCopyButton() {
       // コピーボタンを作成
       const button = document.createElement('button');
       button.className = 'copy-button';
-      button.textContent = 'Copy';
       button.setAttribute('aria-label', 'コードをコピー');
+
+      // ファイルアイコン（初期状態）
+      const fileIcon = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+          <polyline points="13 2 13 9 20 9"></polyline>
+        </svg>
+      `;
+
+      // チェックアイコン（コピー成功時）
+      const checkIcon = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+          <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+      `;
+
+      button.innerHTML = fileIcon;
 
       // スタイルを適用
       button.style.cssText = `
         position: absolute;
-        top: 0.5rem;
-        right: 0.5rem;
-        padding: 0.25rem 0.5rem;
-        font-size: 0.75rem;
+        top: 0.75rem;
+        right: 0.75rem;
+        padding: 0.5rem;
         background-color: #30363d;
         color: #c9d1d9;
         border: none;
-        border-radius: 0.25rem;
+        border-radius: 0.5rem;
         cursor: pointer;
         opacity: 0;
-        transition: opacity 0.2s;
+        transition: opacity 0.2s, background-color 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       `;
 
       // preタグをrelative positionに
@@ -61,17 +80,17 @@ export default function CodeCopyButton() {
 
         try {
           await navigator.clipboard.writeText(text);
-          button.textContent = 'Copied!';
+          button.innerHTML = checkIcon;
           button.style.backgroundColor = '#238636';
 
           setTimeout(() => {
-            button.textContent = 'Copy';
+            button.innerHTML = fileIcon;
             button.style.backgroundColor = '#30363d';
           }, 2000);
         } catch {
-          button.textContent = 'Failed';
+          // エラー時もファイルアイコンに戻す
           setTimeout(() => {
-            button.textContent = 'Copy';
+            button.innerHTML = fileIcon;
           }, 2000);
         }
       });
