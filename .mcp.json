@@ -4,16 +4,6 @@
       "command": "npx",
       "args": ["-y", "next-devtools-mcp@latest"]
     },
-    "playwright": {
-      "type": "stdio",
-      "command": "npx",
-      "args": [
-        "@playwright/mcp@latest",
-        "--headless",
-        "--image-responses",
-        "omit"
-      ]
-    },
     "chrome-devtools": {
       "command": "npx",
       "args": ["-y", "chrome-devtools-mcp@latest"]
