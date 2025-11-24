@@ -108,6 +108,60 @@ https://tech.pepabo.com/2023/08/28/stopped-to-use-gitmoji/
 
 最終的に英語に修正して使うのでつけています。英語にすることで少しだけトークン消費を抑えられ、少しだけ賢くなるらしい... 体感はしたことないです。
 
+<details>
+
+<summary>英語版</summary>
+
+````md
+---
+description: Git差分を分析して適切な粒度でコミットを作成
+---
+
+## Execution Steps
+
+1. Analyze changes with `git status` and `git diff`
+2. Report any potential issues or concerns in the diff and do not commit
+3. Group commits based on the following criteria:
+   - 1 commit = 1 logical change
+   - Dependent changes in the same commit
+4. Present commit plan in table format and **execute directly without asking for user confirmation**
+
+## Commit Message Format
+
+```
+
+<emoji> <prefix>: <subject>
+
+[body: explain the reason for the change]
+
+```
+
+**<emoji> <prefix> List:**
+
+- ✨ feat: introduce new features
+- 🐛 fix: fix bugs
+- ⚡️ perf: improve performance
+- ♻️ refactor: refactor code
+- 🔥 remove: remove code or files
+- 💄 style: add or update UI and style files
+- 🚸 ux: improve user experience/usability
+- ♿️ a11y: improve accessibility
+- 📝 docs: add or update documentation
+- 💡 comment: add or update comments in source code
+- ✏️ typo: fix typos
+- 🤡 mock: create mocks
+- 🏷️ types: add or update types
+
+**Rules:**
+
+- subject: concisely describe the change within 50 characters
+- body: explain the reason ("why") for the change in detail
+- **After executing this command, return to normal mode and do not automatically commit until the user explicitly runs `/commit`**
+- **Write all commit messages in Japanese.**
+````
+
+</details>
+
 ## 終わりに
 
 AI にコミットメッセージを考えさせるのは少し心配ですが、自分で書くよりよっぽどいいメッセージを書いてくれます。セッション情報も読み取って考えてくれるので結構正確なので、私はこれからも愛用していくつもりです。
