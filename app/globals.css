@@ -1,7 +1,16 @@
+/* Declare layer order explicitly for clarity */
+@layer theme, base, components, utilities;
+
+/* Import Tailwind CSS core */
 @import "tailwindcss";
+
+/* Import plugins */
 @plugin "@tailwindcss/typography";
+
+/* Define custom variants */
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* Define CSS variables */
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -12,6 +21,7 @@
   --foreground: #ffffff;
 }
 
+/* Reference CSS variables in theme */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
