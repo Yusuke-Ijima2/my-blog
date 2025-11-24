@@ -213,18 +213,18 @@ export default async function BlogPost({ params }: PageProps) {
             {/* 記事本文（HTMLとして表示） */}
             <div
               className="prose prose-lg max-w-none
-                prose-headings:font-bold prose-headings:text-gray-900 dark:prose-headings:text-white
-                prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4 prose-h2:scroll-mt-8 prose-h2:pb-1 prose-h2:border-b prose-h2:border-gray-200 dark:prose-h2:border-gray-700 prose-h2:text-gray-900 dark:prose-h2:text-white
-                prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3 prose-h3:scroll-mt-8 prose-h3:text-gray-900 dark:prose-h3:text-white
-                prose-p:text-gray-800 dark:prose-p:text-white prose-p:leading-relaxed prose-p:my-3
-                prose-a:text-purple-600 dark:prose-a:text-white prose-a:underline prose-a:decoration-purple-400 prose-a:hover:text-purple-400 prose-a:hover:decoration-purple-300 prose-a:transition-colors prose-a:duration-200
-                prose-code:text-purple-600 dark:prose-code:text-purple-400 prose-code:bg-gray-100 dark:prose-code:bg-gray-800 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:before:content-[''] prose-code:after:content-['']
+                prose-headings:font-bold prose-headings:text-gray-900 prose-headings:dark:text-white
+                prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4 prose-h2:scroll-mt-8 prose-h2:pb-1 prose-h2:border-b prose-h2:border-gray-200 prose-h2:dark:border-gray-700 prose-h2:text-gray-900 prose-h2:dark:text-white
+                prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3 prose-h3:scroll-mt-8 prose-h3:text-gray-900 prose-h3:dark:text-white
+                prose-p:text-gray-800 prose-p:dark:text-white prose-p:leading-relaxed prose-p:my-3
+                prose-a:text-purple-600 prose-a:dark:text-white prose-a:underline prose-a:decoration-purple-400 prose-a:hover:text-purple-400 prose-a:hover:decoration-purple-300 prose-a:transition-colors prose-a:duration-200
+                prose-code:text-purple-600 prose-code:dark:text-purple-400 prose-code:bg-gray-100 prose-code:dark:bg-gray-800 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:before:content-[''] prose-code:after:content-['']
                 prose-pre:bg-gray-900 prose-pre:text-gray-100 prose-pre:overflow-x-auto prose-pre:p-1 prose-pre:rounded-lg
                 prose-ul:list-disc prose-ul:pl-6
                 prose-ol:list-decimal prose-ol:pl-6
-                prose-li:text-gray-800 dark:prose-li:text-white
-                prose-blockquote:border-l-4 prose-blockquote:border-gray-300 dark:prose-blockquote:border-gray-600 prose-blockquote:pl-4 prose-blockquote:italic
-                prose-strong:font-bold prose-strong:text-gray-900 dark:prose-strong:text-white"
+                prose-li:text-gray-800 prose-li:dark:text-white
+                prose-blockquote:border-l-4 prose-blockquote:border-gray-300 prose-blockquote:dark:border-gray-600 prose-blockquote:pl-4 prose-blockquote:italic
+                prose-strong:font-bold prose-strong:text-gray-900 prose-strong:dark:text-white"
               /*
                 className解説（Tailwind Typography）：
                 - prose: Typographyの基本スタイル
