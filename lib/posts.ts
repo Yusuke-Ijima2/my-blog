@@ -202,12 +202,12 @@ export async function getPostBySlug(slug: string): Promise<PostData | null> {
     // 8. .process(content) - 実際の変換を実行
     const processedContent = await remark()
       .use(remarkGfm) // GitHub Flavored Markdown（テーブル、タスクリストなど）
-      .use(remarkRehype) // Markdown → HTML変換
+      .use(remarkRehype, { allowDangerousHtml: true }) // Markdown → HTML変換（生のHTMLを許可）
       .use(rehypeSlug) // 見出しにID付与（目次のアンカーリンク用）
       .use(rehypeCodeTitles) // コードブロックにタイトル付与
       .use(rehypeHighlight) // コードハイライト（highlight.js使用）
       .use(rehypeLinkCard) // URL行をリンクカードに変換
-      .use(rehypeStringify) // HTML文字列化
+      .use(rehypeStringify, { allowDangerousHtml: true }) // HTML文字列化（生のHTMLを許可）
       .process(content);
 
     // 変換結果を文字列として取得
