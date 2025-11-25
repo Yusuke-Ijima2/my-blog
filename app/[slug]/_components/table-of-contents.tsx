@@ -1,5 +1,5 @@
 /**
- * TableOfContents.tsx - 記事の目次コンポーネント
+ * table-of-contents.tsx - 記事の目次コンポーネント
  *
  * 機能：
  * - ビルド時に抽出された見出しを表示（SSG）

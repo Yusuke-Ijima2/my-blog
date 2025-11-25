@@ -1,5 +1,5 @@
 /**
- * Footer.tsx - サイト全体で使用するフッターコンポーネント
+ * footer.tsx - サイト全体で使用するフッターコンポーネント
  *
  * 機能：
  * - コピーライト表示
@@ -10,7 +10,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import Modal from "./Modal";
+import Modal from "./modal";
 
 /**
  * Footer - グローバルフッターコンポーネント

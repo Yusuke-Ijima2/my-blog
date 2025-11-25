@@ -1,5 +1,5 @@
 /**
- * Header.tsx - サイト全体で使用するヘッダーコンポーネント
+ * header.tsx - サイト全体で使用するヘッダーコンポーネント
  *
  * 機能：
  * - サイトロゴ/タイトルの表示
@@ -7,7 +7,7 @@
  */
 
 import Link from "next/link"; // Next.jsのクライアントサイドルーティング用Linkコンポーネント
-import ThemeToggle from "./ThemeToggle"; // テーマ切り替えコンポーネント
+import ThemeToggle from "./theme-toggle"; // テーマ切り替えコンポーネント
 
 /**
  * Header - グローバルヘッダーコンポーネント
