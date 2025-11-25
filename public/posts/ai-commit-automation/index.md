@@ -90,7 +90,7 @@ description: Git差分を分析して適切な粒度でコミットを作成
 
 [有名な t-wada さんのツイート](https://x.com/t_wada/status/904916106153828352)にもあるように、**コミットログには Why**を書いておくと、後から見た時になぜその変更をする必要があったのかが分かるので良さそうです。
 
-![有名な t-wada さんのツイート](/posts/claude-code-custom-commit-command/twada-tweet.webp)
+![有名な t-wada さんのツイート](/posts/ai-commit-automation/twada-tweet.webp)
 
 ### 絵文字/prefix
 
