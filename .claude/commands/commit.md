@@ -11,7 +11,7 @@ description: Git差分を分析して適切な粒度でコミットを作成（A
    - Dependent changes in the same commit
 4. **Stage changes with appropriate granularity (`git add`)**
 5. **Generate questions about the staged changes to understand Why (reason for the change)**
-   - **IMPORTANT**: Your primary focus MUST be on the STAGED CHANGES (the diff) AND session history
+   - Your primary focus MUST be on the STAGED CHANGES (the diff) AND session history
    - **First, analyze the staged changes AND session history to understand what context is already available**
    - **Only ask questions about "why" that cannot be inferred from the session history**
    - **If the "why" can be understood from the session history, do not ask questions and proceed to generate the commit message**
