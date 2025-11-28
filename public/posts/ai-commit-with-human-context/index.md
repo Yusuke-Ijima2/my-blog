@@ -36,13 +36,30 @@ description: Git差分を分析して適切な粒度でコミットを作成（A
    - 1 コミット = 1 論理変更
    - 依存する変更は同一コミット
 4. **適切な粒度で変更をステージングする（`git add`）**
-5. **ステージングした変更について、Why（変更の理由）を理解するためにユーザーに質問する**
-   - 質問する際は「Question 1 / 3」のように、現在の質問番号と総質問数を表示する
-   - 例: 「Question 1 / 3: このテストを分割した理由はなんですか？」
-   - 例: 「Question 2 / 3: この関数をリファクタリングした背景を教えてください」
-6. **疑問点がなくなるまで質問を続ける**
-7. **質問への回答を基にコミットメッセージを完成させ、コミットを実行する**
-8. **ステージングされていない変更が残っている場合は、4 に戻る**
+5. **ステージングした変更について、Why（変更の理由）を理解するために質問を生成し、ユーザーに質問する**
+   - **重要**: **ステージングした変更（diff）**と**セッション情報**の両方を分析すること
+   - **まず、ステージングした変更とセッション情報を分析し、既に利用可能なコンテキストを理解する**
+   - **セッション情報から読み取れない「Why」についてのみ質問する**
+   - **セッション情報から「Why」を理解できる場合は、質問せずにコミットメッセージを生成する**
+   - **質問が必要な場合のみ、必要な質問を一度に生成する（質問数は変更の複雑さとセッション情報に含まれるコンテキストの量によって異なる）**
+   - **全ての質問を一度にユーザーに提示する**
+   - 「何をしたか」ではなく、「なぜ」「意図」に焦点を当てる
+   - 「この変更は何をしますか？」のような汎用的な質問は避ける
+   - セッション情報から変更の理由が明確な場合は、質問を省略できる
+   - 良い質問の例（diffで特定の変更を見た場合）:
+     - タイムアウト値の変更を見た場合: 「タイムアウトを3秒から5秒に増やした理由はなんですか？」
+     - nilチェックの追加を見た場合: 「このnilチェックはどのエッジケースやエラーシナリオに対応していますか？」
+     - コードのリファクタリングを見た場合: 「このリファクタリングはより大きなクリーンアップの一部ですか？それとも特定の問題があって行ったものですか？」
+     - テストの分割を見た場合: 「このテストを複数の小さなテストに分割した理由はなんですか？」
+   - 悪い質問の例（避けるべき）:
+     - 「ファイルを更新しましたか？」（diffから明らか）
+     - 「Xの新しい値は何ですか？」（diffで確認できる）
+     - 「この変更は何をしますか？」（汎用的すぎる、「なぜ」に焦点を当てる）
+6. **質問をした場合、ユーザーから全ての質問への回答を集める**
+7. **質問への回答（およびセッション情報）を基にコミットメッセージを完成させる**
+8. **必ずユーザーの確認を取ってからコミットを実行する**
+9. **ユーザーが確認したら、コミットを実行する**
+10. **ステージングされていない変更が残っている場合は、4 に戻る**
 
 ## コミットメッセージ形式
 
@@ -71,29 +88,28 @@ description: Git差分を分析して適切な粒度でコミットを作成（A
 **ルール:**
 
 - subject: 50 文字以内で変更内容を簡潔に説明（AIが生成）
-- body: 変更の理由("なぜ")を詳しく説明（**質問への回答を基にAIが生成**）
-- **ステージングした変更について、Whyを理解するために積極的に質問すること**
-- **質問する際は「Question 1 / 3」のように、現在の質問番号と総質問数を表示すること**
-- **疑問点がなくなるまで質問を続けること**
-- **質問への回答を基にコミットメッセージを完成させ、確認を求めずに直接実行すること**
+- body: 変更の理由("なぜ")を詳しく説明（**質問への回答およびセッション情報を基にAIが生成**）。diffの内容を説明するのではなく、物語性とコンテキストに焦点を当てる。シグナル:ノイズ比を考える - 読者が変更の「なぜ」を真に理解できるようにする
+- **重要: bodyの各文は一行ずつ記述すること（一文一行）**
+- **必ずユーザーの確認を取ってからコミットを実行すること**
 - **このコマンド実行後は通常モードに戻り、ユーザーが明示的に `/commit` を実行するまで自動的にコミットしない**
 - **コミットメッセージは全て日本語で記述してください。**
 ````
 
 ## 解説
 
-### AI はコミットの粒度を判断し、質問で Why を引き出す
+### AI はコミットの粒度を判断し、セッション情報から読み取れない Why だけを質問する
 
-この Slash Command の最大の特徴は、**AI が質問することで人間から Why を引き出す**ことです。
+この Slash Command の最大の特徴は、**AI がセッション情報を分析し、読み取れない Why についてのみ質問することで人間から情報を引き出す**ことです。
 
 - **AI の役割**:
   - コードの差分を分析し、適切なコミットの粒度を判断する
   - 適切な粒度で変更をステージングする
-  - ステージングした変更について、Why を理解するために質問する
+  - **ステージングした変更とセッション情報の両方を分析し、既に利用可能なコンテキストを理解する**
+  - **セッション情報から読み取れない Why についてのみ質問する**
   - 質問への回答を基にコミットメッセージを生成する
-- **人間の役割**: AI の質問に答えることで、Why を伝える
+- **人間の役割**: AI の質問に答えることで、セッション情報にない Why を伝える
 
-AI はコードの差分から「何をしたか」は理解できますが、「なぜその変更をしたか」という背景や文脈は、ビジネス要件や設計判断、過去の議論の経緯など、コードの差分だけからは読み取れません。そのため、AI が積極的に質問することで、人間が持つ文脈情報を引き出し、より正確で有用なコミットメッセージを作成できます。
+AI はコードの差分から「何をしたか」は理解できますが、「なぜその変更をしたか」という背景や文脈は、コードの差分だけからは読み取れません。しかし、セッション情報には既に多くのコンテキストが含まれている場合があります。そのため、AI はまずセッション情報を分析し、読み取れない Why についてのみ質問することで、効率的に必要な情報を引き出し、より正確で有用なコミットメッセージを作成できます。
 
 ### 差分に潜在的な問題や懸念事項があれば報告し、コミットしない
 
@@ -123,49 +139,47 @@ AI はコードの差分から「何をしたか」は理解できますが、�
    git add src/utils/auth.ts
    ```
 
-2. AI がステージングした変更について質問
+2. AI がステージングした変更を分析し、必要な質問を生成し、全ての質問を一度に提示
 
    ```
-   Question 1 / 3: このテストを分割した理由はなんですか？
+   以下の質問にお答えください：
+
+   1. このテストを分割した理由はなんですか？
+   2. 他に分割した理由はありますか？例えば、テストの実行時間や保守性の観点から。
+   3. この変更は他のテストファイルにも影響しますか？
    ```
 
-3. ユーザーが回答
+3. ユーザーが全ての質問に回答
 
    ```
-   テストが長すぎて可読性が低かったので、責務ごとに分割して理解しやすくしました。
+   1. テストが長すぎて可読性が低かったので、責務ごとに分割して理解しやすくしました。
+   2. はい、テストの実行時間も短縮できました。また、今後テストを追加する際も、分割した方が保守しやすくなります。
+   3. いいえ、このファイルのみの変更です。
    ```
 
-4. AI が追加の質問（必要に応じて）
+4. AI がコミットメッセージを完成させ、ユーザーに確認を求める
 
    ```
-   Question 2 / 3: 他に分割した理由はありますか？例えば、テストの実行時間や保守性の観点から。
-   ```
+   以下のコミットメッセージで実行しますか？
 
-5. ユーザーが回答
-
-   ```
-   はい、テストの実行時間も短縮できました。また、今後テストを追加する際も、分割した方が保守しやすくなります。
-   ```
-
-6. AI がコミットメッセージを完成させて実行
-
-   ```
    ♻️ refactor: 認証テストを責務ごとに分割
 
    テストが長すぎて可読性が低かったため、責務ごとに分割して理解しやすくしました。また、テストの実行時間も短縮でき、今後テストを追加する際も保守しやすくなります。
    ```
 
-7. 残りの変更があれば、1 に戻る
+5. ユーザーが確認し、AI がコミットを実行
 
-### 疑問点がなくなるまで質問を続ける
+6. 残りの変更があれば、1 に戻る
 
-AI は、ステージングした変更について Why を完全に理解するまで、積極的に質問を続けます。1 回の質問で十分な場合もあれば、複数回の質問が必要な場合もあります。重要なのは、Why を正確に理解することです。
+### 質問を一度に生成し、全てまとめて提示する
 
-質問する際は、「Question 1 / 3」のように現在の質問番号と総質問数を表示することで、ユーザーが残りの質問数を把握でき、回答しやすくなります。
+AI は、ステージングした変更を分析して、Why を理解するために必要な質問を一度に生成します。質問数は変更の複雑さによって異なりますが、通常 2-4 問程度です。生成した全ての質問を一度にユーザーに提示することで、ユーザーは全体像を把握しやすくなり、効率的に回答できます。
 
-### ユーザーの確認を求めずに直接実行
+重要なのは、Why を正確に理解することです。全ての質問を一度に提示することで、ユーザーは質問の全体像を把握し、より包括的な回答ができるようになります。
 
-これは好みですが、私はつけています。質問への回答が完了した後、いちいち承認するのは面倒なのでつけています。これでもたまに聞いてきますが。
+### 必ずユーザーの確認を取ってから実行
+
+コミットメッセージを生成した後、必ずユーザーの確認を取ってからコミットを実行します。これにより、ユーザーは生成されたコミットメッセージを確認し、必要に応じて修正や改善を依頼できます。
 
 ### subject: 50 文字以内
 
@@ -212,11 +226,21 @@ description: Git差分を分析して適切な粒度でコミットを作成（A
    - 1 commit = 1 logical change
    - Dependent changes in the same commit
 4. **Stage changes with appropriate granularity (`git add`)**
-5. **Ask the user questions about the staged changes to understand Why (reason for the change)**
-   - When asking questions, display the current question number and total number of questions like "Question 1 / 3"
-   - Example: "Question 1 / 3: Why did you split this test?"
-   - Example: "Question 2 / 3: What was the background for refactoring this function?"
-6. **Continue asking questions until all doubts are resolved**
+5. **Generate questions about the staged changes to understand Why (reason for the change)**
+   - **IMPORTANT**: Your primary focus MUST be on the STAGED CHANGES (the diff)
+   - **Analyze the staged changes and generate all necessary questions at once (the number of questions may vary depending on the complexity of the changes)**
+   - **Present all questions together to the user at once**
+   - Focus on the "why" and "intent", not just the "what"
+   - Avoid generic questions like "What does this change do?"
+   - If the changes are self-explanatory, ask for any extra context or side effects
+   - Examples of GOOD questions:
+     - "Why was the timeout increased to 5 seconds?"
+     - "What edge case does this nil check handle?"
+     - "Is this refactor part of a larger cleanup?"
+   - Examples of BAD questions:
+     - "Did you update the file?"
+     - "What is the new value of X?"
+6. **Collect answers from the user for all questions**
 7. **Complete the commit message based on the answers and execute the commit**
 8. **If there are remaining unstaged changes, return to step 4**
 
@@ -247,10 +271,12 @@ description: Git差分を分析して適切な粒度でコミットを作成（A
 **Rules:**
 
 - subject: concisely describe the change within 50 characters (generated by AI)
-- body: explain the reason ("why") for the change in detail (**generated by AI based on answers**)
+- body: explain the reason ("why") for the change in detail (**generated by AI based on answers**). Focus on narrative and context, not just describing what's in the diff. Think of the signal:noise ratio - you want the reader to truly understand the 'why' behind the changes
 - **Actively ask questions about staged changes to understand Why**
-- **When asking questions, display the current question number and total number of questions like "Question 1 / 3"**
-- **Continue asking questions until all doubts are resolved**
+- **Your primary focus MUST be on the STAGED CHANGES (the diff). Session history is provided ONLY as supporting context**
+- **Focus on the "why" and "intent", not just the "what"**
+- **Generate all necessary questions at once and present them all together to the user**
+- **Collect answers from the user for all questions before generating the commit message**
 - **Complete the commit message based on the answers and execute directly without asking for confirmation**
 - **After executing this command, return to normal mode and do not automatically commit until the user explicitly runs `/commit`**
 - **Write all commit messages in Japanese.**
