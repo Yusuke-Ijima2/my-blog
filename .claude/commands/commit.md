@@ -19,7 +19,6 @@ description: Git差分を分析して適切な粒度でコミットを作成（A
    - **Present all questions together to the user at once**
    - Focus on the "why" and "intent", not just the "what"
    - Avoid generic questions like "What does this change do?"
-   - If the changes are self-explanatory and the context is clear from session history, you may not need to ask any questions
    - Examples of GOOD questions (when you see specific changes in the diff):
      - If you see a timeout value change: "Why was the timeout increased from 3 to 5 seconds?"
      - If you see a nil check added: "What edge case or error scenario does this nil check handle?"
