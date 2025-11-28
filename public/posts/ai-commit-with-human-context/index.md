@@ -45,7 +45,6 @@ description: Git差分を分析して適切な粒度でコミットを作成（A
    - **全ての質問を一度にユーザーに提示する**
    - 「何をしたか」ではなく、「なぜ」「意図」に焦点を当てる
    - 「この変更は何をしますか？」のような汎用的な質問は避ける
-   - セッション情報から変更の理由が明確な場合は、質問を省略できる
    - 良い質問の例（diffで特定の変更を見た場合）:
      - タイムアウト値の変更を見た場合: 「タイムアウトを3秒から5秒に増やした理由はなんですか？」
      - nilチェックの追加を見た場合: 「このnilチェックはどのエッジケースやエラーシナリオに対応していますか？」
@@ -232,7 +231,6 @@ description: Git差分を分析して適切な粒度でコミットを作成（A
    - **Present all questions together to the user at once**
    - Focus on the "why" and "intent", not just the "what"
    - Avoid generic questions like "What does this change do?"
-   - If the changes are self-explanatory, ask for any extra context or side effects
    - Examples of GOOD questions:
      - "Why was the timeout increased to 5 seconds?"
      - "What edge case does this nil check handle?"
