@@ -9,14 +9,14 @@ description: Git差分を分析して適切な粒度でコミットを作成（A
 3. Group commits based on the following criteria:
    - 1 commit = 1 logical change
    - Dependent changes in the same commit
-4. **Stage changes with appropriate granularity (`git add`)**
-5. **Generate questions about the staged changes to understand Why (reason for the change)**
+4. Stage changes with appropriate granularity (`git add`)
+5. Generate questions about the staged changes to understand Why (reason for the change)
    - Your primary focus MUST be on the STAGED CHANGES (the diff) AND session history
-   - **First, analyze the staged changes AND session history to understand what context is already available**
-   - **Only ask questions about "why" that cannot be inferred from the session history**
-   - **If the "why" can be understood from the session history, do not ask questions and proceed to generate the commit message**
-   - **If questions are needed, generate all necessary questions at once (the number of questions may vary depending on the complexity of the changes and how much context is available in the session)**
-   - **Present all questions together to the user at once**
+   - First, analyze the staged changes AND session history to understand what context is already available
+   - Only ask questions about "why" that cannot be inferred from the session history
+   - If the "why" can be understood from the session history, do not ask questions and proceed to generate the commit message
+   - If questions are needed, generate all necessary questions at once (the number of questions may vary depending on the complexity of the changes and how much context is available in the session)
+   - Present all questions together to the user at once
    - Focus on the "why" and "intent", not just the "what"
    - Avoid generic questions like "What does this change do?"
    - Examples of GOOD questions (when you see specific changes in the diff):
@@ -28,11 +28,11 @@ description: Git差分を分析して適切な粒度でコミットを作成（A
      - "Did you update the file?" (obvious from diff)
      - "What is the new value of X?" (can be seen in diff)
      - "What does this change do?" (too generic, focus on "why")
-6. **If questions were asked, collect answers from the user for all questions**
-7. **Complete the commit message based on the answers (and session history)**
-8. **ALWAYS ask the user for confirmation before executing the commit**
-9. **After user confirms, execute the commit**
-10. **If there are remaining unstaged changes, return to step 4**
+6. If questions were asked, collect answers from the user for all questions
+7. Complete the commit message based on the answers (and session history)
+8. ALWAYS ask the user for confirmation before executing the commit
+9. After user confirms, execute the commit
+10. If there are remaining unstaged changes, return to step 4
 
 ## Commit Message Format
 

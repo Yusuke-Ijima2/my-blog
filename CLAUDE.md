@@ -7,6 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 This is a technical blog built with Next.js Static Export. It generates a completely static site from Markdown files, deployable to any static hosting service (Cloudflare Pages, Vercel, Netlify, GitHub Pages, etc.).
 
 **Key Technology:**
+
 - **Next.js 16.0.1** with App Router
 - **React 19.2.0**
 - **TypeScript 5.x**
@@ -27,6 +28,7 @@ npm run type-check    # Run TypeScript type checking without emitting files
 ### Static Site Generation Strategy
 
 This project uses Next.js Static Export, which means:
+
 - All pages are pre-rendered to static HTML at build time
 - No Node.js server required for deployment
 - **Server Components run at build time** and are fully supported
@@ -48,12 +50,14 @@ public/posts/
 ```
 
 **Benefits:**
+
 - Articles and their assets are completely co-located
 - No naming conflicts between different articles
 - Easy to move/copy entire article directories
 - Images can use relative paths: `![alt](./image.png)`
 
 **Frontmatter format:**
+
 ```markdown
 ---
 title: "Article Title"
@@ -63,6 +67,8 @@ description: "Article description for listing pages"
 
 ## Content here...
 ```
+
+**Important:** `description` must be 200 characters or less.
 
 ### Directory Structure: App Router Colocation
 
@@ -89,6 +95,7 @@ app/
 ```
 
 **Benefits:**
+
 - Related code is colocated near usage
 - `_` prefix prevents routing (Next.js convention)
 - Route-specific components are clearly separated
@@ -111,6 +118,7 @@ The `app/_lib/posts.ts` file handles all Markdown processing:
    - `rehypeStringify` → convert to HTML string
 
 **Key Functions:**
+
 - `getAllPosts()`: Returns all post metadata (sorted by date, newest first) - used for blog listing
 - `getAllPostSlugs()`: Returns array of slugs - used for `generateStaticParams()`
 - `getPostBySlug(slug)`: Returns full post data including HTML content - used for article detail pages
@@ -129,14 +137,19 @@ The `[slug]` dynamic route uses `generateStaticParams()` to pre-render all artic
 All pages use a consistent two-tier layout structure for alignment:
 
 ```tsx
-<div className="max-w-7xl mx-auto px-4 py-12">  {/* Outer container */}
-  <div className="max-w-5xl mx-auto">            {/* Inner content container */}
+<div className="max-w-7xl mx-auto px-4 py-12">
+  {" "}
+  {/* Outer container */}
+  <div className="max-w-5xl mx-auto">
+    {" "}
+    {/* Inner content container */}
     {/* Content here */}
   </div>
 </div>
 ```
 
 This structure is used in:
+
 - Header (`app/_components/Header.tsx`)
 - Footer (`app/_components/Footer.tsx`)
 - Article listing (`app/page.tsx`)
@@ -145,6 +158,7 @@ This structure is used in:
 ### Table of Contents
 
 Article detail pages include a client-side table of contents (`app/[slug]/_components/TableOfContents.tsx`) that:
+
 - Extracts h2/h3 headings from the article DOM after mount
 - Displays in a sticky sidebar on XL+ screens (`hidden xl:block w-64 shrink-0`)
 - Uses `rehypeSlug` to ensure headings have IDs for anchor links
@@ -153,18 +167,23 @@ Article detail pages include a client-side table of contents (`app/[slug]/_compo
 ### Typography and Styling
 
 **Tailwind CSS v4 Configuration:**
+
 - Uses new CSS-first configuration via `app/globals.css`
 - No `tailwind.config.ts` required
 - Import: `@import "tailwindcss"` and `@plugin "@tailwindcss/typography"`
 - Theme variables defined with `@theme inline` directive
 
 **Dark Mode Implementation:**
+
 - Uses class-based dark mode (`.dark` class on `<html>`)
 - Background: Gray (#1f2937) instead of pure black for better readability
 - Text: White (#ffffff) for maximum contrast
 - **Important:** Tailwind's utility classes (`dark:text-white`) may not work in v4. Use direct CSS selectors in `globals.css`:
   ```css
-  .dark h1, .dark h2, .dark p, .dark a {
+  .dark h1,
+  .dark h2,
+  .dark p,
+  .dark a {
     color: #ffffff !important;
   }
   ```
@@ -172,6 +191,7 @@ Article detail pages include a client-side table of contents (`app/[slug]/_compo
 
 **Typography:**
 Articles use Tailwind Typography (`@tailwindcss/typography`) with extensive customization:
+
 - Code blocks: `prose-pre:bg-gray-900 prose-pre:text-gray-100 prose-pre:p-1`
 - Inline code: `prose-code:text-purple-600 prose-code:bg-gray-100` (light mode), `purple-400` on `gray-800` (dark mode)
 - Headings: `prose-h2:scroll-mt-8` for proper anchor link scrolling
@@ -180,21 +200,22 @@ Articles use Tailwind Typography (`@tailwindcss/typography`) with extensive cust
 
 ### Link Cards
 
-URL を単独行で記述すると、自動的にOGP情報付きのリンクカードに変換されます：
+URL を単独行で記述すると、自動的に OGP 情報付きのリンクカードに変換されます：
 
 ```markdown
 https://example.com/article
 ```
 
-- `app/_lib/rehype-link-card.ts` が unfurl.js を使用してOGPデータを取得
-- タイトル、サムネイル画像、URLをカード形式で表示
+- `app/_lib/rehype-link-card.ts` が unfurl.js を使用して OGP データを取得
+- タイトル、サムネイル画像、URL をカード形式で表示
 - スタイルは `app/globals.css` の `.link-card` クラスで定義
-- 外部サービスのNext.js Image Optimization URL (`/_next/image?url=...`) を検出した場合、元の画像URLを自動抽出
+- 外部サービスの Next.js Image Optimization URL (`/_next/image?url=...`) を検出した場合、元の画像 URL を自動抽出
 
 ## Adding New Articles
 
 1. Create directory: `public/posts/my-article-slug/`
 2. Create `index.md` with frontmatter:
+
    ```markdown
    ---
    title: "Article Title"
@@ -204,6 +225,9 @@ https://example.com/article
 
    ## Content here...
    ```
+
+   **Note:** `description` must be 200 characters or less.
+
 3. Add images to the same directory (prefer WebP format for optimal performance)
 4. Reference images with relative paths: `![alt](./image.png)`
 5. Run `node scripts/convert-to-webp.mjs` to convert PNG/JPEG to WebP (optional but recommended)
@@ -217,7 +241,7 @@ Next.js 16 changed `params` to be a Promise. All dynamic route handlers must awa
 
 ```tsx
 export default async function Page({ params }: PageProps) {
-  const { slug } = await params;  // Must await!
+  const { slug } = await params; // Must await!
   // ...
 }
 ```
@@ -242,10 +266,10 @@ The `redirect()` function from `next/navigation` IS supported in Server Componen
 
 ```tsx
 // ✅ Supported in static export
-import { redirect } from 'next/navigation';
+import { redirect } from "next/navigation";
 
 export default function Home() {
-  redirect('/blog');
+  redirect("/blog");
 }
 ```
 
@@ -256,6 +280,7 @@ The `TableOfContents.tsx` component has an ESLint disable comment for `react-hoo
 ### Commit Granularity
 
 When committing changes, separate unrelated concerns into different commits. For example:
+
 - ✅ Separate commits for: site name change, routing change, feature addition
 - ❌ Single commit for: site name + routing + feature
 
@@ -264,21 +289,26 @@ When committing changes, separate unrelated concerns into different commits. For
 This project includes custom slash commands in `.claude/commands/`:
 
 ### `/commit`
+
 Analyzes git changes and creates well-structured commits in Japanese with emojis. Automatically separates unrelated changes into different commits and follows conventional commit format.
 
 ### `/nextjs-fix`
+
 Uses Next.js MCP (Model Context Protocol) server to validate code against Next.js best practices and official documentation. Checks for:
+
 - Next.js 16 async API compliance
 - Static export compatibility
 - App Router patterns
 - Performance best practices
 
 ### `/update-description`
+
 Updates blog post descriptions automatically from the first paragraph content.
 
 ## SEO & Performance Optimizations
 
 ### SEO Features
+
 - **robots.txt**: Search engine crawl control at `public/robots.txt`
 - **sitemap.xml**: Dynamically generated at build time via `app/sitemap.ts`
 - **OGP Images**: Dynamically generated via `app/opengraph-image.tsx` for social media previews
@@ -286,6 +316,7 @@ Updates blog post descriptions automatically from the first paragraph content.
 - **Metadata**: Comprehensive Open Graph and Twitter Card metadata in `app/layout.tsx`
 
 ### Performance Optimizations
+
 - **Font Loading**: System font stack (no external font requests)
   - Stack: `ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", Meiryo, sans-serif`
   - Zero network requests for fonts, instant text rendering
@@ -297,6 +328,7 @@ Updates blog post descriptions automatically from the first paragraph content.
   - Static asset caching (1 year for immutable assets)
 
 ### Image Workflow
+
 1. Add images as PNG/JPEG to article directory
 2. Run `node scripts/convert-to-webp.mjs` to convert to WebP
 3. Update markdown references from `.png`/`.jpg` to `.webp`
@@ -305,6 +337,7 @@ Updates blog post descriptions automatically from the first paragraph content.
 ## Deployment
 
 The project is configured for Cloudflare Pages deployment:
+
 - Build command: `npm run build`
 - Output directory: `out`
 - Includes Cloudflare Web Analytics (cookie-free, auto-enabled)
