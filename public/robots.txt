@@ -1,4 +1,4 @@
-# robots.txt for Ijima.dev
+# robots.txt for ijima.dev
 
 # すべての検索エンジンクローラーを許可
 User-agent: *

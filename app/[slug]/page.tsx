@@ -105,14 +105,14 @@ export async function generateMetadata({ params }: PageProps) {
 
   // 記事のメタデータを返す
   return {
-    title: post.title, // templateで | Ijima.dev が自動追加される
+    title: post.title, // templateで | ijima.dev が自動追加される
     description: post.description,
     openGraph: {
       type: "article",
       title: post.title,
       description: post.description,
       publishedTime: post.date,
-      authors: ["Ijima"],
+      authors: ["ijima"],
     },
     twitter: {
       card: "summary_large_image",
@@ -155,11 +155,11 @@ export default async function BlogPost({ params }: PageProps) {
     datePublished: post.date,
     author: {
       "@type": "Person",
-      name: "Ijima",
+      name: "ijima",
     },
     publisher: {
       "@type": "Organization",
-      name: "Ijima.dev",
+      name: "ijima.dev",
       logo: {
         "@type": "ImageObject",
         url: "https://ijima.dev/icon.svg",

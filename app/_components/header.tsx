@@ -31,7 +31,7 @@ export default function Header() {
             href="/"
             className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white hover:text-purple-400 transition-colors duration-200"
           >
-            Ijima.dev
+            ijima.dev
           </Link>
 
           {/* 右側のアイコングループ */}

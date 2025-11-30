@@ -43,7 +43,7 @@ export default function Footer() {
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="max-w-5xl mx-auto flex flex-col-reverse sm:flex-row items-center justify-center gap-4 sm:gap-16">
             <p className="text-gray-600 dark:text-gray-400 text-sm">
-              &copy; {currentYear} Ijima.dev. All rights reserved.
+              &copy; {currentYear} ijima.dev. All rights reserved.
             </p>
             <button
               ref={triggerButtonRef}

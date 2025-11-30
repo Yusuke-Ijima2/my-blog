@@ -1,6 +1,6 @@
-# Ijima.dev
+# ijima.dev
 
-Next.js Static Exportを使った技術ブログのMVPプロジェクトです。
+Next.js Static Export を使った技術ブログの MVP プロジェクトです。
 
 ## 技術スタック
 
@@ -8,14 +8,14 @@ Next.js Static Exportを使った技術ブログのMVPプロジェクトです�
 - **React**: 19.2.0
 - **TypeScript**: 5.x
 - **Tailwind CSS**: v4
-- **Markdown処理**:
-  - gray-matter: frontmatterパース
-  - remark + remark-html: Markdown→HTML変換
+- **Markdown 処理**:
+  - gray-matter: frontmatter パース
+  - remark + remark-html: Markdown→HTML 変換
   - rehype-highlight: シンタックスハイライト
 
 ## 機能
 
-- ✅ Markdownファイルから静的ブログ記事を生成
+- ✅ Markdown ファイルから静的ブログ記事を生成
 - ✅ 記事一覧ページ（日付順ソート）
 - ✅ 記事詳細ページ（動的ルート）
 - ✅ シンタックスハイライト対応
@@ -74,12 +74,12 @@ npm run dev
 
 ### 記事の作成手順
 
-1. 記事のslug（URL）を決める（例: `my-new-article`）
+1. 記事の slug（URL）を決める（例: `my-new-article`）
 2. `public/posts/my-new-article/` ディレクトリを作成
 3. `public/posts/my-new-article/index.md` ファイルを作成
 4. 画像がある場合は同じディレクトリに配置
 
-### Markdownファイルの形式
+### Markdown ファイルの形式
 
 ```markdown
 ---
@@ -99,10 +99,10 @@ const example = "コード例";
 \`\`\`
 ```
 
-### frontmatterのフィールド
+### frontmatter のフィールド
 
 - `title`: 記事のタイトル（必須）
-- `date`: 公開日（YYYY-MM-DD形式、必須）
+- `date`: 公開日（YYYY-MM-DD 形式、必須）
 - `description`: 記事の説明文（必須）
 
 ### 画像の追加方法
@@ -110,6 +110,7 @@ const example = "コード例";
 記事と画像を同じディレクトリに配置できます（完全なコロケーション）。
 
 **ディレクトリ構造:**
+
 ```
 public/posts/
   nextjs-static-export/
@@ -118,19 +119,22 @@ public/posts/
     diagram.svg
 ```
 
-**Markdownでの記述（2つの方法）:**
+**Markdown での記述（2 つの方法）:**
 
 1. **相対パス（推奨）:**
+
 ```markdown
 ![スクリーンショット](./screenshot1.png)
 ```
 
 2. **絶対パス:**
+
 ```markdown
 ![スクリーンショット](/posts/nextjs-static-export/screenshot1.png)
 ```
 
 **メリット:**
+
 - 記事と画像が完全に同じ場所に配置される
 - 記事ごとに画像が整理される
 - 画像の名前が重複しても問題ない
@@ -158,12 +162,12 @@ npm run build
 - **AWS S3 + CloudFront**: 静的ホスティング
 - **Firebase Hosting**: [https://firebase.google.com/docs/hosting](https://firebase.google.com/docs/hosting)
 
-### Cloudflare Pagesへのデプロイ（推奨）
+### Cloudflare Pages へのデプロイ（推奨）
 
-Cloudflare Pagesは高速で、無料でWeb Analyticsが利用できます。
+Cloudflare Pages は高速で、無料で Web Analytics が利用できます。
 
 1. [Cloudflare Pages](https://pages.cloudflare.com/)にログイン
-2. GitHubリポジトリを接続
+2. GitHub リポジトリを接続
 3. ビルド設定：
    - **ビルドコマンド**: `npm run build`
    - **ビルド出力ディレクトリ**: `out`
@@ -171,23 +175,25 @@ Cloudflare Pagesは高速で、無料でWeb Analyticsが利用できます。
 
 ### アクセス解析
 
-Cloudflare Web Analyticsを使用しています。
+Cloudflare Web Analytics を使用しています。
 
 **特徴:**
-- ✅ **Cookie不要** - プライバシー重視
-- ✅ **自動有効化** - Cloudflare Pagesで自動的に有効
+
+- ✅ **Cookie 不要** - プライバシー重視
+- ✅ **自動有効化** - Cloudflare Pages で自動的に有効
 - ✅ **リアルタイム** - ページビュー、訪問者数、リファラーを確認可能
 - ✅ **無料** - 追加費用なし
 
 **確認方法:**
-1. Cloudflare Pagesダッシュボードを開く
+
+1. Cloudflare Pages ダッシュボードを開く
 2. プロジェクトを選択
 3. **Web Analytics**タブをクリック
 4. ページビュー、訪問者数、人気ページなどを確認
 
-Google Analyticsのような複雑な設定は不要で、シンプルにページビュー数を確認できます。
+Google Analytics のような複雑な設定は不要で、シンプルにページビュー数を確認できます。
 
-### Vercelへのデプロイ
+### Vercel へのデプロイ
 
 ```bash
 npm install -g vercel
@@ -196,12 +202,12 @@ vercel
 
 ## 開発コマンド
 
-| コマンド | 説明 |
-|---------|------|
-| `npm run dev` | 開発サーバーを起動 |
-| `npm run build` | 本番用ビルド（静的ファイル生成） |
-| `npm run lint` | ESLintでコードチェック |
-| `npm run type-check` | TypeScriptの型チェック |
+| コマンド             | 説明                             |
+| -------------------- | -------------------------------- |
+| `npm run dev`        | 開発サーバーを起動               |
+| `npm run build`      | 本番用ビルド（静的ファイル生成） |
+| `npm run lint`       | ESLint でコードチェック          |
+| `npm run type-check` | TypeScript の型チェック          |
 
 ## カスタマイズ
 
@@ -223,19 +229,19 @@ export const metadata: Metadata = {
 
 ### スタイルのカスタマイズ
 
-Tailwind CSSのユーティリティクラスを使ってスタイルをカスタマイズできます。
+Tailwind CSS のユーティリティクラスを使ってスタイルをカスタマイズできます。
 
 ## 制限事項（Static Export）
 
-Next.js Static Exportを使用しているため、以下の機能は使用できません：
+Next.js Static Export を使用しているため、以下の機能は使用できません：
 
 - ❌ Server Components（サーバーコンポーネント）
 - ❌ API Routes
 - ❌ Middleware
-- ❌ Image Optimization（next/imageの最適化機能）
+- ❌ Image Optimization（next/image の最適化機能）
 - ❌ Incremental Static Regeneration（ISR）
 
-これらの機能が必要な場合は、通常のNext.jsデプロイメントを検討してください。
+これらの機能が必要な場合は、通常の Next.js デプロイメントを検討してください。
 
 ## ライセンス
 

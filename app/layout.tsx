@@ -25,25 +25,27 @@ import Footer from "@/app/_components/footer"; // フッターコンポーネン
  * - SEO（検索エンジン最適化）に重要
  */
 export const metadata: Metadata = {
-  metadataBase: new URL('https://ijima.dev'),
+  metadataBase: new URL("https://ijima.dev"),
   title: {
-    default: "Ijima.dev",
-    template: "%s | Ijima.dev",
+    default: "ijima.dev",
+    template: "%s | ijima.dev",
   },
   description:
     "技術ブログ - Next.js, TypeScript, Tailwind CSSなどの技術記事を発信",
   openGraph: {
-    type: 'website',
-    locale: 'ja_JP',
-    url: 'https://ijima.dev',
-    siteName: 'Ijima.dev',
-    title: 'Ijima.dev',
-    description: '技術ブログ - Next.js, TypeScript, Tailwind CSSなどの技術記事を発信',
+    type: "website",
+    locale: "ja_JP",
+    url: "https://ijima.dev",
+    siteName: "ijima.dev",
+    title: "ijima.dev",
+    description:
+      "技術ブログ - Next.js, TypeScript, Tailwind CSSなどの技術記事を発信",
   },
   twitter: {
-    card: 'summary_large_image',
-    title: 'Ijima.dev',
-    description: '技術ブログ - Next.js, TypeScript, Tailwind CSSなどの技術記事を発信',
+    card: "summary_large_image",
+    title: "ijima.dev",
+    description:
+      "技術ブログ - Next.js, TypeScript, Tailwind CSSなどの技術記事を発信",
   },
   robots: {
     index: true,
@@ -109,9 +111,7 @@ export default function RootLayout({
         <Header />
 
         {/* メインコンテンツエリア - 各ページの内容が表示される */}
-        <main className="flex-1">
-          {children}
-        </main>
+        <main className="flex-1">{children}</main>
 
         {/* フッター - すべてのページの下部に表示 */}
         <Footer />
